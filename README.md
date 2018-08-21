@@ -1,4 +1,4 @@
-# @Sugoi\core
+# @Sugoi\orm
 
 ![Sugoi logo](https://www.sugoijs.com/assets/logo_inverse.png)
 
@@ -10,7 +10,7 @@ which gives you the ability to use only what you need, fast.
 
 this is a standalone module that can be functional separately (as all of the SugoiJS modules).
 
-The ORM model provide the ability to build model classes with lifecycle hooks.
+The ORM module provide the ability to build model classes with lifecycle hooks.
 
 ## Installation
 
