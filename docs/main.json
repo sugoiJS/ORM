@@ -1,0 +1,3697 @@
+{
+	"id": 0,
+	"name": "@sugoi/orm",
+	"kind": 0,
+	"flags": {},
+	"children": [
+		{
+			"id": 38,
+			"name": "CONNECTION_STATUS",
+			"kind": 4,
+			"kindString": "Enumeration",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 39,
+					"name": "CONNECTED",
+					"kind": 16,
+					"kindString": "Enumeration member",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "constants/connection-status.constant.ts",
+							"line": 2,
+							"character": 15
+						}
+					],
+					"defaultValue": "\"CONNECTED\""
+				},
+				{
+					"id": 40,
+					"name": "DISCONNECTED",
+					"kind": 16,
+					"kindString": "Enumeration member",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "constants/connection-status.constant.ts",
+							"line": 3,
+							"character": 18
+						}
+					],
+					"defaultValue": "\"DISCONNECTED\""
+				}
+			],
+			"groups": [
+				{
+					"title": "Enumeration members",
+					"kind": 16,
+					"children": [
+						39,
+						40
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "constants/connection-status.constant.ts",
+					"line": 1,
+					"character": 29
+				}
+			]
+		},
+		{
+			"id": 115,
+			"name": "ConnectableModel",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isAbstract": true
+			},
+			"children": [
+				{
+					"id": 116,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 117,
+							"name": "new ConnectableModel",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "ConnectableModel",
+								"id": 115
+							},
+							"overwrites": {
+								"type": "reference",
+								"name": "ModelAbstract.__constructor",
+								"id": 83
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/connectable-model.abstract.ts",
+							"line": 13,
+							"character": 68
+						}
+					],
+					"overwrites": {
+						"type": "reference",
+						"name": "ModelAbstract.__constructor",
+						"id": 83
+					}
+				},
+				{
+					"id": 135,
+					"name": "id",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 7,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.id",
+						"id": 82
+					}
+				},
+				{
+					"id": 134,
+					"name": "status",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 5,
+							"character": 24
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "CONNECTION_STATUS",
+						"id": 38
+					},
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.status",
+						"id": 81
+					}
+				},
+				{
+					"id": 158,
+					"name": "remove",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 159,
+							"name": "remove",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 160,
+									"name": "query",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "ModelAbstract.remove",
+								"id": 107
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 122,
+							"character": 17
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.remove",
+						"id": 107
+					}
+				},
+				{
+					"id": 146,
+					"name": "save",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 147,
+							"name": "save",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 148,
+									"name": "options",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											},
+											{
+												"type": "intrinsic",
+												"name": "string"
+											}
+										]
+									},
+									"defaultValue": " {}"
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "ModelAbstract.save",
+								"id": 95
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 39,
+							"character": 21
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.save",
+						"id": 95
+					}
+				},
+				{
+					"id": 156,
+					"name": "sugAfterUpdate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 157,
+							"name": "sugAfterUpdate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "ModelAbstract.sugAfterUpdate",
+								"id": 105
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 114,
+							"character": 25
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.sugAfterUpdate",
+						"id": 105
+					}
+				},
+				{
+					"id": 154,
+					"name": "sugBeforeUpdate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 155,
+							"name": "sugBeforeUpdate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "ModelAbstract.sugBeforeUpdate",
+								"id": 103
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 108,
+							"character": 26
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.sugBeforeUpdate",
+						"id": 103
+					}
+				},
+				{
+					"id": 149,
+					"name": "sugValidate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 150,
+							"name": "sugValidate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "boolean"
+											}
+										]
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "ModelAbstract.sugValidate",
+								"id": 98
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 68,
+							"character": 22
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.sugValidate",
+						"id": 98
+					}
+				},
+				{
+					"id": 151,
+					"name": "update",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 152,
+							"name": "update",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 153,
+									"name": "options",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											},
+											{
+												"type": "intrinsic",
+												"name": "string"
+											}
+										]
+									},
+									"defaultValue": " {}"
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "ModelAbstract.update",
+								"id": 100
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 85,
+							"character": 23
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.update",
+						"id": 100
+					}
+				},
+				{
+					"id": 161,
+					"name": "clone",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 162,
+							"name": "clone",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"typeParameter": [
+								{
+									"id": 163,
+									"name": "T",
+									"kind": 131072,
+									"kindString": "Type parameter",
+									"flags": {}
+								}
+							],
+							"parameters": [
+								{
+									"id": 164,
+									"name": "classIns",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								},
+								{
+									"id": 165,
+									"name": "data",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "typeParameter",
+								"name": "T"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "ModelAbstract.clone",
+								"id": 110
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 126,
+							"character": 23
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.clone",
+						"id": 110
+					}
+				},
+				{
+					"id": 125,
+					"name": "connect",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 126,
+							"name": "connect",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 127,
+									"name": "connectionName",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									},
+									"defaultValue": " this.connectionName"
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/connectable-model.abstract.ts",
+							"line": 33,
+							"character": 25
+						}
+					]
+				},
+				{
+					"id": 128,
+					"name": "connectEmitter",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 129,
+							"name": "connectEmitter",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Connect to service and return connection for further use",
+								"returns": "- connection item\n"
+							},
+							"parameters": [
+								{
+									"id": 130,
+									"name": "connection",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {},
+									"type": {
+										"type": "reference",
+										"name": "Connection",
+										"id": 41
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/connectable-model.abstract.ts",
+							"line": 62,
+							"character": 32
+						}
+					]
+				},
+				{
+					"id": 131,
+					"name": "disconnect",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 132,
+							"name": "disconnect",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 133,
+									"name": "connectionName",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/connectable-model.abstract.ts",
+							"line": 66,
+							"character": 28
+						}
+					]
+				},
+				{
+					"id": 136,
+					"name": "find",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 137,
+							"name": "find",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"typeParameter": [
+								{
+									"id": 138,
+									"name": "T",
+									"kind": 131072,
+									"kindString": "Type parameter",
+									"flags": {}
+								}
+							],
+							"parameters": [
+								{
+									"id": 139,
+									"name": "query",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									},
+									"defaultValue": " {}"
+								},
+								{
+									"id": 140,
+									"name": "options",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									},
+									"defaultValue": " {}"
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Array",
+										"typeArguments": [
+											{
+												"type": "typeParameter",
+												"name": "T"
+											}
+										]
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "ModelAbstract.find",
+								"id": 85
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 15,
+							"character": 22
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.find",
+						"id": 85
+					}
+				},
+				{
+					"id": 141,
+					"name": "findOne",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 142,
+							"name": "findOne",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"typeParameter": [
+								{
+									"id": 143,
+									"name": "T",
+									"kind": 131072,
+									"kindString": "Type parameter",
+									"flags": {}
+								}
+							],
+							"parameters": [
+								{
+									"id": 144,
+									"name": "query",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									},
+									"defaultValue": " {}"
+								},
+								{
+									"id": 145,
+									"name": "options",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									},
+									"defaultValue": " {}"
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "typeParameter",
+										"name": "T"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "ModelAbstract.findOne",
+								"id": 90
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 29,
+							"character": 25
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "ModelAbstract.findOne",
+						"id": 90
+					}
+				},
+				{
+					"id": 122,
+					"name": "getConnection",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 123,
+							"name": "getConnection",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 124,
+									"name": "connectionName",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									},
+									"defaultValue": "\"default\""
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Connection",
+								"id": 41
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/connectable-model.abstract.ts",
+							"line": 27,
+							"character": 31
+						}
+					]
+				},
+				{
+					"id": 118,
+					"name": "setConnection",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 119,
+							"name": "setConnection",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 120,
+									"name": "configData",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IConnectionConfig",
+										"id": 30
+									}
+								},
+								{
+									"id": 121,
+									"name": "connectionName",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									},
+									"defaultValue": "\"default\""
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/connectable-model.abstract.ts",
+							"line": 19,
+							"character": 31
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						116
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						135,
+						134
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						158,
+						146,
+						156,
+						154,
+						149,
+						151,
+						161,
+						125,
+						128,
+						131,
+						136,
+						141,
+						122,
+						118
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "models/connectable-model.abstract.ts",
+					"line": 8,
+					"character": 38
+				}
+			],
+			"extendedTypes": [
+				{
+					"type": "reference",
+					"name": "ModelAbstract",
+					"id": 80
+				}
+			]
+		},
+		{
+			"id": 41,
+			"name": "Connection",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true
+			},
+			"decorators": [
+				{
+					"name": "Injectable",
+					"type": {
+						"type": "reference",
+						"name": "Injectable"
+					},
+					"arguments": {}
+				}
+			],
+			"children": [
+				{
+					"id": 44,
+					"name": "authDB",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isPublic": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 14,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IConnectionConfig.authDB",
+						"id": 37
+					}
+				},
+				{
+					"id": 47,
+					"name": "connection",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 20,
+							"character": 21
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "any"
+					}
+				},
+				{
+					"id": 46,
+					"name": "connectionName",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 18,
+							"character": 25
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IConnectionConfig.connectionName",
+						"id": 34
+					}
+				},
+				{
+					"id": 43,
+					"name": "password",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isPublic": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 12,
+							"character": 19
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IConnectionConfig.password",
+						"id": 36
+					}
+				},
+				{
+					"id": 45,
+					"name": "status",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 16,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "CONNECTION_STATUS",
+						"id": 38
+					},
+					"defaultValue": " CONNECTION_STATUS.DISCONNECTED"
+				},
+				{
+					"id": 42,
+					"name": "user",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isPublic": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 10,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IConnectionConfig.user",
+						"id": 35
+					}
+				},
+				{
+					"id": 73,
+					"name": "disconnect",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 74,
+							"name": "disconnect",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 65,
+							"character": 21
+						}
+					]
+				},
+				{
+					"id": 78,
+					"name": "getConnection",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 79,
+							"name": "getConnection",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "any"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 74,
+							"character": 24
+						}
+					]
+				},
+				{
+					"id": 71,
+					"name": "getConnectionString",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 72,
+							"name": "getConnectionString",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 61,
+							"character": 30
+						}
+					]
+				},
+				{
+					"id": 69,
+					"name": "isConnected",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 70,
+							"name": "isConnected",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 57,
+							"character": 22
+						}
+					]
+				},
+				{
+					"id": 63,
+					"name": "setAuthDB",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 64,
+							"name": "setAuthDB",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 65,
+									"name": "db",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "unknown",
+								"name": "this"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 48,
+							"character": 20
+						}
+					]
+				},
+				{
+					"id": 75,
+					"name": "setConnection",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 76,
+							"name": "setConnection",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 77,
+									"name": "connection",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 70,
+							"character": 24
+						}
+					]
+				},
+				{
+					"id": 66,
+					"name": "setConnectionName",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 67,
+							"name": "setConnectionName",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 68,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									},
+									"defaultValue": " this.db"
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 53,
+							"character": 28
+						}
+					]
+				},
+				{
+					"id": 56,
+					"name": "setCredentials",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 57,
+							"name": "setCredentials",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 58,
+									"name": "user",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 59,
+									"name": "password",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "unknown",
+								"name": "this"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 37,
+							"character": 25
+						}
+					]
+				},
+				{
+					"id": 60,
+					"name": "setStatus",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 61,
+							"name": "setStatus",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 62,
+									"name": "status",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "CONNECTION_STATUS",
+										"id": 38
+									}
+								}
+							],
+							"type": {
+								"type": "unknown",
+								"name": "this"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 43,
+							"character": 20
+						}
+					]
+				},
+				{
+					"id": 48,
+					"name": "builder",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 49,
+							"name": "builder",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 50,
+									"name": "hostName",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 51,
+									"name": "db",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 52,
+									"name": "port",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Connection",
+								"id": 41
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 29,
+							"character": 25
+						}
+					]
+				},
+				{
+					"id": 53,
+					"name": "clone",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 54,
+							"name": "clone",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 55,
+									"name": "config",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IConnectionConfig",
+										"id": 30
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Connection",
+								"id": 41
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "classes/connection.class.ts",
+							"line": 33,
+							"character": 23
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						44,
+						47,
+						46,
+						43,
+						45,
+						42
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						73,
+						78,
+						71,
+						69,
+						63,
+						75,
+						66,
+						56,
+						60,
+						48,
+						53
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "classes/connection.class.ts",
+					"line": 9,
+					"character": 23
+				}
+			],
+			"implementedTypes": [
+				{
+					"type": "reference",
+					"name": "IConnectionConfig",
+					"id": 30
+				}
+			]
+		},
+		{
+			"id": 80,
+			"name": "ModelAbstract",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isAbstract": true
+			},
+			"children": [
+				{
+					"id": 83,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 84,
+							"name": "new ModelAbstract",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "ModelAbstract",
+								"id": 80
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 9,
+							"character": 74
+						}
+					]
+				},
+				{
+					"id": 82,
+					"name": "id",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 7,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 81,
+					"name": "status",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 5,
+							"character": 24
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "CONNECTION_STATUS",
+						"id": 38
+					}
+				},
+				{
+					"id": 107,
+					"name": "remove",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 108,
+							"name": "remove",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 109,
+									"name": "query",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 122,
+							"character": 17
+						}
+					]
+				},
+				{
+					"id": 95,
+					"name": "save",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 96,
+							"name": "save",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 97,
+									"name": "options",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											},
+											{
+												"type": "intrinsic",
+												"name": "string"
+											}
+										]
+									},
+									"defaultValue": " {}"
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 39,
+							"character": 21
+						}
+					]
+				},
+				{
+					"id": 105,
+					"name": "sugAfterUpdate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 106,
+							"name": "sugAfterUpdate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 114,
+							"character": 25
+						}
+					]
+				},
+				{
+					"id": 103,
+					"name": "sugBeforeUpdate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 104,
+							"name": "sugBeforeUpdate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 108,
+							"character": 26
+						}
+					]
+				},
+				{
+					"id": 98,
+					"name": "sugValidate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 99,
+							"name": "sugValidate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "boolean"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 68,
+							"character": 22
+						}
+					]
+				},
+				{
+					"id": 100,
+					"name": "update",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 101,
+							"name": "update",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 102,
+									"name": "options",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											},
+											{
+												"type": "intrinsic",
+												"name": "string"
+											}
+										]
+									},
+									"defaultValue": " {}"
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 85,
+							"character": 23
+						}
+					]
+				},
+				{
+					"id": 110,
+					"name": "clone",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 111,
+							"name": "clone",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"typeParameter": [
+								{
+									"id": 112,
+									"name": "T",
+									"kind": 131072,
+									"kindString": "Type parameter",
+									"flags": {}
+								}
+							],
+							"parameters": [
+								{
+									"id": 113,
+									"name": "classIns",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								},
+								{
+									"id": 114,
+									"name": "data",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "typeParameter",
+								"name": "T"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 126,
+							"character": 23
+						}
+					]
+				},
+				{
+					"id": 85,
+					"name": "find",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 86,
+							"name": "find",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"typeParameter": [
+								{
+									"id": 87,
+									"name": "T",
+									"kind": 131072,
+									"kindString": "Type parameter",
+									"flags": {}
+								}
+							],
+							"parameters": [
+								{
+									"id": 88,
+									"name": "query",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									},
+									"defaultValue": " {}"
+								},
+								{
+									"id": 89,
+									"name": "options",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									},
+									"defaultValue": " {}"
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Array",
+										"typeArguments": [
+											{
+												"type": "typeParameter",
+												"name": "T"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 15,
+							"character": 22
+						}
+					]
+				},
+				{
+					"id": 90,
+					"name": "findOne",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isStatic": true,
+						"isExported": true,
+						"isPublic": true
+					},
+					"signatures": [
+						{
+							"id": 91,
+							"name": "findOne",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"typeParameter": [
+								{
+									"id": 92,
+									"name": "T",
+									"kind": 131072,
+									"kindString": "Type parameter",
+									"flags": {}
+								}
+							],
+							"parameters": [
+								{
+									"id": 93,
+									"name": "query",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									},
+									"defaultValue": " {}"
+								},
+								{
+									"id": 94,
+									"name": "options",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									},
+									"defaultValue": " {}"
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "typeParameter",
+										"name": "T"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "models/model.abstract.ts",
+							"line": 29,
+							"character": 25
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						83
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						82,
+						81
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						107,
+						95,
+						105,
+						103,
+						98,
+						100,
+						110,
+						85,
+						90
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "models/model.abstract.ts",
+					"line": 4,
+					"character": 35
+				}
+			],
+			"extendedBy": [
+				{
+					"type": "reference",
+					"name": "ConnectableModel",
+					"id": 115
+				}
+			]
+		},
+		{
+			"id": 11,
+			"name": "SugoiModelException",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 12,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 13,
+							"name": "new SugoiModelException",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 14,
+									"name": "message",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 15,
+									"name": "code",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								},
+								{
+									"id": 16,
+									"name": "data",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SugoiModelException",
+								"id": 11
+							},
+							"overwrites": {
+								"type": "reference",
+								"name": "SugoiError.__constructor"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "GenericException.__constructor"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "C:/Users/Orel Balilti/Documents/Projects/node_modules/@sugoi/core/dist/exceptions/generic.exception.d.ts",
+							"line": 2,
+							"character": 58
+						}
+					],
+					"overwrites": {
+						"type": "reference",
+						"name": "SugoiError.__constructor"
+					},
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "GenericException.__constructor"
+					}
+				},
+				{
+					"id": 17,
+					"name": "code",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "C:/Users/Orel Balilti/Documents/Projects/node_modules/@sugoi/core/dist/exceptions/sugoi-abstract.exception.d.ts",
+							"line": 2,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					},
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "SugoiError.code"
+					}
+				},
+				{
+					"id": 18,
+					"name": "message",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "C:/Users/Orel Balilti/Documents/Projects/node_modules/@sugoi/core/dist/exceptions/sugoi-abstract.exception.d.ts",
+							"line": 3,
+							"character": 11
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "SugoiError.message"
+					}
+				},
+				{
+					"id": 19,
+					"name": "stack",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "C:/Users/Orel Balilti/Documents/Projects/node_modules/@sugoi/core/dist/exceptions/sugoi-abstract.exception.d.ts",
+							"line": 4,
+							"character": 9
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "SugoiError.stack"
+					}
+				},
+				{
+					"id": 22,
+					"name": "getCode",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 23,
+							"name": "getCode",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "SugoiError.getCode"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "C:/Users/Orel Balilti/Documents/Projects/node_modules/@sugoi/core/dist/exceptions/sugoi-abstract.exception.d.ts",
+							"line": 8,
+							"character": 11
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "SugoiError.getCode"
+					}
+				},
+				{
+					"id": 20,
+					"name": "getMessage",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 21,
+							"name": "getMessage",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "SugoiError.getMessage"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "C:/Users/Orel Balilti/Documents/Projects/node_modules/@sugoi/core/dist/exceptions/sugoi-abstract.exception.d.ts",
+							"line": 7,
+							"character": 14
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "SugoiError.getMessage"
+					}
+				},
+				{
+					"id": 24,
+					"name": "getStack",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 25,
+							"name": "getStack",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "SugoiError.getStack"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "C:/Users/Orel Balilti/Documents/Projects/node_modules/@sugoi/core/dist/exceptions/sugoi-abstract.exception.d.ts",
+							"line": 9,
+							"character": 12
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "SugoiError.getStack"
+					}
+				},
+				{
+					"id": 28,
+					"name": "printError",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 29,
+							"name": "printError",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "SugoiError.printError"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "C:/Users/Orel Balilti/Documents/Projects/node_modules/@sugoi/core/dist/exceptions/sugoi-abstract.exception.d.ts",
+							"line": 11,
+							"character": 14
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "SugoiError.printError"
+					}
+				},
+				{
+					"id": 26,
+					"name": "printStack",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 27,
+							"name": "printStack",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "SugoiError.printStack"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "C:/Users/Orel Balilti/Documents/Projects/node_modules/@sugoi/core/dist/exceptions/sugoi-abstract.exception.d.ts",
+							"line": 10,
+							"character": 14
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "SugoiError.printStack"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						12
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						17,
+						18,
+						19
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						22,
+						20,
+						24,
+						28,
+						26
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "exceptions/model.exception.ts",
+					"line": 4,
+					"character": 32
+				}
+			],
+			"extendedTypes": [
+				{
+					"type": "reference",
+					"name": "GenericException"
+				}
+			]
+		},
+		{
+			"id": 175,
+			"name": "IAfterSave",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 176,
+					"name": "afterSave",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 177,
+							"name": "afterSave",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									},
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "interfaces/after-save.interface.ts",
+							"line": 2,
+							"character": 13
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						176
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "interfaces/after-save.interface.ts",
+					"line": 1,
+					"character": 27
+				}
+			]
+		},
+		{
+			"id": 172,
+			"name": "IAfterUpdate",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 173,
+					"name": "afterUpdate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 174,
+							"name": "afterUpdate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									},
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "interfaces/after-update.interface.ts",
+							"line": 2,
+							"character": 15
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						173
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "interfaces/after-update.interface.ts",
+					"line": 1,
+					"character": 29
+				}
+			]
+		},
+		{
+			"id": 169,
+			"name": "IBeforeSave",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 170,
+					"name": "beforeSave",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 171,
+							"name": "beforeSave",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									},
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "interfaces/before-save.interface.ts",
+							"line": 2,
+							"character": 14
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						170
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "interfaces/before-save.interface.ts",
+					"line": 1,
+					"character": 28
+				}
+			]
+		},
+		{
+			"id": 166,
+			"name": "IBeforeUpdate",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 167,
+					"name": "beforeUpdate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 168,
+							"name": "beforeUpdate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									},
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "interfaces/before-update.interface.ts",
+							"line": 2,
+							"character": 16
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						167
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "interfaces/before-update.interface.ts",
+					"line": 1,
+					"character": 30
+				}
+			]
+		},
+		{
+			"id": 181,
+			"name": "IBeforeValidate",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 182,
+					"name": "beforeValidate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 183,
+							"name": "beforeValidate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									},
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "interfaces/before-validate.interface.ts",
+							"line": 2,
+							"character": 18
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						182
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "interfaces/before-validate.interface.ts",
+					"line": 1,
+					"character": 32
+				}
+			]
+		},
+		{
+			"id": 30,
+			"name": "IConnectionConfig",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 37,
+					"name": "authDB",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "interfaces/connection-config.interface.ts",
+							"line": 8,
+							"character": 10
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 34,
+					"name": "connectionName",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "interfaces/connection-config.interface.ts",
+							"line": 5,
+							"character": 18
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 33,
+					"name": "db",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "interfaces/connection-config.interface.ts",
+							"line": 4,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 32,
+					"name": "hostName",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "interfaces/connection-config.interface.ts",
+							"line": 3,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 36,
+					"name": "password",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "interfaces/connection-config.interface.ts",
+							"line": 7,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 31,
+					"name": "port",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "interfaces/connection-config.interface.ts",
+							"line": 2,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					}
+				},
+				{
+					"id": 35,
+					"name": "user",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "interfaces/connection-config.interface.ts",
+							"line": 6,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						37,
+						34,
+						33,
+						32,
+						36,
+						31,
+						35
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "interfaces/connection-config.interface.ts",
+					"line": 1,
+					"character": 34
+				}
+			],
+			"implementedBy": [
+				{
+					"type": "reference",
+					"name": "Connection",
+					"id": 41
+				}
+			]
+		},
+		{
+			"id": 178,
+			"name": "IValidate",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 179,
+					"name": "validate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 180,
+							"name": "validate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "return true whenever valid, otherwise considered as invalid value\nreturned value use as error message data",
+								"returns": "\n"
+							},
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "boolean"
+											},
+											{
+												"type": "intrinsic",
+												"name": "string"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "interfaces/validate.interface.ts",
+							"line": 7,
+							"character": 12
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						179
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "interfaces/validate.interface.ts",
+					"line": 1,
+					"character": 26
+				}
+			]
+		},
+		{
+			"id": 1,
+			"name": "EXCEPTIONS",
+			"kind": 2097152,
+			"kindString": "Object literal",
+			"flags": {
+				"isExported": true,
+				"isConst": true
+			},
+			"children": [
+				{
+					"id": 8,
+					"name": "CONFIGURATION_MISSING",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 10,
+							"name": "code",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "constants/exceptions.contant.ts",
+									"line": 6,
+									"character": 79
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "5001"
+						},
+						{
+							"id": 9,
+							"name": "message",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "constants/exceptions.contant.ts",
+									"line": 6,
+									"character": 36
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"defaultValue": "\"Connection configuration is missing\""
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								10,
+								9
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "constants/exceptions.contant.ts",
+							"line": 6,
+							"character": 25
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				},
+				{
+					"id": 2,
+					"name": "INVALID",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 3,
+							"name": "code",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "constants/exceptions.contant.ts",
+									"line": 4,
+									"character": 18
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "4000"
+						},
+						{
+							"id": 4,
+							"name": "message",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "constants/exceptions.contant.ts",
+									"line": 4,
+									"character": 33
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"defaultValue": "\"INVALID\""
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								3,
+								4
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "constants/exceptions.contant.ts",
+							"line": 4,
+							"character": 11
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				},
+				{
+					"id": 5,
+					"name": "NOT_IMPLEMENTED",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 7,
+							"name": "code",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "constants/exceptions.contant.ts",
+									"line": 5,
+									"character": 62
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "5000"
+						},
+						{
+							"id": 6,
+							"name": "message",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "constants/exceptions.contant.ts",
+									"line": 5,
+									"character": 29
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"defaultValue": "\"Implementation is missing\""
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								7,
+								6
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "constants/exceptions.contant.ts",
+							"line": 5,
+							"character": 19
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Object literals",
+					"kind": 2097152,
+					"children": [
+						8,
+						2,
+						5
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "constants/exceptions.contant.ts",
+					"line": 3,
+					"character": 23
+				}
+			],
+			"type": {
+				"type": "intrinsic",
+				"name": "object"
+			}
+		}
+	],
+	"groups": [
+		{
+			"title": "Enumerations",
+			"kind": 4,
+			"children": [
+				38
+			]
+		},
+		{
+			"title": "Classes",
+			"kind": 128,
+			"children": [
+				115,
+				41,
+				80,
+				11
+			]
+		},
+		{
+			"title": "Interfaces",
+			"kind": 256,
+			"children": [
+				175,
+				172,
+				169,
+				166,
+				181,
+				30,
+				178
+			]
+		},
+		{
+			"title": "Object literals",
+			"kind": 2097152,
+			"children": [
+				1
+			]
+		}
+	]
+}
