@@ -119,7 +119,7 @@ export abstract class ModelAbstract {
 
     protected abstract removeEmitter(query?: any): Promise<any>;
 
-    public remove(query: any): Promise<any> {
+    public remove(query?: any): Promise<any> {
         return this.removeEmitter(query);
     }
 
