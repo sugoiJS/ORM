@@ -1,14 +1,14 @@
 import {CONNECTION_STATUS, SugoiModelException, EXCEPTIONS} from "../index";
 import {IModel} from "../interfaces/model.interface";
 import {getPrimaryKey, Primary} from "../decorators/primary.decorator";
-import {TIdentiferTypesType} from "../interfaces/identifer-types.type";
+import {TIdentifierTypes} from "../interfaces/identifer-types.type";
 
 
 export abstract class ModelAbstract implements IModel {
     public static status: CONNECTION_STATUS;
 
     @Primary()
-    public id: TIdentiferTypesType;
+    public id: TIdentifierTypes;
 
     private static collectionName: string;
 
@@ -48,7 +48,7 @@ export abstract class ModelAbstract implements IModel {
             .then(res => res ? res : null);
     }
 
-    public static findById<T=any>(id: TIdentiferTypesType, options?: any): Promise<T> {
+    public static findById<T=any>(id: TIdentifierTypes, options?: any): Promise<T> {
         return this.findOne<T>(this.castIdToQuery(id), options)
     }
 
@@ -138,26 +138,33 @@ export abstract class ModelAbstract implements IModel {
             : Promise.resolve();
     };
 
-    public remove<T=any>(query: any = this.getIdQuery()): Promise<T> {
-        return ModelAbstract.removeEmitter(query);
+    public remove<T=any>(query: any = this.getIdQuery(),options?:any): Promise<T> {
+        return ModelAbstract.removeEmitter(query,options);
     }
 
-    protected static removeById<T=any>(id: string): Promise<T>  {
-        return this.removeEmitter(this.castIdToQuery(id));
+    protected static removeById<T=any>(id: string,options?:any): Promise<T>  {
+        return this.removeOne(this.castIdToQuery(id),options);
     }
 
-    protected static removeOne<T=any>(query:any = {}): Promise<T> {
+    protected static removeOne<T=any>(query:any = {},options:any={}): Promise<T> {
+        options.limit = 1;
         return this.removeEmitter(query);
     }
 
-    protected static removeAll<T=any>(query:any = {}): Promise<T[]>  {
-        return this.removeEmitter(query);
+    protected static removeAll<T=any>(query:any = {},options?:any): Promise<T[]>  {
+        return this.removeEmitter(query,options);
     }
 
-    protected static removeEmitter<T=any>(query?: any): Promise<T> {
+    protected static removeEmitter<T=any>(query?: any,options?:any): Promise<T> {
         throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "Remove Emitter " + this.constructor.name);
     };
 
+    /**
+     * Transform data into class(T) instance
+     * @param classIns - class instance
+     * @param data - data to transform
+     * @returns {T}
+     */
     public static clone<T>(classIns: any, data: any): T {
         const func = function () {
         };
@@ -169,6 +176,11 @@ export abstract class ModelAbstract implements IModel {
         return temp as T;
     }
 
+    /**
+     * In case string is passed this function build query object using the class primary key
+     * @param {string | any} query
+     * @returns {any}
+     */
     protected static castIdToQuery(query: string | any) {
         if (typeof query === "string") {
             const primaryKey = getPrimaryKey(this);
@@ -176,7 +188,15 @@ export abstract class ModelAbstract implements IModel {
         }
         return query
     }
-    protected static getIdFromQuery(query: any,deleteProperty=true) {
+
+    /**
+     * Check if the primary key found in the query and return his value
+     *
+     * @param query - The query object
+     * @param {boolean} deleteProperty - flag to remove the primaryKey property from the query
+     * @returns {TIdentifierTypes}
+     */
+    protected static getIdFromQuery(query: any,deleteProperty=true):TIdentifierTypes {
         const primaryKey = getPrimaryKey(this);
         const id = query && query.hasOwnProperty(primaryKey) ? query[primaryKey] : null;
         if(deleteProperty) {
@@ -185,6 +205,10 @@ export abstract class ModelAbstract implements IModel {
         return id;
     }
 
+    /**
+     * build and return query object containing the primary key and his value
+     * @returns {{[primaryKey]:TIdentifierTypes}}
+     */
     public getIdQuery(){
         const primaryKey = getPrimaryKey(this);
         return {[primaryKey]:this[primaryKey]};

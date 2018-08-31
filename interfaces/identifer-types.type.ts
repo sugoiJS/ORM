@@ -1,1 +1,1 @@
-export type TIdentiferTypesType = number | string;
+export type TIdentifierTypes = number | string;
