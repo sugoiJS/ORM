@@ -73,7 +73,7 @@ Example:
 
 For CRUD support, you can implement your CRUD logic under each of the CRUD emitters:
 
-#### 1. SaveEmitter
+#### 1. saveEmitter
 
     public saveEmitter(options?:any): Promise<any> {
             return rp({
@@ -86,7 +86,7 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 
 
-#### 2. FindEmitter
+#### 2. findEmitter
 
     protected static findEmitter(query: any, options = {}): Promise<any> {
             return rp({
@@ -100,7 +100,7 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 
 
-#### 3. UpdateEmitter
+#### 3. updateEmitter
 
     public updateEmitter(options?:any): Promise<any> {
             return rp({
@@ -113,7 +113,7 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 
 
-#### 4. RemoveEmitter
+#### 4. removeEmitter
 
     protected static removeEmitter(query?,options?): Promise<any> {
             return rp({
@@ -124,7 +124,7 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
             })
     }
 
-#### Implemented Methods
+#### Model interface
 
 ##### Find
 
