@@ -1,0 +1,1 @@
+export type TIdentiferTypesType = number | string;

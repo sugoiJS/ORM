@@ -1,3 +1,5 @@
+export {Primary,getPrimaryKey} from "./decorators/primary.decorator";
+
 export {EXCEPTIONS} from "./constants/exceptions.contant";
 
 export {SugoiModelException} from "./exceptions/model.exception";
