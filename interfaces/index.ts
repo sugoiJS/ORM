@@ -1,4 +1,5 @@
 import {IConnectionConfig} from "./connection-config.interface";
+export {IModel} from "./model.interface";
 
 export {IBeforeUpdate} from "./before-update.interface";
 export {IBeforeSave} from "./before-save.interface";

@@ -1,22 +1,34 @@
 import {CONNECTION_STATUS, SugoiModelException, EXCEPTIONS} from "../index";
+import {IModel} from "../interfaces/model.interface";
+import {getPrimaryKey, Primary} from "../decorators/primary.decorator";
+import {TIdentiferTypesType} from "../interfaces/identifer-types.type";
 
 
-export abstract class ModelAbstract {
+export abstract class ModelAbstract implements IModel {
     public static status: CONNECTION_STATUS;
 
-    public id: string;
+    @Primary()
+    public id: TIdentiferTypesType;
 
-    protected collectionName: string = this.constructor['name'] as string;
+    private static collectionName: string;
+
 
     constructor() {
-
     }
 
-    public static find<T=any>(query: any = {}, options: any = {}): Promise<Array<T>> {
+    public static setCollectionName(name:string = this.constructor['name']){
+        this.collectionName = name;
+    }
+
+    public static getCollectionName(){
+        return this.collectionName || this.constructor['name'];
+    }
+
+    public static find<T=any>(query: any = {}, options?: any): Promise<Array<T>> {
         const that = this;
-        query = ModelAbstract.castStringQuery(query);
         return that.findEmitter(query, options)
             .then((res: Array<T>) => {
+                if(!Array.isArray(res))res = [res];
                 res = res.map((collection) => {
                     return that.clone(that, collection);
                 });
@@ -25,18 +37,26 @@ export abstract class ModelAbstract {
 
     }
 
-
-    public static findOne<T=any>(query: any = {}, options: any = {}): Promise<T> {
+    public static findOne<T=any>(query: any = {}, options: any={}): Promise<T> {
         options.limit = 1;
         return this.find<T>(query, options)
             .then(res => res ? res[0] : null);
     }
 
-    protected static findEmitter(query: any, options?: any): Promise<any> {
+    public static findAll<T=any>(query: any = {}, options?: any): Promise<T[]> {
+        return this.find<T>(query, options)
+            .then(res => res ? res : null);
+    }
+
+    public static findById<T=any>(id: TIdentiferTypesType, options?: any): Promise<T> {
+        return this.findOne<T>(this.castIdToQuery(id), options)
+    }
+
+    protected static findEmitter<T=any>(query: any, options?: any): Promise<T> {
         throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "Find Emitter " + this.constructor.name);
     };
 
-    public async save(options: any | string = {}): Promise<any> {
+    public async save<T=any>(options: any | string = {}): Promise<T> {
         let savedData;
         return await this.sugBeforeValidate()
             .then(() => {
@@ -57,7 +77,7 @@ export abstract class ModelAbstract {
             })
     }
 
-    protected abstract saveEmitter(options?): Promise<any>;
+    protected abstract saveEmitter<T=any>(options?): Promise<T>;
 
     protected sugBeforeValidate(): Promise<void> {
         return 'beforeValidate' in (this as any)
@@ -73,16 +93,17 @@ export abstract class ModelAbstract {
 
     protected sugBeforeSave(): Promise<void> {
         return "beforeSave" in (this as any)
-            ? (<any>this).beforeSave()|| Promise.resolve()
-            : Promise.resolve();
-    };
-    protected sugAfterSave(): Promise<void> {
-        return 'afterSave' in (this as any)
-            ? (<any>this).afterSave()|| Promise.resolve()
+            ? (<any>this).beforeSave() || Promise.resolve()
             : Promise.resolve();
     };
 
-    public async update(options: any | string = {}): Promise<any> {
+    protected sugAfterSave(): Promise<void> {
+        return 'afterSave' in (this as any)
+            ? (<any>this).afterSave() || Promise.resolve()
+            : Promise.resolve();
+    };
+
+    public async update<T=any>(options: any = {}): Promise<T> {
         let updatedData;
         return await this.sugBeforeValidate()
             .then(() => {
@@ -103,11 +124,11 @@ export abstract class ModelAbstract {
             });
     }
 
-    protected abstract updateEmitter(options?): Promise<any>;
+    protected abstract updateEmitter<T=any>(options?: any): Promise<T>;
 
     public sugBeforeUpdate(): Promise<void> {
         return 'beforeUpdate' in (this as any)
-            ? (<any>this).beforeUpdate()|| Promise.resolve()
+            ? (<any>this).beforeUpdate() || Promise.resolve()
             : Promise.resolve();
     };
 
@@ -117,11 +138,25 @@ export abstract class ModelAbstract {
             : Promise.resolve();
     };
 
-    protected abstract removeEmitter(query?: any): Promise<any>;
+    public remove<T=any>(query: any = this.getIdQuery()): Promise<T> {
+        return ModelAbstract.removeEmitter(query);
+    }
 
-    public remove(query?: any): Promise<any> {
+    protected static removeById<T=any>(id: string): Promise<T>  {
+        return this.removeEmitter(this.castIdToQuery(id));
+    }
+
+    protected static removeOne<T=any>(query:any = {}): Promise<T> {
         return this.removeEmitter(query);
     }
+
+    protected static removeAll<T=any>(query:any = {}): Promise<T[]>  {
+        return this.removeEmitter(query);
+    }
+
+    protected static removeEmitter<T=any>(query?: any): Promise<T> {
+        throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "Remove Emitter " + this.constructor.name);
+    };
 
     public static clone<T>(classIns: any, data: any): T {
         const func = function () {
@@ -134,10 +169,25 @@ export abstract class ModelAbstract {
         return temp as T;
     }
 
-    protected static castStringQuery(query: string | any) {
+    protected static castIdToQuery(query: string | any) {
         if (typeof query === "string") {
-            query = {id: query};
+            const primaryKey = getPrimaryKey(this);
+            query = {[primaryKey]: query};
         }
         return query
     }
+    protected static getIdFromQuery(query: any,deleteProperty=true) {
+        const primaryKey = getPrimaryKey(this);
+        const id = query && query.hasOwnProperty(primaryKey) ? query[primaryKey] : null;
+        if(deleteProperty) {
+            delete query[primaryKey];
+        }
+        return id;
+    }
+
+    public getIdQuery(){
+        const primaryKey = getPrimaryKey(this);
+        return {[primaryKey]:this[primaryKey]};
+    }
+
 }
