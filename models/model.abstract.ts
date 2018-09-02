@@ -21,7 +21,7 @@ export abstract class ModelAbstract implements IModel {
     }
 
     public static getCollectionName(){
-        return this.collectionName || this.constructor['name'];
+        return this.collectionName || this.name;
     }
 
     public static find<T=any>(query: any = {}, options?: any): Promise<Array<T>> {
