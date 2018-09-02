@@ -147,16 +147,16 @@ export abstract class ModelAbstract implements IModel {
         return ModelAbstract.removeEmitter(query, options);
     }
 
-    protected static removeById<T=any>(id: string, options?: Partial<QueryOptions> & any): Promise<T> {
+    public static removeById<T=any>(id: string, options?: Partial<QueryOptions> & any): Promise<T> {
         return this.removeOne(this.castIdToQuery(id), options);
     }
 
-    protected static removeOne<T=any>(query: any = {}, options: Partial<QueryOptions> & any = QueryOptions.builder()): Promise<T> {
+    public static removeOne<T=any>(query: any = {}, options: Partial<QueryOptions> & any = QueryOptions.builder()): Promise<T> {
         options.limit = 1;
         return this.removeEmitter(query);
     }
 
-    protected static removeAll<T=any>(query: any = {}, options?: Partial<QueryOptions> & any): Promise<T[]> {
+    public static removeAll<T=any>(query: any = {}, options?: Partial<QueryOptions> & any): Promise<T[]> {
         return this.removeEmitter(query, options);
     }
 
