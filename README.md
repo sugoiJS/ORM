@@ -75,7 +75,7 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 #### 1. saveEmitter
 
-    public saveEmitter(options?:any): Promise<any> {
+    public saveEmitter(options?:QueryOptions): Promise<any> {
             return rp({
                 method: 'POST',
                 uri: 'https://api.example.com/myendpoint',
@@ -88,7 +88,7 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 #### 2. findEmitter
 
-    protected static findEmitter(query: any, options = {}): Promise<any> {
+    protected static findEmitter(query: any, options?:QueryOptions): Promise<any> {
             return rp({
                 method: 'GET',
                 uri: 'https://api.example.com/myendpoint',
@@ -102,7 +102,7 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 #### 3. updateEmitter
 
-    public updateEmitter(options?:any): Promise<any> {
+    public updateEmitter(options?:QueryOptions): Promise<any> {
             return rp({
                 method: 'PUT',
                 uri: `https://api.example.com/myendpoint/${this.id}`,
@@ -115,7 +115,7 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 #### 4. removeEmitter
 
-    protected static removeEmitter(query?,options?): Promise<any> {
+    protected static removeEmitter(query?,options?:QueryOptions):Promise<any> {
             return rp({
                 method: 'DELETE',
                 uri: `https://api.example.com/myendpoint/${query.id}`,
@@ -128,31 +128,47 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 ##### Find
 
-> findAll(query: any = {}, options?: any) - query all records
+> (static method) findAll(query: any = {}, options?: QueryOptions) - query all records
 
-> findOne(query: any = {}, options:any ={limit:1}) - query one record
+> (static method) findOne(query: any = {}, options:QueryOptions ={limit:1}) - query one record
 
-> findById(id: string | number, options:any ={limit:1}) - query by id
+> (static method) findById(id: string | number, options:QueryOptions ={limit:1}) - query by id
 
-> find(query: any = {}, options?: any) - customize query
+> (static method) find(query: any = {}, options?: QueryOptions) - customize query
 
 ##### Remove
 
-> removeAll(query: any = {}, options?: any) - remove all records
+> (static method) removeAll(query: any = {}, options?: QueryOptions) - remove all records
 
-> removeOne(query: any = {}, options:any ={limit:1}) - remove one record
+> (static method) removeOne(query: any = {}, options:QueryOptions ={limit:1}) - remove one record
 
-> removeById(id: string | number, options:any ={limit:1}) - remove by id
+> (static method) removeById(id: string | number, options:QueryOptions ={limit:1}) - remove by id
 
-> (instance method) remove(query: any = {}, options?: any) - remove the record itself
+> (instance method) remove(query: any = {}, options?: QueryOptions) - remove the record itself
 
 ##### Save (create)
 
-> (instance method) save(query: any = {}, options?: any) - Save instance to DB\Microservice
+> (instance method) save(query: any = {}, options?: QueryOptions) - Save instance to DB\Microservice
 
 ##### Update
 
-> (instance method) update(options?: any) - Update instance on DB\Microservice
+> (instance method) update(options?: QueryOptions) - Update instance on DB\Microservice
+
+##### Setting the model name
+
+By default the model name is the name of the class (case sensitive).
+
+For changing the model name use:
+
+1. Class static method setModelName(name:string):
+
+        Post.setModelName("posts");
+
+2. @ModelName(name:string) decorator:
+
+        @ModelName("posts")
+        export class Post extends ModelAbstract{
+        }
 
 #### Lifecycle Hooks
 
