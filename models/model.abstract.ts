@@ -8,9 +8,6 @@ import {QueryOptions} from "../classes/query-options.class";
 export abstract class ModelAbstract implements IModel {
     public static status: CONNECTION_STATUS;
 
-    @Primary()
-    public id: TIdentifierTypes;
-
     private static collectionName: string;
 
 
@@ -187,12 +184,16 @@ export abstract class ModelAbstract implements IModel {
     /**
      * In case string is passed this function build query object using the class primary key
      * @param {string | any} query
-     * @returns {any}
+     * @param {any} classToUse - class to take the primary key from
+     * @returns {{[prop:string}:TIdentifierTypes}
      */
-    protected static castIdToQuery(query: string | any) {
+    public static castIdToQuery(query: string | any, classToUse = this) {
         if (typeof query === "string") {
-            const primaryKey = getPrimaryKey(this);
-            query = {[primaryKey]: query};
+            const primaryKey = getPrimaryKey(classToUse);
+            const id = query;
+            query = {};
+            if(primaryKey)
+                query[primaryKey] = id;
         }
         return query
     }
@@ -201,11 +202,12 @@ export abstract class ModelAbstract implements IModel {
      * Check if the primary key found in the query and return his value
      *
      * @param query - The query object
+     * @param {any} classToUse - class to take the primary key from
      * @param {boolean} deleteProperty - flag to remove the primaryKey property from the query
      * @returns {TIdentifierTypes}
      */
-    protected static getIdFromQuery(query: any, deleteProperty = true): TIdentifierTypes {
-        const primaryKey = getPrimaryKey(this);
+    public static getIdFromQuery(query: any,classToUse = this, deleteProperty:boolean = true): TIdentifierTypes {
+        const primaryKey = getPrimaryKey(classToUse);
         const id = query && query.hasOwnProperty(primaryKey) ? query[primaryKey] : null;
         if (deleteProperty) {
             delete query[primaryKey];
@@ -219,7 +221,7 @@ export abstract class ModelAbstract implements IModel {
      */
     public getIdQuery() {
         const primaryKey = getPrimaryKey(this);
-        return {[primaryKey]: this[primaryKey]};
+        return primaryKey ? {[primaryKey]: this[primaryKey]} : null;
     }
 
 }
