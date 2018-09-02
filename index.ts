@@ -1,4 +1,9 @@
+
+export {ModelName} from "./decorators/model-name.decorator";
+
 export {Primary,getPrimaryKey} from "./decorators/primary.decorator";
+
+export {QueryOptions} from "./classes/query-options.class";
 
 export {EXCEPTIONS} from "./constants/exceptions.contant";
 

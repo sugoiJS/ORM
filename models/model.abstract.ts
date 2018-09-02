@@ -2,6 +2,7 @@ import {CONNECTION_STATUS, SugoiModelException, EXCEPTIONS} from "../index";
 import {IModel} from "../interfaces/model.interface";
 import {getPrimaryKey, Primary} from "../decorators/primary.decorator";
 import {TIdentifierTypes} from "../interfaces/identifer-types.type";
+import {QueryOptions} from "../classes/query-options.class";
 
 
 export abstract class ModelAbstract implements IModel {
@@ -16,19 +17,26 @@ export abstract class ModelAbstract implements IModel {
     constructor() {
     }
 
-    public static setCollectionName(name:string = this.constructor['name']){
+    public static setModelName(name: string = this.name) {
+        this.setCollectionName(name)
+    }
+
+    public static setCollectionName(name: string = this.name) {
         this.collectionName = name;
     }
 
-    public static getCollectionName(){
+    public static getModelName() {
+        return this.getCollectionName();
+    }
+    public static getCollectionName() {
         return this.collectionName || this.name;
     }
 
-    public static find<T=any>(query: any = {}, options?: any): Promise<Array<T>> {
+    public static find<T=any>(query: any = {}, options?: Partial<QueryOptions> & any): Promise<Array<T>> {
         const that = this;
         return that.findEmitter(query, options)
             .then((res: Array<T>) => {
-                if(!Array.isArray(res))res = [res];
+                if (!Array.isArray(res)) res = [res];
                 res = res.map((collection) => {
                     return that.clone(that, collection);
                 });
@@ -37,26 +45,26 @@ export abstract class ModelAbstract implements IModel {
 
     }
 
-    public static findOne<T=any>(query: any = {}, options: any={}): Promise<T> {
+    public static findOne<T=any>(query: any = {}, options: Partial<QueryOptions> & any = QueryOptions.builder()): Promise<T> {
         options.limit = 1;
         return this.find<T>(query, options)
             .then(res => res ? res[0] : null);
     }
 
-    public static findAll<T=any>(query: any = {}, options?: any): Promise<T[]> {
+    public static findAll<T=any>(query: any = {}, options?: Partial<QueryOptions> & any): Promise<T[]> {
         return this.find<T>(query, options)
             .then(res => res ? res : null);
     }
 
-    public static findById<T=any>(id: TIdentifierTypes, options?: any): Promise<T> {
+    public static findById<T=any>(id: TIdentifierTypes, options?: Partial<QueryOptions> & any): Promise<T> {
         return this.findOne<T>(this.castIdToQuery(id), options)
     }
 
-    protected static findEmitter<T=any>(query: any, options?: any): Promise<T> {
+    protected static findEmitter<T=any>(query: any, options?: Partial<QueryOptions> & any): Promise<T> {
         throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "Find Emitter " + this.constructor.name);
     };
 
-    public async save<T=any>(options: any | string = {}): Promise<T> {
+    public async save<T=any>(options?: Partial<QueryOptions> & any): Promise<T> {
         let savedData;
         return await this.sugBeforeValidate()
             .then(() => {
@@ -77,7 +85,7 @@ export abstract class ModelAbstract implements IModel {
             })
     }
 
-    protected abstract saveEmitter<T=any>(options?): Promise<T>;
+    protected abstract saveEmitter<T=any>(options?: Partial<QueryOptions> & any): Promise<T>;
 
     protected sugBeforeValidate(): Promise<void> {
         return 'beforeValidate' in (this as any)
@@ -103,7 +111,7 @@ export abstract class ModelAbstract implements IModel {
             : Promise.resolve();
     };
 
-    public async update<T=any>(options: any = {}): Promise<T> {
+    public async update<T=any>(options?: Partial<QueryOptions> & any): Promise<T> {
         let updatedData;
         return await this.sugBeforeValidate()
             .then(() => {
@@ -124,7 +132,7 @@ export abstract class ModelAbstract implements IModel {
             });
     }
 
-    protected abstract updateEmitter<T=any>(options?: any): Promise<T>;
+    protected abstract updateEmitter<T=any>(options?: Partial<QueryOptions> & any): Promise<T>;
 
     public sugBeforeUpdate(): Promise<void> {
         return 'beforeUpdate' in (this as any)
@@ -138,24 +146,24 @@ export abstract class ModelAbstract implements IModel {
             : Promise.resolve();
     };
 
-    public remove<T=any>(query: any = this.getIdQuery(),options?:any): Promise<T> {
-        return ModelAbstract.removeEmitter(query,options);
+    public remove<T=any>(query: any = this.getIdQuery(), options?: Partial<QueryOptions> & any): Promise<T> {
+        return ModelAbstract.removeEmitter(query, options);
     }
 
-    protected static removeById<T=any>(id: string,options?:any): Promise<T>  {
-        return this.removeOne(this.castIdToQuery(id),options);
+    protected static removeById<T=any>(id: string, options?: Partial<QueryOptions> & any): Promise<T> {
+        return this.removeOne(this.castIdToQuery(id), options);
     }
 
-    protected static removeOne<T=any>(query:any = {},options:any={}): Promise<T> {
+    protected static removeOne<T=any>(query: any = {}, options: Partial<QueryOptions> & any = QueryOptions.builder()): Promise<T> {
         options.limit = 1;
         return this.removeEmitter(query);
     }
 
-    protected static removeAll<T=any>(query:any = {},options?:any): Promise<T[]>  {
-        return this.removeEmitter(query,options);
+    protected static removeAll<T=any>(query: any = {}, options?: Partial<QueryOptions> & any): Promise<T[]> {
+        return this.removeEmitter(query, options);
     }
 
-    protected static removeEmitter<T=any>(query?: any,options?:any): Promise<T> {
+    protected static removeEmitter<T=any>(query?: any, options?: Partial<QueryOptions> & any): Promise<T> {
         throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "Remove Emitter " + this.constructor.name);
     };
 
@@ -196,10 +204,10 @@ export abstract class ModelAbstract implements IModel {
      * @param {boolean} deleteProperty - flag to remove the primaryKey property from the query
      * @returns {TIdentifierTypes}
      */
-    protected static getIdFromQuery(query: any,deleteProperty=true):TIdentifierTypes {
+    protected static getIdFromQuery(query: any, deleteProperty = true): TIdentifierTypes {
         const primaryKey = getPrimaryKey(this);
         const id = query && query.hasOwnProperty(primaryKey) ? query[primaryKey] : null;
-        if(deleteProperty) {
+        if (deleteProperty) {
             delete query[primaryKey];
         }
         return id;
@@ -209,9 +217,9 @@ export abstract class ModelAbstract implements IModel {
      * build and return query object containing the primary key and his value
      * @returns {{[primaryKey]:TIdentifierTypes}}
      */
-    public getIdQuery(){
+    public getIdQuery() {
         const primaryKey = getPrimaryKey(this);
-        return {[primaryKey]:this[primaryKey]};
+        return {[primaryKey]: this[primaryKey]};
     }
 
 }
