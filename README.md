@@ -124,9 +124,9 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
             })
     }
 
-#### Model interface
+### Model interface
 
-##### Find
+#### Find
 
 > (static method) findAll(query: any = {}, options?: QueryOptions) - query all records
 
@@ -136,7 +136,7 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 > (static method) find(query: any = {}, options?: QueryOptions) - customize query
 
-##### Remove
+#### Remove
 
 > (static method) removeAll(query: any = {}, options?: QueryOptions) - remove all records
 
@@ -146,15 +146,15 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 > (instance method) remove(query: any = {}, options?: QueryOptions) - remove the record itself
 
-##### Save (create)
+#### Save (create)
 
 > (instance method) save(query: any = {}, options?: QueryOptions) - Save instance to DB\Microservice
 
-##### Update
+#### Update
 
 > (instance method) update(options?: QueryOptions) - Update instance on DB\Microservice
 
-##### Setting the model name
+### Setting the model name
 
 By default the model name is the name of the class (case sensitive).
 
@@ -170,7 +170,7 @@ For changing the model name use:
         export class Post extends ModelAbstract{
         }
 
-##### Primary key
+### Primary key
 
 For query and upsert data @sugoi use primary key of the instance\query object.
 
