@@ -1,4 +1,8 @@
 
+export {ConnectionName} from "./decorators/connection-name.decorator";
+
+export {SortOptions} from "./constants/sort-options.enum";
+
 export {ModelName} from "./decorators/model-name.decorator";
 
 export {Primary,getPrimaryKey} from "./decorators/primary.decorator";
@@ -18,4 +22,5 @@ export {ConnectableModel} from "./models/connectable-model.abstract";
 export {CONNECTION_STATUS} from "./constants/connection-status.constant";
 
 export * from "./interfaces"
+
 

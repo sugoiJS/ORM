@@ -1,7 +1,8 @@
-import {SortOptions} from "../constants/sort-options.enum";
+import {SortItem} from "./sort-item.class";
 
 export class QueryOptions{
-    public sort:SortOptions;
+    protected sort:Array<SortItem>;
+    protected offset:number;
     public limit:number;
 
     public static builder(){
@@ -15,7 +16,25 @@ export class QueryOptions{
         return this;
     }
 
-    setSortOption(sortOption:SortOptions){
-        this.sort = sortOption
+    getLimit(){
+        return this.limit;
+    }
+
+    setOffset(offset:number){
+        this.offset = offset;
+        return this;
+    }
+
+    getOffset(){
+        return this.offset;
+    }
+
+    setSortOption(...sort:Array<SortItem>){
+        this.sort = sort;
+        return this;
+    }
+
+    getSortOption(){
+        return this.sort || [];
     }
 }

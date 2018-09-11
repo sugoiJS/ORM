@@ -25,43 +25,60 @@ export abstract class ModelAbstract implements IModel {
     public static getModelName() {
         return this.getCollectionName();
     }
+
     public static getCollectionName() {
         return this.collectionName || this.name;
     }
 
-    public static find<T=any>(query: any = {}, options?: Partial<QueryOptions> & any): Promise<Array<T>> {
-        const that = this;
-        return that.findEmitter(query, options)
-            .then((res: Array<T>) => {
-                if (!Array.isArray(res)) res = [res];
-                res = res.map((collection) => {
-                    return that.clone(that, collection);
-                });
-                return res;
-            });
-
+    public static find<T=any>(query: any = {}, options?: Partial<QueryOptions | any>): Promise<Array<T>> {
+        return this.findPipe(query, options);
     }
 
-    public static findOne<T=any>(query: any = {}, options: Partial<QueryOptions> & any = QueryOptions.builder()): Promise<T> {
+    public static findOne<T=any>(query: any = {}, options: Partial<QueryOptions | any> = QueryOptions.builder()): Promise<T> {
         options.limit = 1;
         return this.find<T>(query, options)
             .then(res => res ? res[0] : null);
     }
 
-    public static findAll<T=any>(query: any = {}, options?: Partial<QueryOptions> & any): Promise<T[]> {
+    public static findAll<T=any>(query: any = {}, options?: Partial<QueryOptions | any>): Promise<T[]> {
         return this.find<T>(query, options)
             .then(res => res ? res : null);
     }
 
-    public static findById<T=any>(id: TIdentifierTypes, options?: Partial<QueryOptions> & any): Promise<T> {
+    public static findById<T=any>(id: TIdentifierTypes, options?: Partial<QueryOptions | any>): Promise<T> {
         return this.findOne<T>(this.castIdToQuery(id), options)
     }
 
-    protected static findEmitter<T=any>(query: any, options?: Partial<QueryOptions> & any): Promise<T> {
+    public sugBeforeFind(): Promise<void> {
+        return 'beforeFind' in (this as any)
+            ? (<any>this).beforeFind() || Promise.resolve()
+            : Promise.resolve();
+    };
+
+    public sugAfterFind<T=any>(resolvedData: T): Promise<void | T> {
+        return 'afterFind' in (this as any)
+            ? (<any>this).afterFind(resolvedData) || Promise.resolve()
+            : Promise.resolve();
+    };
+
+    protected static findPipe<T=any>(query?: any, options?: Partial<QueryOptions | any>): Promise<T[]> {
+        return this.prototype.sugBeforeFind()
+            .then(() => this.findEmitter(query, options))
+            .then((res: Array<T>) => {
+                if (!Array.isArray(res)) res = [res];
+                res = res.map((collection) => {
+                    return this.clone(this, collection);
+                });
+                return res;
+            })
+            .then((data) => this.prototype.sugAfterFind(data).then((res) => res || data));
+    }
+
+    protected static findEmitter<T=any>(query: any, options?: Partial<QueryOptions | any>): Promise<T> {
         throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "Find Emitter " + this.constructor.name);
     };
 
-    public async save<T=any>(options?: Partial<QueryOptions> & any): Promise<T> {
+    public async save<T=any>(options?: Partial<QueryOptions | any>): Promise<T> {
         let savedData;
         return await this.sugBeforeValidate()
             .then(() => {
@@ -73,16 +90,12 @@ export abstract class ModelAbstract implements IModel {
             })
             .then(() => this.sugBeforeSave())
             .then(() => this.saveEmitter(options))
-            .then((_savedData) => {
-                savedData = _savedData;
-                return this.sugAfterSave();
-            })
-            .then(() => {
-                return savedData;
+            .then((savedData) => {
+                return this.sugAfterSave<T>(savedData).then((res) => res || savedData)
             })
     }
 
-    protected abstract saveEmitter<T=any>(options?: Partial<QueryOptions> & any): Promise<T>;
+    protected abstract saveEmitter<T=any>(options?: Partial<QueryOptions | any>): Promise<T>;
 
     protected sugBeforeValidate(): Promise<void> {
         return 'beforeValidate' in (this as any)
@@ -102,13 +115,13 @@ export abstract class ModelAbstract implements IModel {
             : Promise.resolve();
     };
 
-    protected sugAfterSave(): Promise<void> {
+    protected sugAfterSave<T=any>(savedData:T): Promise<void> {
         return 'afterSave' in (this as any)
-            ? (<any>this).afterSave() || Promise.resolve()
+            ? (<any>this).afterSave(savedData) || Promise.resolve()
             : Promise.resolve();
     };
 
-    public async update<T=any>(options?: Partial<QueryOptions> & any): Promise<T> {
+    public async update<T=any>(options?: Partial<QueryOptions | any>): Promise<T> {
         let updatedData;
         return await this.sugBeforeValidate()
             .then(() => {
@@ -120,16 +133,18 @@ export abstract class ModelAbstract implements IModel {
             })
             .then(() => this.sugBeforeUpdate())
             .then(() => this.updateEmitter(options))
-            .then((_updatedData) => {
-                updatedData = _updatedData;
-                return this.sugAfterUpdate();
-            })
-            .then(() => {
-                return updatedData;
+            .then((updatedData) => {
+                return this.sugAfterUpdate<T>(updatedData).then((res) => res || updatedData)
             });
     }
 
-    protected abstract updateEmitter<T=any>(options?: Partial<QueryOptions> & any): Promise<T>;
+    public static async updateById<T extends ModelAbstract>(id: string, data: T, options?: Partial<QueryOptions | any>): Promise<T> {
+        const objectInstance = this.clone(this, data) as any;
+        objectInstance.setPrimaryPropertyValue(id);
+        return objectInstance.update(options);
+    }
+
+    protected abstract updateEmitter<T=any>(options?: Partial<QueryOptions | any>): Promise<T>;
 
     public sugBeforeUpdate(): Promise<void> {
         return 'beforeUpdate' in (this as any)
@@ -137,32 +152,62 @@ export abstract class ModelAbstract implements IModel {
             : Promise.resolve();
     };
 
-    public sugAfterUpdate(): Promise<void> {
+    public sugAfterUpdate<T=any>(updatedData:T): Promise<void> {
         return 'afterUpdate' in (this as any)
-            ? (<any>this).afterUpdate() || Promise.resolve()
+            ? (<any>this).afterUpdate(updatedData) || Promise.resolve()
             : Promise.resolve();
     };
 
-    public remove<T=any>(query: any = this.getIdQuery(), options?: Partial<QueryOptions> & any): Promise<T> {
-        return ModelAbstract.removeEmitter(query, options);
+    public remove<T=any>(query: any = this.getIdQuery(), options?: Partial<QueryOptions | any>): Promise<T> {
+        return ModelAbstract.removePipe(query, options);
     }
 
-    public static removeById<T=any>(id: string, options?: Partial<QueryOptions> & any): Promise<T> {
+    public static removeById<T=any>(id: string, options?: Partial<QueryOptions | any>): Promise<T> {
         return this.removeOne(this.castIdToQuery(id), options);
     }
 
-    public static removeOne<T=any>(query: any = {}, options: Partial<QueryOptions> & any = QueryOptions.builder()): Promise<T> {
+    public static removeOne<T=any>(query: any = {}, options: Partial<QueryOptions | any> = QueryOptions.builder()): Promise<T> {
         options.limit = 1;
-        return this.removeEmitter(query);
+        return this.removePipe(query);
     }
 
-    public static removeAll<T=any>(query: any = {}, options?: Partial<QueryOptions> & any): Promise<T[]> {
-        return this.removeEmitter(query, options);
+    public static removeAll<T=any>(query: any = {}, options?: Partial<QueryOptions | any>): Promise<T[]> {
+        return this.removePipe(query, options);
     }
 
-    protected static removeEmitter<T=any>(query?: any, options?: Partial<QueryOptions> & any): Promise<T> {
+    protected static removePipe<T=any>(query?: any, options?: Partial<QueryOptions | any>): Promise<T> {
+        return this.prototype.sugBeforeRemove()
+            .then(() => this.removeEmitter(query, options))
+            .then((data) => this.prototype.sugAfterRemove(data).then(res => res || data))
+    }
+
+    protected static removeEmitter<T=any>(query?: any, options?: Partial<QueryOptions | any>): Promise<T> {
         throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "Remove Emitter " + this.constructor.name);
     };
+
+    public sugBeforeRemove(): Promise<void> {
+        return 'beforeRemove' in (this as any)
+            ? (<any>this).beforeRemove() || Promise.resolve()
+            : Promise.resolve();
+    };
+
+    public sugAfterRemove<T=any>(data:T): Promise<void> {
+        return 'afterRemove' in (this as any)
+            ? (<any>this).afterRemove(data) || Promise.resolve()
+            : Promise.resolve();
+    };
+
+    /**
+     * Set the value of class primary property
+     *
+     * @param {TIdentifierTypes} value
+     */
+    public setPrimaryPropertyValue(value: TIdentifierTypes): void {
+        const primaryKey = getPrimaryKey(this);
+        if (!primaryKey)
+            return;
+        this[primaryKey] = value;
+    }
 
     /**
      * Transform data into class(T) instance
@@ -192,7 +237,7 @@ export abstract class ModelAbstract implements IModel {
             const primaryKey = getPrimaryKey(classToUse);
             const id = query;
             query = {};
-            if(primaryKey)
+            if (primaryKey)
                 query[primaryKey] = id;
         }
         return query
@@ -206,7 +251,7 @@ export abstract class ModelAbstract implements IModel {
      * @param {boolean} deleteProperty - flag to remove the primaryKey property from the query
      * @returns {TIdentifierTypes}
      */
-    public static getIdFromQuery(query: any,classToUse = this, deleteProperty:boolean = true): TIdentifierTypes {
+    public static getIdFromQuery(query: any, classToUse = this, deleteProperty: boolean = true): TIdentifierTypes {
         const primaryKey = getPrimaryKey(classToUse);
         const id = query && query.hasOwnProperty(primaryKey) ? query[primaryKey] : null;
         if (deleteProperty) {

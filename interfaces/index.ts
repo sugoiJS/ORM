@@ -1,4 +1,5 @@
-import {IConnectionConfig} from "./connection-config.interface";
+export {IConnectionConfig} from "./connection-config.interface";
+export {ISortItem} from "./sort-item.interface";
 export {IModel} from "./model.interface";
 
 export {IBeforeUpdate} from "./before-update.interface";

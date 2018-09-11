@@ -30,8 +30,16 @@ export abstract class ConnectableModel extends ModelAbstract {
             : null;
     }
 
-    public static connect(connectionName: string = this.connectionName): Promise<any> {
-        const connection = this.connections.get(ConnectableModel.connectionName);
+    public static setConnectionName(connectionName: string = "default"):void{
+        this.connectionName = connectionName;
+    }
+
+    public static getConnectionName():string{
+        return this.connectionName;
+    }
+
+    public static connect(connectionName: string = this.getConnectionName()): Promise<any> {
+        const connection = this.connections.get(connectionName);
         if (!connection) {
             throw new SugoiModelException(EXCEPTIONS.CONFIGURATION_MISSING.message, EXCEPTIONS.CONFIGURATION_MISSING.code);
         }
