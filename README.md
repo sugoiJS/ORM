@@ -29,7 +29,7 @@ Its most common usage is for TCP connection.
 
 Example (by the @sugoi/mongodb package implementation):
 
-    import {Connection,ConnectableModel} from "@sugoi/core";
+    import {Connection,ConnectableModel} from "@sugoi/orm";
 
     export class MongoModel extends ConnectableModel{
         protected static ConnectionType:Connection = MongoConnection;
@@ -49,6 +49,22 @@ Example (by the @sugoi/mongodb package implementation):
                     });
             }
     }
+
+#### Setting connectable model connection name
+
+By default connectable model use connection which label by name "default" (case sensitive).
+
+For changing the connection name use:
+
+1. Class static method setModelName(name:string):
+
+        Post.setConnectionName("adminDB");
+
+2. @ConnectionName(name:string) decorator:
+
+        @ConnectionName("adminDB")
+        export class Post extends ModelAbstract{
+        }
 
 ### 2. RESTFUL Model
 
@@ -124,9 +140,41 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
             })
     }
 
-#### Model interface
+### QueryOptions
 
-##### Find
+QueryOptions is an object which provides the query meta-data like sort, offset and limit.
+
+QueryOptions class contains a `builder` method for easy "inline" usage.
+
+#### Properties
+
+> limit:number - The maximum records amount to query. default - 0.
+
+> offset:number - The amount of record which should be skipped, can also be use for page number. default - 0.
+
+> sort:Array<SortItem> - Array of all the sorted fields and their direction
+
+    SortItem{
+        sortOption: SortOptions;// "DESC" | "ASC"
+        field: string;
+    }
+
+#### Usage example
+
+    public static pagingQuery(query:any,limit:number,page:number){
+        DataModel.findAll(query, QueryOptions.builder()
+                            .setLimit(limit)
+                            .setOffset(page)
+                            .setSortOption(
+                                new SortItem(SortOptions.DESC, "amount"),
+                                new SortItem(SortOptions.ASC, "lastUpdate")
+                            )
+                        );
+    }
+
+### Model interface
+
+#### Find
 
 > (static method) findAll(query: any = {}, options?: QueryOptions) - query all records
 
@@ -136,7 +184,7 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 > (static method) find(query: any = {}, options?: QueryOptions) - customize query
 
-##### Remove
+#### Remove
 
 > (static method) removeAll(query: any = {}, options?: QueryOptions) - remove all records
 
@@ -146,15 +194,17 @@ For CRUD support, you can implement your CRUD logic under each of the CRUD emitt
 
 > (instance method) remove(query: any = {}, options?: QueryOptions) - remove the record itself
 
-##### Save (create)
+#### Save (create)
 
-> (instance method) save(query: any = {}, options?: QueryOptions) - Save instance to DB\Microservice
+> (instance method) save(options?: QueryOptions) - Save instance to DB\Microservice
 
-##### Update
+#### Update
+
+> (static method) updateById(id: string | number,, options:QueryOptions ={limit:1}) - update by id
 
 > (instance method) update(options?: QueryOptions) - Update instance on DB\Microservice
 
-##### Setting the model name
+### Setting the model name
 
 By default the model name is the name of the class (case sensitive).
 
@@ -170,7 +220,7 @@ For changing the model name use:
         export class Post extends ModelAbstract{
         }
 
-##### Primary key
+### Primary key
 
 For query and upsert data @sugoi use primary key of the instance\query object.
 
