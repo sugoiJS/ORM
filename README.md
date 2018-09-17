@@ -20,9 +20,13 @@ The ORM module provide the ability to build model classes with lifecycle hooks.
 
 Under your tsconfig - compilerOptions set:
 
+- `"target": "es5"`
+
 - `"emitDecoratorMetadata": true`
 
 - `"experimentalDecorators": true`
+
+- `"lib": ["es2015","dom"]`
 
 
 #### Template
