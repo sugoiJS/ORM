@@ -1,4 +1,6 @@
 
+export {SortItem} from "./classes/sort-item.class";
+
 export {ConnectionName} from "./decorators/connection-name.decorator";
 
 export {SortOptions} from "./constants/sort-options.enum";
