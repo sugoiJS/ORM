@@ -159,7 +159,7 @@ export abstract class ModelAbstract implements IModel {
     };
 
     public remove<T=any>(query: any = this.getIdQuery(), options?: Partial<QueryOptions | any>): Promise<T> {
-        return ModelAbstract.removePipe(query, options);
+        return (<any>this.constructor).removePipe(query, options);
     }
 
     public static removeById<T=any>(id: string, options?: Partial<QueryOptions | any>): Promise<T> {
