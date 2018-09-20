@@ -1,6 +1,6 @@
 {
   "name": "@sugoi/orm",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "SugoiJS ORM",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
