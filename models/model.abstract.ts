@@ -91,6 +91,10 @@ export abstract class ModelAbstract implements IModel {
             .then(() => this.sugBeforeSave())
             .then(() => this.saveEmitter(options))
             .then((savedData) => {
+                Object.assign(this,savedData);
+                return savedData;
+            })
+            .then((savedData) => {
                 return this.sugAfterSave<T>(savedData).then((res) => res || savedData)
             })
     }
@@ -133,6 +137,10 @@ export abstract class ModelAbstract implements IModel {
             })
             .then(() => this.sugBeforeUpdate())
             .then(() => this.updateEmitter(options))
+            .then((updatedData) => {
+                Object.assign(this,updatedData);
+                return updatedData;
+            })
             .then((updatedData) => {
                 return this.sugAfterUpdate<T>(updatedData).then((res) => res || updatedData)
             });
