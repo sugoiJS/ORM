@@ -20,7 +20,7 @@ The ORM module provide the ability to build model classes with lifecycle hooks.
 
 Under your tsconfig - compilerOptions set:
 
-- `"target": "es5"`
+- `"target": "es2015"`
 
 - `"emitDecoratorMetadata": true`
 
@@ -37,7 +37,7 @@ You are able to use the config template which was set for the @sugoi/demo applic
       "compilerOptions": {
         "baseUrl": "./src",
         "allowJs": true,
-        "target": "es5",
+        "target": "es2015",
         "module": "commonjs",
         "moduleResolution": "node",
         "sourceMap": true,
