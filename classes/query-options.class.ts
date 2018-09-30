@@ -29,12 +29,30 @@ export class QueryOptions{
         return this.offset;
     }
 
-    setSortOption(...sort:Array<SortItem>){
+    setSortOptions(...sort:Array<SortItem>){
         this.sort = sort;
         return this;
     }
 
-    getSortOption(){
+    /**
+     * @deprecated
+     * @use setSortOptions
+     * @param {SortItem} sort
+     */
+    setSortOption(...sort:Array<SortItem>){
+        return this.setSortOptions(...sort);
+
+    }
+
+    getSortOptions(){
         return this.sort || [];
+    }
+
+    /**
+     * @deprecated
+     * @use getSortOptions
+     */
+    getSortOption(){
+        return this.getSortOptions();
     }
 }

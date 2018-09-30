@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "target": "es2015",
 //    "inlineSourceMap": true,
     "outDir": "./dist"                        /* Redirect output structure to the directory. */
   },
