@@ -16,7 +16,7 @@ export abstract class ConnectableModel extends ModelAbstract {
         super()
     }
 
-    public static setConnection(configData: IConnectionConfig, connectionName: string = "default"):Promise<any> {
+    public static setConnection(configData: Partial<IConnectionConfig>, connectionName: string = "default"):Promise<any> {
         configData.connectionName = connectionName;
         const connection = this.ConnectionType.clone(configData);
         this.connections.set(connectionName, connection);
