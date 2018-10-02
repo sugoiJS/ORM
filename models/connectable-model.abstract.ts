@@ -71,7 +71,7 @@ export abstract class ConnectableModel extends ModelAbstract {
         throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "connectEmitter");
     }
 
-    public static disconnect(connectionName: string) {
+    public static disconnect(connectionName: string=this.getConnectionName()) {
         this.connections.has(connectionName)
             ? this.connections.get(connectionName).disconnect()
             : null
