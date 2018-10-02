@@ -18,6 +18,8 @@ import {
 } from "../../index";
 import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
 import {EXCEPTIONS} from "../../constants/exceptions.contant";
+import {Connection} from "../../classes/connection.class";
+import {CONNECTION_STATUS} from "../../constants/connection-status.constant";
 
 
 @ModelName("dummy")
@@ -58,6 +60,11 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
 
     afterRemove(res): Promise<any> | void {
         res.ok = res.n > 0
+    }
+
+    public static connectEmitter(connection: Connection): Promise<any> {
+        connection.setStatus(CONNECTION_STATUS.CONNECTED);
+
     }
 
     protected saveEmitter(options?: any): Promise<any> {
