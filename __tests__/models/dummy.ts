@@ -8,20 +8,20 @@ import {
     SortItem,
     QueryOptions,
     ModelName,
-    ModelAbstract,
     Primary,
     SugoiModelException,
     IBeforeFind,
     IAfterFind,
     IBeforeRemove,
-    IAfterRemove
+    IAfterRemove,
+    ConnectableModel
 } from "../../index";
 import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
 import {EXCEPTIONS} from "../../constants/exceptions.contant";
 
 
 @ModelName("dummy")
-export class Dummy extends ModelAbstract implements IValidate, IBeforeUpdate, IAfterUpdate, IAfterSave, IBeforeSave, IBeforeValidate, IBeforeFind, IAfterFind, IBeforeRemove, IAfterRemove {
+export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate, IAfterUpdate, IAfterSave, IBeforeSave, IBeforeValidate, IBeforeFind, IAfterFind, IBeforeRemove, IAfterRemove {
     public static RECORDS = [];
 
     @Primary()
