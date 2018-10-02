@@ -1,55 +1,7 @@
 import {IConnectionConfig, QueryOptions, SugoiModelException, SortItem, SortOptions} from "../index";
 import {Dummy} from "./models/dummy";
 
-// export async function connect() {
-//     let client, connection;
-//     const config: IConnectionConfig = {
-//         port: 27017,
-//         protocol: "mongodb://",
-//         hostName: "127.0.0.1",
-//         db: "SUGOIJS-TEST",
-//         user: null,
-//         password: null,
-//         newParser: true
-//     };
-//     const mongod = new MongodbMemoryServer({
-//         instance: {
-//             port: config.port,
-//             ip: config.hostName,
-//             dbName: config.db,
-//         }
-//     });
-//     return await mongod.getConnectionString().then(connString => {
-//         console.info(connString);
-//     })
-//         .then(() => MongoModel.setConnection(config, "TESTING"))
-//         .then(_connection => {
-//             client = _connection.client;
-//             connection = _connection.connection;
-//             return setResources();
-//         })
-//         .then(() => ({client, mongod, connection}))
-//
-// }
-
-// export async function disconnect(client, mongod, connection) {
-//     console.info("Stopping server");
-//     expect.assertions(2);
-//     try {
-//         let disconnectRes = await Dummy.disconnect("t");
-//         expect(disconnectRes).toEqual(null);
-//         disconnectRes = await Dummy.disconnect();
-//         //corrupt disconnect
-//         delete connection.getConnection().client;
-//         disconnectRes = await connection.disconnect();
-//         expect(disconnectRes).toEqual(null);
-//     }catch (err){
-//         console.error(err);
-//     }
-//     return await mongod.stop();
-// }
-
-export const exceptionCheck = {
+const exceptionCheck = {
     toBeExceptionOf(received, expected: { type: any, message: string, code: number }) {
         const type = expected.type;
         const message = expected.message;
@@ -86,11 +38,12 @@ export const exceptionCheck = {
 };
 expect.extend(exceptionCheck);
 
-export const recAmount = 10;
-export const recNamePrefix = "read_name_";
-export let mockObject;
+const recAmount = 10;
+const recNamePrefix = "read_name_";
+let mockObject;
 
-export async function setResources() {
+let client, connection;
+async function setResources() {
     const p = [];
     for (let i = 0; i < recAmount; i++) {
         p.push(
@@ -102,25 +55,53 @@ export async function setResources() {
     });
     return Promise.all(p);
 }
+async function connect() {
+    let client, connection;
+    const config: IConnectionConfig = {
+        port: 9999,
+        protocol: "tcp://",
+        hostName: "127.0.0.1",
+        db: "SUGOIJS-TEST",
+        user: "test",
+        password: "test",
+    };
 
-let mongod;
+    return await Dummy.setConnection(config, "TESTING")
+        .then(_connection => {
+            connection = _connection;
+            return setResources();
+        })
+        .then(() => ({connection}))
+
+}
+async function disconnect(connection) {
+    console.info("Stopping server");
+    expect.assertions(1);
+    try {
+        let disconnectRes = await Dummy.disconnect("t");
+        expect(disconnectRes).toEqual(null);
+        disconnectRes = await Dummy.disconnect();
+        //corrupt disconnect
+        delete connection.getConnection().client;
+        disconnectRes = await connection.disconnect();
+        expect(disconnectRes).toEqual(null);
+    }catch (err){
+        console.error(err);
+    }
+
+}
 let MockId;
 const validationException = {type: SugoiModelException, message: "INVALID", code: 4000};
 const notFoundException = {type: SugoiModelException, message: "Not Found", code: 404};
 const notUpdatedException = {type: SugoiModelException, message: "Not updated", code: 5000};
-const notRemovedException = {type: SugoiModelException, message: "Not removed", code: 5000};
 
-let client, connection;
+const notRemovedException = {type: SugoiModelException, message: "Not removed", code: 5000};
 
 
 beforeAll(async () => {
-    // const res = await connect();
-    // client = res.client;
-    // mongod = res.mongod;
-    // connection = res.connection;
-    return await setResources();
+    return await connect();
 });
-// afterAll(async () => disconnect(client, mongod, connection));
+afterAll(async () => disconnect(connection));
 
 
 //Create test suit

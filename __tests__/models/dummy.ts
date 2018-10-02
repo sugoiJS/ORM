@@ -20,9 +20,11 @@ import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
 import {EXCEPTIONS} from "../../constants/exceptions.contant";
 import {Connection} from "../../classes/connection.class";
 import {CONNECTION_STATUS} from "../../constants/connection-status.constant";
+import {ConnectionName} from "../../decorators/connection-name.decorator";
 
 
 @ModelName("dummy")
+@ConnectionName("TEST")
 export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate, IAfterUpdate, IAfterSave, IBeforeSave, IBeforeValidate, IBeforeFind, IAfterFind, IBeforeRemove, IAfterRemove {
     public static RECORDS = [];
 
