@@ -64,6 +64,7 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
 
     public static connectEmitter(connection: Connection): Promise<any> {
         connection.setStatus(CONNECTION_STATUS.CONNECTED);
+        return Promise.resolve();
 
     }
 
