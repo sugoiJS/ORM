@@ -2,6 +2,8 @@
 
 ![Sugoi logo](https://www.sugoijs.com/assets/logo_inverse.png)
 
+[![Build Status](https://travis-ci.org/sugoiJS/ORM.svg?branch=master)](https://travis-ci.org/sugoiJS/ORM)
+
 
 ## Introduction
 SugoiJS is a minimal modular framework,
