@@ -2,6 +2,8 @@
 
 ![Sugoi logo](https://www.sugoijs.com/assets/logo_inverse.png)
 
+[![Build Status](https://travis-ci.org/sugoiJS/ORM.svg?branch=master)](https://travis-ci.org/sugoiJS/ORM)
+
 
 ## Introduction
 SugoiJS is a minimal modular framework,
@@ -15,6 +17,48 @@ The ORM module provide the ability to build model classes with lifecycle hooks.
 ## Installation
 
 > npm install --save @sugoi/orm
+
+### tsconfig.json:
+
+Under your tsconfig - compilerOptions set:
+
+- `"target": "es2015"`
+
+- `"emitDecoratorMetadata": true`
+
+- `"experimentalDecorators": true`
+
+- `"lib": ["es2015","dom"]`
+
+
+#### Template
+
+You are able to use the config template which was set for the @sugoi/demo application:
+
+    {
+      "compilerOptions": {
+        "baseUrl": "./src",
+        "allowJs": true,
+        "target": "es2015",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [
+          "es2015",
+          "dom"
+        ],
+        "typeRoots": [
+          "./node_modules/@types"
+        ],
+        "types": [
+          "body-parser",
+          "express",
+          "node"
+        ]
+      }
+    }
 
 
 ## ORM

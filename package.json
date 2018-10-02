@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest --config=jest.config.js --coverage --detectOpenHandles",
+    "coverge": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "docs": "..\\node_modules\\.bin\\typedoc --out ..\\dist\\docs\\orm --json dist\\docs\\main.json --ignoreCompilerErrors --excludeNotExported --excludeProtected --excludePrivate --readme .\\README.md --mode file --hideGenerator --externalPattern node_modules/**/* --excludeExternals ",
     "update:patch": " npm run build && npm version patch && npm publish && npm run docs",
     "update:minor": " npm run build && npm version minor && npm publish && npm run docs",
@@ -30,6 +31,14 @@
   "author": "Orel Balilti",
   "license": "MIT",
   "homepage": "http://sugoijs.com",
+  "bugs": {
+    "url": "https://github.com/sugoiJS/ORM/issues",
+    "email": "oba.sugoi@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sugoiJS/ORM"
+  },
   "dependencies": {
     "@sugoi/core": "2.1.3"
   },
