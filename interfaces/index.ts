@@ -1,5 +1,5 @@
-
 export {IConnectionConfig} from "./connection-config.interface";
+export {IConnection} from "./connection.interface";
 export {ISortItem} from "./sort-item.interface";
 export {IModel} from "./model.interface";
 

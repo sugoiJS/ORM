@@ -14,20 +14,23 @@ import {
     IAfterFind,
     IBeforeRemove,
     IAfterRemove,
-    ConnectableModel
+    ConnectableModel,
+    IConnection,
+    CONNECTION_STATUS
 } from "../../index";
 import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
 import {EXCEPTIONS} from "../../constants/exceptions.contant";
-import {Connection} from "../../classes/connection.class";
-import {CONNECTION_STATUS} from "../../constants/connection-status.constant";
 import {ConnectionName} from "../../decorators/connection-name.decorator";
+import {DummyConnection} from "../classes/dummy-connection.class";
 
 
 @ModelName("dummy")
-@ConnectionName("TEST")
+@ConnectionName("TESTING")
 export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate, IAfterUpdate, IAfterSave, IBeforeSave, IBeforeValidate, IBeforeFind, IAfterFind, IBeforeRemove, IAfterRemove {
-    public static RECORDS = [];
+    public static connectionClass = DummyConnection;
 
+
+    public static RECORDS = [];
     @Primary()
     public id;
     public name;
@@ -64,12 +67,6 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
         res.ok = res.n > 0
     }
 
-    public static connectEmitter(connection: Connection): Promise<any> {
-        connection.setStatus(CONNECTION_STATUS.CONNECTED);
-        return Promise.resolve();
-
-    }
-
     protected saveEmitter(options?: any): Promise<any> {
         return Dummy.upsert(this);
     }
@@ -83,13 +80,12 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
 
     protected static removeEmitter<T=any>(query?: any, options: Partial<QueryOptions | any> = QueryOptions.builder()): Promise<any> {
         const hasId = !!this.getIdFromQuery(query, this, false);
-        console.log(hasId);
         const limit = options.limit || 0;
         const originalSize = Dummy.RECORDS.length;
         const size = originalSize - limit;
         let i = 0;
         Dummy.RECORDS = hasId || limit
-            ? Dummy.filterByQuery(query,size,options.sort,hasId)
+            ? Dummy.filterByQuery(query, size, options.sort, hasId)
             : Dummy.RECORDS.filter(rec => {
                 return !(i++ < size && Dummy.validRecordByQuery(rec, query));
             });

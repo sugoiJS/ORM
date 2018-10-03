@@ -1,4 +1,7 @@
+import {QueryOptions} from "../classes/query-options.class";
+
 export interface IModel {
-    update<T=any>(options?: any): Promise<T>;
-    save<T=any>(options?: any): Promise<T>;
+    save<T=any>(options?: QueryOptions): Promise<T>;
+    update<T=any>(options?: QueryOptions): Promise<T>;
+    remove<T=any>(options?: QueryOptions): Promise<T>;
 }

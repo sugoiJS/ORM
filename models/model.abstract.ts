@@ -3,6 +3,7 @@ import {IModel} from "../interfaces/model.interface";
 import {getPrimaryKey, Primary} from "../decorators/primary.decorator";
 import {TIdentifierTypes} from "../interfaces/identifer-types.type";
 import {QueryOptions} from "../classes/query-options.class";
+import {clone} from "../utils/object.utils";
 
 
 export abstract class ModelAbstract implements IModel {
@@ -239,25 +240,7 @@ export abstract class ModelAbstract implements IModel {
             data = classIns;
             classIns = this;
         }
-        let temp = {};
-        try {
-            try {
-                const func = function () {
-                };
-                func.prototype = classIns.prototype;
-                temp = new func();
-                classIns.apply(temp, []);
-                temp.constructor = classIns;
-            } catch (e) {
-                temp = new classIns();
-            }
-        }
-        catch (e) {
-            console.error(e);
-            return data;
-        }
-        Object.assign(temp, data);
-        return temp as T;
+        return clone(classIns,data) as T;
     }
 
 

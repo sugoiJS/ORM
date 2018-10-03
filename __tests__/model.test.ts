@@ -1,5 +1,8 @@
 import {IConnectionConfig, QueryOptions, SugoiModelException, SortItem, SortOptions} from "../index";
 import {Dummy} from "./models/dummy";
+import {NotModel} from "./models/not-model";
+import {ModelAbstract} from "../models/model.abstract";
+import {EXCEPTIONS} from "../constants/exceptions.contant";
 
 const exceptionCheck = {
     toBeExceptionOf(received, expected: { type: any, message: string, code: number }) {
@@ -42,7 +45,8 @@ const recAmount = 10;
 const recNamePrefix = "read_name_";
 let mockObject;
 
-let client, connection;
+let connection;
+
 async function setResources() {
     const p = [];
     for (let i = 0; i < recAmount; i++) {
@@ -55,46 +59,44 @@ async function setResources() {
     });
     return Promise.all(p);
 }
+
 async function connect() {
-    let client, connection;
     const config: IConnectionConfig = {
         port: 9999,
-        protocol: "tcp://",
         hostName: "127.0.0.1",
         db: "SUGOIJS-TEST",
+        authDB: "SUGOIJS-TEST",
         user: "test",
         password: "test",
     };
 
     return await Dummy.setConnection(config, "TESTING")
         .then(_connection => {
-            connection = _connection;
+            connection = _connection.connectionClient;
             return setResources();
         })
         .then(() => ({connection}))
 
 }
+
 async function disconnect(connection) {
     console.info("Stopping server");
-    expect.assertions(1);
+    expect.assertions(2);
     try {
         let disconnectRes = await Dummy.disconnect("t");
-        expect(disconnectRes).toEqual(null);
+        expect(disconnectRes).toBe(null);
         disconnectRes = await Dummy.disconnect();
-        //corrupt disconnect
-        delete connection.getConnection().client;
-        disconnectRes = await connection.disconnect();
-        expect(disconnectRes).toEqual(null);
-    }catch (err){
+        expect(disconnectRes).toBeTruthy();
+    } catch (err) {
         console.error(err);
     }
 
 }
+
 let MockId;
 const validationException = {type: SugoiModelException, message: "INVALID", code: 4000};
-const notFoundException = {type: SugoiModelException, message: "Not Found", code: 404};
 const notUpdatedException = {type: SugoiModelException, message: "Not updated", code: 5000};
-
+const notFoundException = {type: SugoiModelException, message: "Not Found", code: 404};
 const notRemovedException = {type: SugoiModelException, message: "Not removed", code: 5000};
 
 
@@ -132,11 +134,11 @@ describe("Model save test suit", () => {
 //Read test suit
 describe("Model read test suit", () => {
 
-    it("beforeSave hook check",async () => {
+    it("beforeSave hook check", async () => {
         expect.assertions(1);
         try {
-            await Dummy.findOne({name: recNamePrefix,fail:true});
-        }catch (err){
+            await Dummy.findOne({name: recNamePrefix, fail: true});
+        } catch (err) {
             (<any>expect(err)).toBeExceptionOf(validationException)
         }
     });
@@ -255,7 +257,7 @@ describe("Model remove test suit", () => {
     it("remove one - name", async () => {
         expect.assertions(1);
         const dummy = await Dummy.removeOne<any>(
-            {name:  recNamePrefix},
+            {name: recNamePrefix},
             QueryOptions.builder().setSortOptions(new SortItem(SortOptions.ASC, "lastSavedTime"))
         )
             .then(res => res.n);
@@ -272,15 +274,15 @@ describe("Model remove test suit", () => {
 
     });
 
-    it("Remove hooks", async () =>{
+    it("Remove hooks", async () => {
         expect.assertions(3);
         try {
-            await Dummy.removeOne({name: recNamePrefix,fail:true});
-        }catch (err){
+            await Dummy.removeOne({name: recNamePrefix, fail: true});
+        } catch (err) {
             (<any>expect(err)).toBeExceptionOf(validationException)
         }
         let res = await Dummy.findOne({name: recNamePrefix})
-            .then(item=>item.remove());
+            .then(item => item.remove());
         expect(res.ok).toBe(true);
         res = await Dummy.removeOne({name: recNamePrefix});
         expect(res.ok).toBe(true);
@@ -297,6 +299,11 @@ describe("Model remove test suit", () => {
 });
 
 describe("Model extra functions", () => {
+    it("Not a model", () => {
+        expect("getModelName" in NotModel).toBeFalsy();
+        expect(NotModel instanceof ModelAbstract).toBeFalsy();
+    })
+
     it("Model name", () => {
         const originalModelName = "dummy";
         let modelName = originalModelName;
@@ -306,6 +313,17 @@ describe("Model extra functions", () => {
         expect(Dummy.getModelName()).toBe(modelName);
         Dummy.setModelName(originalModelName);
         return;
+    });
+
+    it("Wrong config", async () => {
+        expect.assertions(2);
+        const connection = await Dummy.setConnection({port: null, hostName: null}, "test");
+        await expect(connection.isConnected()).resolves.toBeFalsy();
+        await (<any>expect(Dummy.connect("fail")).rejects).toBeExceptionOf({
+            type:SugoiModelException,
+            message:"Connection configuration is missing",
+            code:5001
+        });
     });
 
     it("Clone without Id", async () => {

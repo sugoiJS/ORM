@@ -6,5 +6,6 @@ export const EXCEPTIONS: { [prop: string]: IExceptionConstant } = {
     CONFIGURATION_MISSING: {message:"Connection configuration is missing",code:5001},
     NOT_EXTEND_MODEL: {message:"Class not extend ModelAbstract",code:5002},
     NOT_EXTEND_CONNECTABLE_MODEL: {message:"Class not extend ConnectableModel",code:5003},
-    PRIMARY_NOT_CONFIGURED: {message:"Primary key not configured for class, please use @Primary",code:5006}
+    PRIMARY_NOT_CONFIGURED: {message:"Primary key not configured for class, please use @Primary",code:5006},
+    CONNECTABLE_CONNECTION_NOT_CONFIGURED: {message:"connectableConnectionClass not set",code:5007}
 }

@@ -1,79 +1,70 @@
 import {ModelAbstract} from "./model.abstract";
-import {Connection} from "../classes/connection.class";
-import {CONNECTION_STATUS} from "../constants/connection-status.constant";
 import {IConnectionConfig} from "../interfaces/connection-config.interface";
 import {SugoiModelException} from "../exceptions/model.exception";
 import {EXCEPTIONS} from "../constants/exceptions.contant";
+import {IConnection} from "../interfaces/connection.interface";
+import {clone} from "../utils/object.utils";
+import {CONNECTION_STATUS} from "../constants/connection-status.constant";
 
 export abstract class ConnectableModel extends ModelAbstract {
-    protected static connections: Map<string, Connection> = new Map();
+    protected static connections: Map<string, IConnection> = new Map();
 
     protected static connectionName: string = "default";
 
-    protected static ConnectionType: typeof Connection = Connection;
+    protected static connectionClass;
 
-    constructor() {
-        super()
-    }
-
-    public static setConnection(configData: Partial<IConnectionConfig>, connectionName: string = "default"):Promise<any> {
-        configData.connectionName = connectionName;
-        const connection = this.ConnectionType.clone(configData);
+    public static setConnection(configData: IConnectionConfig, connectionName: string = "default"): Promise<IConnection> {
+        if (!this.connectionClass)
+            throw new SugoiModelException(EXCEPTIONS.CONNECTABLE_CONNECTION_NOT_CONFIGURED.message, EXCEPTIONS.CONNECTABLE_CONNECTION_NOT_CONFIGURED.code, this.name);
+        configData['connectionName'] = connectionName;
+        const connection = clone(this.connectionClass, configData) as IConnection;
+        connection.status = CONNECTION_STATUS.DISCONNECTED;
         this.connections.set(connectionName, connection);
         return this.connect(connectionName);
 
     }
 
-    public static getConnection(connectionName: string = "default"): Connection {
+    public static getConnection(connectionName: string = this.getConnectionName()): IConnection {
         return this.connections.has(connectionName)
             ? this.connections.get(connectionName)
             : null;
     }
 
-    public static setConnectionName(connectionName: string = "default"):void{
+    public static setConnectionName(connectionName: string = "default"): void {
         this.connectionName = connectionName;
     }
 
-    public static getConnectionName():string{
+    public static getConnectionName(): string {
         return this.connectionName;
     }
 
-    public static connect(connectionName: string = this.getConnectionName()): Promise<any> {
+    public static async connect(connectionName: string = this.getConnectionName()): Promise<IConnection> {
         const connection = this.connections.get(connectionName);
         if (!connection) {
             throw new SugoiModelException(EXCEPTIONS.CONFIGURATION_MISSING.message, EXCEPTIONS.CONFIGURATION_MISSING.code);
         }
 
-        if (connection.isConnected()) {
-            return Promise.resolve(connection.connection);
+        if (await connection.isConnected()) {
+            return Promise.resolve(connection);
         } else {
-            return this.connectEmitter(connection)
-                .then((connectionItem) => {
-                    connection.setConnection(connectionItem);
-                    connection.setStatus(CONNECTION_STATUS.CONNECTED);
-                    return connectionItem;
-                })
-                .catch(err => {
+            return connection.connect()
+                .then(() => connection)
+                .catch(async err => {
                     console.error(err);
-                    connection.setStatus(CONNECTION_STATUS.DISCONNECTED);
+                    try {
+                        await connection.disconnect();
+                    } catch (err) {
+                    }
                     throw err;
                 });
 
         }
     }
 
-    /**
-     * Connect to service and return connection for further use
-     * @param {Connection} connection
-     * @returns {Promise<any>} - connection item
-     */
-    public static connectEmitter(connection: Connection): Promise<any> {
-        throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "connectEmitter");
-    }
-
-    public static disconnect(connectionName: string=this.getConnectionName()) {
-        this.connections.has(connectionName)
-            ? this.connections.get(connectionName).disconnect()
+    public static disconnect(connectionName?: string) {
+        const connection = this.getConnection(connectionName);
+        return !!connection
+            ? connection.disconnect()
             : null
     }
 }
