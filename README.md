@@ -2,7 +2,7 @@
 
 ![Sugoi logo](https://www.sugoijs.com/assets/logo_inverse.png)
 
-[![npm version](https://badge.fury.io/js/%40sugoi%2Fmongodb.svg)](https://badge.fury.io/js/%40sugoi%2Fmongodb)
+[![npm version](https://badge.fury.io/js/%40sugoi%2Form.svg)](https://badge.fury.io/js/%40sugoi%2Form)
 [![Build Status](https://travis-ci.org/sugoiJS/ORM.svg?branch=master)](https://travis-ci.org/sugoiJS/ORM)
 [![codecov](https://codecov.io/gh/sugoiJS/ORM/branch/master/graph/badge.svg)](https://codecov.io/gh/sugoiJS/ORM)
 
