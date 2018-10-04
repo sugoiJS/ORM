@@ -11,13 +11,11 @@ export abstract class ConnectableModel extends ModelAbstract {
 
     protected static connectionName: string = "default";
 
-    protected static connectionClass;
-
-    public static setConnection(configData: IConnectionConfig, connectionName: string = "default"): Promise<IConnection> {
-        if (!this.connectionClass)
+    public static setConnection(configData: IConnectionConfig,connectionClass, connectionName: string = "default"): Promise<IConnection> {
+        if (!connectionClass)
             throw new SugoiModelException(EXCEPTIONS.CONNECTABLE_CONNECTION_NOT_CONFIGURED.message, EXCEPTIONS.CONNECTABLE_CONNECTION_NOT_CONFIGURED.code, this.name);
         configData['connectionName'] = connectionName;
-        const connection = clone(this.connectionClass, configData) as IConnection;
+        const connection = clone(connectionClass, configData) as IConnection;
         connection.status = CONNECTION_STATUS.DISCONNECTED;
         this.connections.set(connectionName, connection);
         return this.connect(connectionName);

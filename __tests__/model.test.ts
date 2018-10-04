@@ -3,6 +3,9 @@ import {Dummy} from "./models/dummy";
 import {NotModel} from "./models/not-model";
 import {ModelAbstract} from "../models/model.abstract";
 import {EXCEPTIONS} from "../constants/exceptions.contant";
+import {DummyConnection} from "./classes/dummy-connection.class";
+import {ConnectionName} from "../decorators/connection-name.decorator";
+import {ModelName} from "../decorators/model-name.decorator";
 
 const exceptionCheck = {
     toBeExceptionOf(received, expected: { type: any, message: string, code: number }) {
@@ -70,7 +73,7 @@ async function connect() {
         password: "test",
     };
 
-    return await Dummy.setConnection(config, "TESTING")
+    return await Dummy.setConnection(config,DummyConnection, "TESTING")
         .then(_connection => {
             connection = _connection.connectionClient;
             return setResources();
@@ -302,7 +305,29 @@ describe("Model extra functions", () => {
     it("Not a model", () => {
         expect("getModelName" in NotModel).toBeFalsy();
         expect(NotModel instanceof ModelAbstract).toBeFalsy();
-    })
+        try{
+            expect(ConnectionName("test")(NotModel)).toThrowError();
+        }catch(err){
+            (<any>expect(err)).toBeExceptionOf({
+                type: SugoiModelException,
+                message: "Class not extend ConnectableModel",
+                code: 5003
+            });
+
+        try{
+            expect(ModelName("test")(NotModel)).toThrowError();
+        }catch(err) {
+            (<any>expect(err)).toBeExceptionOf({
+                type: SugoiModelException,
+                message: "Class not extend ModelAbstract",
+                code: 5002
+            });
+        }
+
+
+        }
+
+    });
 
     it("Model name", () => {
         const originalModelName = "dummy";
@@ -317,7 +342,7 @@ describe("Model extra functions", () => {
 
     it("Wrong config", async () => {
         expect.assertions(2);
-        const connection = await Dummy.setConnection({port: null, hostName: null}, "test");
+        const connection = await Dummy.setConnection({port: null, hostName: null},DummyConnection, "test");
         await expect(connection.isConnected()).resolves.toBeFalsy();
         await (<any>expect(Dummy.connect("fail")).rejects).toBeExceptionOf({
             type:SugoiModelException,

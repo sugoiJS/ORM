@@ -21,13 +21,11 @@ import {
 import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
 import {EXCEPTIONS} from "../../constants/exceptions.contant";
 import {ConnectionName} from "../../decorators/connection-name.decorator";
-import {DummyConnection} from "../classes/dummy-connection.class";
 
 
 @ModelName("dummy")
 @ConnectionName("TESTING")
 export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate, IAfterUpdate, IAfterSave, IBeforeSave, IBeforeValidate, IBeforeFind, IAfterFind, IBeforeRemove, IAfterRemove {
-    public static connectionClass = DummyConnection;
 
 
     public static RECORDS = [];
@@ -40,7 +38,6 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
     public saved: boolean;
     public updated: boolean;
     public isUpdate: boolean;
-    public static dummyMockGenerator = () => Dummy.builder(StringUtils.generateGuid());
 
     constructor(name: string) {
         super();
@@ -50,17 +47,17 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
     beforeFind(query: any, options?: Partial<QueryOptions | any>): Promise<any> | void {
         if (query.fail)
             throw new SugoiModelException(EXCEPTIONS.INVALID.message, EXCEPTIONS.INVALID.code)
+        return Dummy.connect();
     }
 
     afterFind(res): Promise<any> | void {
-        if (!Array.isArray(res)) res.found = true;
-        else
-            res.forEach(item => item.found = true)
+        res.forEach(item => item.found = true)
     }
 
     beforeRemove(query: any, options?: Partial<QueryOptions | any>): Promise<any> | void {
         if (query.fail)
             throw new SugoiModelException(EXCEPTIONS.INVALID.message, EXCEPTIONS.INVALID.code)
+        return Dummy.connect();
     }
 
     afterRemove(res): Promise<any> | void {
@@ -152,6 +149,7 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
     beforeUpdate(): Promise<any> | void {
         delete this.isUpdate;
         this.lastUpdated = "today";
+        return Dummy.connect();
     }
 
     afterUpdate(updateResponse?: any): Promise<any> | void {
@@ -162,7 +160,8 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
         delete this.isUpdate;
         this.id = StringUtils.generateGuid();
         this.lastSaved = "today";
-        this.lastSavedTime = new Date().getTime()
+        this.lastSavedTime = new Date().getTime();
+        return Dummy.connect();
     }
 
     afterSave(saveResponse?: any): Promise<any> | void {

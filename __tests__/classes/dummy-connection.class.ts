@@ -11,37 +11,38 @@ export class DummyConnection implements IConnection {
     authDB?: string;
 
 
-    getConnectionString(): string {
-        let connectionString: string = "";
-        if (this.user && this.password)
-            connectionString += `${this.user}:${this.password}@`;
-        connectionString += `${this.hostName}:${this.port}`;
-        if (this.authDB)
-            connectionString += `/${this.authDB}`;
-        return connectionString;
-    }
-
-    disconnect(): Promise<boolean> {
-        console.log("disconnect");
-        this.status = CONNECTION_STATUS.DISCONNECTED;
-        return Promise.resolve(true)
-    }
-
     connect(): Promise<boolean> {
-        if (this.getConnectionString().trim() !== ":") {
+        if (this.getConnectionString().trim() === ":") {
             return Promise.resolve(false);
         }
         this.connectionClient = {
-            disconnect: (function(){
-                return this.disconnect();
-            }).bind(this)
+            disconnect: ()=>Promise.resolve(true)
         };
         this.status = CONNECTION_STATUS.CONNECTED;
         return Promise.resolve(true);
     }
 
+    disconnect(): Promise<boolean> {
+        console.log("disconnect");
+        return this.connectionClient.disconnect()
+            .then(()=>{
+                this.status = CONNECTION_STATUS.DISCONNECTED;
+                return true;
+            });
+    }
+
     isConnected(): Promise<boolean> {
         return Promise.resolve(this.status === CONNECTION_STATUS.CONNECTED);
+    }
+
+    getConnectionString(): string {
+        let connectionString: string = "";
+        if (this.user && this.password)
+            connectionString += `${this.user}:${this.password}@`;
+        connectionString += `${this.hostName||""}:${this.port||""}`;
+        if (this.authDB)
+            connectionString += `/${this.authDB}`;
+        return connectionString;
     }
 
 }
