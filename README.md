@@ -421,12 +421,22 @@ All of the @sugoi/orm predefined interface methods which mentioned before use th
 
 SugoiJS ORM uses predefined lifecycle hooks that can be implemented by interfaces:
 
+##### Save(create) and update
+
 1. IBeforeValidate
 2. IValidate
 3. IBeforeSave \ IBeforeUpdate
 4. IAfterSave \ IAfterUpdate
 
-![SugoiJS Lifecycle hooks](https://www.sugoijs.com/assets/lifecycle.png)
+![SugoiJS Lifecycle hooks create and update](https://www.sugoijs.com/assets/lifecycle.png)
+
+##### Find and remove
+
+3. IBeforeFind \ IBeforeRemove
+4. IAfterFind \ IAfterRemove
+
+![SugoiJS Lifecycle hooks find and remove](https://www.sugoijs.com/assets/lifecycle_RD.png)
+
 
 ## Documentation
 
