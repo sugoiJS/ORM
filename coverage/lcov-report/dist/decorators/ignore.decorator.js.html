@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for dist/decorators/ignore.decorator.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">dist/decorators</a> ignore.decorator.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">97.78% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>44/45</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80.77% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>21/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>12/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">97.73% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>43/44</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const decorators_key_constant_1 = require("../constants/decorators-key.constant");
+/**
+ * Set property as primary key.
+ * This key is use later to query, update and remove models.
+ *
+ * @returns {(contextClassInstance: Storeable, propertyKey: string) =&gt; void}
+ * @constructor
+ */
+function Ignore() {
+    return function (contextClassInstance, propertyKey) {
+        const contextClass = contextClassInstance.constructor;
+        addIgnoredFields(contextClass, propertyKey);
+    };
+}
+exports.Ignore = Ignore;
+function addIgnoredFields(contextClass, ...fields) {
+    const ignoredFields = getInstanceIgnoredFields(contextClass) || <span class="branch-1 cbranch-no" title="branch not covered" >new Set();</span>
+    const classFields = getClassIgnoredFields(contextClass);
+    fields.forEach(field =&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (classFields &amp;&amp; classFields.has(field))
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        ignoredFields.add(field);
+    });
+    contextClass.setModelMeta(decorators_key_constant_1.DECORATOR_KEYS.IGNORE_KEY, new Set(ignoredFields));
+}
+exports.addIgnoredFields = addIgnoredFields;
+function removeFieldsFromIgnored(contextClass, ...fields) {
+    const instanceFields = getInstanceIgnoredFields(contextClass);
+    const classFields = getClassIgnoredFields(contextClass);
+    const instanceNotIgnored = getInstanceNotIgnoredFields(contextClass);
+    const update = { instance: false, classLevel: false };
+    fields.forEach(field =&gt; {
+        if (instanceFields &amp;&amp; instanceFields.has(field)) {
+            instanceFields.delete(field);
+            update.instance = true;
+        }
+        else <span class="missing-if-branch" title="else path not taken" >E</span>if (classFields &amp;&amp; classFields.has(field)) {
+            instanceNotIgnored.add(field);
+            update.classLevel = true;
+        }
+    });
+    if (update.instance)
+        contextClass.setModelMeta(decorators_key_constant_1.DECORATOR_KEYS.IGNORE_KEY, instanceFields);
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (update.classLevel)
+        contextClass.setModelMeta(decorators_key_constant_1.DECORATOR_KEYS.NOT_IGNORE_KEY, instanceNotIgnored);
+}
+exports.removeFieldsFromIgnored = removeFieldsFromIgnored;
+function getIgnoredFields(contextClass) {
+    const classSet = new Set(getClassIgnoredFields(contextClass));
+    const instanceSet = getInstanceIgnoredFields(contextClass);
+    const notIgnored = getInstanceNotIgnoredFields(contextClass);
+    Array.from(notIgnored).forEach(field =&gt; classSet.delete(field));
+    const arr = Array.from(classSet);
+    arr.push.apply(arr, Array.from(instanceSet));
+    return arr;
+}
+exports.getIgnoredFields = getIgnoredFields;
+function initInstanceIgnoredFields(contextClass) {
+    contextClass.deleteModelMeta(decorators_key_constant_1.DECORATOR_KEYS.IGNORE_KEY);
+    contextClass.deleteModelMeta(decorators_key_constant_1.DECORATOR_KEYS.NOT_IGNORE_KEY);
+}
+exports.initInstanceIgnoredFields = initInstanceIgnoredFields;
+function getClassIgnoredFields(contextClass) {
+    return "getModelMeta" in contextClass.constructor
+        ? contextClass.constructor.getModelMeta(decorators_key_constant_1.DECORATOR_KEYS.IGNORE_KEY) || <span class="branch-1 cbranch-no" title="branch not covered" >new Set()</span>
+        : null;
+}
+function getInstanceIgnoredFields(contextClass) {
+    return contextClass.hasModelMeta(decorators_key_constant_1.DECORATOR_KEYS.IGNORE_KEY)
+        ? contextClass.getModelMeta(decorators_key_constant_1.DECORATOR_KEYS.IGNORE_KEY)
+        : new Set();
+}
+function getInstanceNotIgnoredFields(contextClass) {
+    return contextClass.hasModelMeta(decorators_key_constant_1.DECORATOR_KEYS.NOT_IGNORE_KEY)
+        ? contextClass.getModelMeta(decorators_key_constant_1.DECORATOR_KEYS.NOT_IGNORE_KEY)
+        : new Set();
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Oct 07 2018 01:51:13 GMT+0300 (Jerusalem Daylight Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>
