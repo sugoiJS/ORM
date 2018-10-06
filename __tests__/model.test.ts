@@ -404,7 +404,7 @@ describe("Model extra functions", () => {
         expect(res.updated).not.toBeDefined();
         expect(res.isUpdate).toBeDefined();
         dummy.initIgnoredFields();
-        res = await dummy.update().then(() => Dummy.findById(res.id));
+        res = await res.update().then(() => Dummy.findById(res.id));
         expect(res.lastUpdated).toBeDefined();
         expect(res.isUpdate).not.toBeDefined();
     })
