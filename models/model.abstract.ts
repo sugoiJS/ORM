@@ -91,7 +91,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
                  key = this.removeIgnoredFields();
             })
             .then(() => this.saveEmitter(options))
-            .then(() => this.revertIgnoredFields(key))
+            .then((res) => this.revertIgnoredFields(key,res))
             .then((savedData) => {
                 if (typeof this !== "function")//check if is instance
                     savedData = (<any>this.constructor).clone(this.constructor, savedData);
@@ -147,7 +147,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
                 key = this.removeIgnoredFields();
             })
             .then(() => this.updateEmitter(options))
-            .then(() => this.revertIgnoredFields(key))
+            .then((res) => this.revertIgnoredFields(key,res))
             .then((updatedData) => {
                 if (typeof this !== "function")//check if is instance
                     updatedData = (<any>this.constructor).clone(this.constructor, updatedData);

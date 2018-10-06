@@ -71,9 +71,9 @@ export class Storeable{
         return key;
     }
 
-    protected revertIgnoredFields(key:string):any{
+    protected revertIgnoredFields(key:string,value?:any):any{
         const metaObject = (<typeof Storeable>this.constructor).getModelMeta(Storeable.IGNORED_FIELDS_OBJECT_KEY+"_"+key);
-        Object.assign(this,metaObject);
+        Object.assign(this,metaObject,value);
         return this;
     }
 }
