@@ -10,7 +10,7 @@ import {Storeable} from "../classes/storeable.class";
  * @constructor
  */
 export function Ignore() {
-    return function (contextClassInstance: Storeable,
+    return function (contextClassInstance: any,
                      propertyKey: string): void {
         const contextClass = (<typeof Storeable>contextClassInstance.constructor);
         addIgnoredFields(contextClass, propertyKey);
@@ -50,21 +50,26 @@ export function removeFieldsFromIgnored(contextClass: Storeable, ...fields: stri
             update.classLevel = true;
         }
     });
-
-    if(update.instance)
-        contextClass.setModelMeta(DECORATOR_KEYS.IGNORE_KEY,instanceFields);
-    if(update.classLevel)
-        contextClass.setModelMeta(DECORATOR_KEYS.NOT_IGNORE_KEY,instanceNotIgnored);
+    if (update.instance)
+        contextClass.setModelMeta(DECORATOR_KEYS.IGNORE_KEY, instanceFields);
+    if (update.classLevel)
+        contextClass.setModelMeta(DECORATOR_KEYS.NOT_IGNORE_KEY, instanceNotIgnored);
 
 }
 
 export function getIgnoredFields(contextClass: Storeable | typeof Storeable): string[] {
-    const set = new Set(getClassIgnoredFields(contextClass));
+    const classSet = new Set(getClassIgnoredFields(contextClass));
+    const instanceSet = getInstanceIgnoredFields(contextClass);
     const notIgnored = getInstanceNotIgnoredFields(contextClass);
-    notIgnored.forEach(field=>set.delete(field));
-    const arr = Array.from(set);
-    arr.push.apply(arr, getInstanceIgnoredFields(contextClass));
+    Array.from(notIgnored).forEach(field => classSet.delete(field));
+    const arr = Array.from(classSet);
+    arr.push.apply(arr, Array.from(instanceSet));
     return arr;
+}
+
+export function initInstanceIgnoredFields(contextClass: Storeable | typeof Storeable): void{
+    contextClass.deleteModelMeta(DECORATOR_KEYS.IGNORE_KEY);
+    contextClass.deleteModelMeta(DECORATOR_KEYS.NOT_IGNORE_KEY);
 }
 
 function getClassIgnoredFields(contextClass: Storeable | typeof Storeable): Set<string> {
@@ -74,9 +79,13 @@ function getClassIgnoredFields(contextClass: Storeable | typeof Storeable): Set<
 }
 
 function getInstanceIgnoredFields(contextClass: Storeable | typeof Storeable): Set<string> {
-    return contextClass.getModelMeta(DECORATOR_KEYS.IGNORE_KEY) || new Set();
+    return contextClass.hasModelMeta(DECORATOR_KEYS.IGNORE_KEY)
+        ? contextClass.getModelMeta(DECORATOR_KEYS.IGNORE_KEY)
+        : new Set();
 }
 
 function getInstanceNotIgnoredFields(contextClass: Storeable | typeof Storeable): Set<string> {
-    return contextClass.getModelMeta(DECORATOR_KEYS.NOT_IGNORE_KEY) || new Set();
+    return contextClass.hasModelMeta(DECORATOR_KEYS.NOT_IGNORE_KEY)
+        ? contextClass.getModelMeta(DECORATOR_KEYS.NOT_IGNORE_KEY)
+        : new Set();
 }

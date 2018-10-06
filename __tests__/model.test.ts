@@ -72,7 +72,7 @@ async function connect() {
         password: "test",
     };
 
-    return await Dummy.setConnection(config,DummyConnection, "TESTING")
+    return await Dummy.setConnection(config, DummyConnection, "TESTING")
         .then(_connection => {
             connection = _connection.connectionClient;
             return setResources();
@@ -149,7 +149,7 @@ describe("Model read test suit", () => {
         expect.assertions(1);
         const resAmount = await Dummy.findAll({name: `${recNamePrefix}`}, QueryOptions
             .builder()
-            .setSortOptions(new SortItem(SortOptions.DESC, "lastSavedTime"))
+            .setSortOption(new SortItem(SortOptions.DESC, "lastSavedTime"))
         )
             .then(res => res.length);
         expect(resAmount).toBe(recAmount);
@@ -304,24 +304,24 @@ describe("Model extra functions", () => {
     it("Not a model", () => {
         expect("getModelName" in NotModel).toBeFalsy();
         expect(NotModel instanceof ModelAbstract).toBeFalsy();
-        try{
+        try {
             expect(ConnectionName("test")(NotModel)).toThrowError();
-        }catch(err){
+        } catch (err) {
             (<any>expect(err)).toBeExceptionOf({
                 type: SugoiModelException,
                 message: "Class not extend ConnectableModel",
                 code: 5003
             });
 
-        try{
-            expect(ModelName("test")(NotModel)).toThrowError();
-        }catch(err) {
-            (<any>expect(err)).toBeExceptionOf({
-                type: SugoiModelException,
-                message: "Class not extend ModelAbstract",
-                code: 5002
-            });
-        }
+            try {
+                expect(ModelName("test")(NotModel)).toThrowError();
+            } catch (err) {
+                (<any>expect(err)).toBeExceptionOf({
+                    type: SugoiModelException,
+                    message: "Class not extend ModelAbstract",
+                    code: 5002
+                });
+            }
 
 
         }
@@ -341,12 +341,12 @@ describe("Model extra functions", () => {
 
     it("Wrong config", async () => {
         expect.assertions(2);
-        const connection = await Dummy.setConnection({port: null, hostName: null},DummyConnection, "test");
+        const connection = await Dummy.setConnection({port: null, hostName: null}, DummyConnection, "test");
         await expect(connection.isConnected()).resolves.toBeFalsy();
         await (<any>expect(Dummy.connect("fail")).rejects).toBeExceptionOf({
-            type:SugoiModelException,
-            message:"Connection configuration is missing",
-            code:5001
+            type: SugoiModelException,
+            message: "Connection configuration is missing",
+            code: 5001
         });
     });
 
@@ -369,21 +369,43 @@ describe("Model extra functions", () => {
         expect({name: dummyRes.name, id: dummyRes.id}).toEqual({name: dummy.name, id: dummy.id});
     });
 
-    it("Ignored fields",async ()=>{
-        expect.assertions(8);
+    it("Ignored fields", async () => {
+        expect.assertions(10);
         const dummy = Dummy.builder("TestIgnore");
         dummy.addFieldsToIgnore("lastUpdated");
-        expect(dummy.getIgnoredFields().length).toEqual(4);
+        expect(dummy.getIgnoredFields().indexOf("lastUpdated")).toBeGreaterThan(-1);
         let res = await dummy.save();
-        expect(res.lastUpdated).not.toBeDefined();
+        dummy.isUpdate = true;
         expect(res.saved).not.toBeDefined();
-        res = await dummy.update().then(()=>Dummy.findById(res.id));
+        res = await dummy.update().then(() => Dummy.findById(res.id));
+        expect(res.lastUpdated).not.toBeDefined();
         expect(res.updated).not.toBeDefined();
         expect(res.isUpdate).not.toBeDefined();
-        dummy.removeFieldsFromIgnored("lastUpdated","updated");
+        dummy.removeFieldsFromIgnored("lastUpdated", "updated");
+        expect(dummy.getIgnoredFields().indexOf("lastUpdated")).toEqual(-1);
+        expect(dummy.getIgnoredFields().indexOf("updated")).toEqual(-1);
+        res = await dummy.update().then(() => Dummy.findById(res.id));
+        expect(res.lastUpdated).toEqual("today");
+        expect(res.isUpdate).not.toBeDefined();
+        expect(res.updated).toBeDefined();
+    });
+
+    it("Ignored fields init", async () => {
+        expect.assertions(7);
+        const dummy = Dummy.builder("TestIgnore");
+        dummy.addFieldsToIgnore("lastUpdated");
+        dummy.removeFieldsFromIgnored("isUpdate");
+        expect(dummy.getIgnoredFields().length).toEqual(4);
+        let res = await dummy.save();
+        dummy.isUpdate = true;
+        expect(res.saved).not.toBeDefined();
+        res = await dummy.update().then(() => Dummy.findById(res.id));
+        expect(res.lastUpdated).not.toBeDefined();
+        expect(res.updated).not.toBeDefined();
+        expect(res.isUpdate).toBeDefined();
+        dummy.initIgnoredFields();
         res = await dummy.update().then(() => Dummy.findById(res.id));
         expect(res.lastUpdated).toBeDefined();
         expect(res.isUpdate).not.toBeDefined();
-        expect(res.updated).toBeDefined();
     })
 });

@@ -147,11 +147,11 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
     }
 
     beforeValidate(): Promise<any> | void {
-        this.name = this.isUpdate ? "u_" + this.name : this.name;
+        this.name = this.isUpdate
+            ? "u_" + this.name : this.name;
     }
 
     beforeUpdate(): Promise<any> | void {
-        delete this.isUpdate;
         this.lastUpdated = "today";
         return Dummy.connect();
     }
@@ -161,7 +161,6 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
     }
 
     beforeSave(): Promise<any> | void {
-        delete this.isUpdate;
         this.id = StringUtils.generateGuid();
         this.lastSaved = "today";
         this.lastSavedTime = new Date().getTime();

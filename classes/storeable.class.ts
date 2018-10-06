@@ -1,4 +1,4 @@
-import {addIgnoredFields, getIgnoredFields, removeFieldsFromIgnored} from "../decorators/ignore.decorator";
+import {addIgnoredFields, getIgnoredFields, removeFieldsFromIgnored,initInstanceIgnoredFields} from "../decorators/ignore.decorator";
 import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
 
 export class Storeable{
@@ -47,6 +47,11 @@ export class Storeable{
 
     public removeFieldsFromIgnored(...fields:string[]){
         removeFieldsFromIgnored(this,...fields);
+    }
+
+
+    public initIgnoredFields(){
+        initInstanceIgnoredFields(this);
     }
 
     public getIgnoredFields(){

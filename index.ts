@@ -1,4 +1,6 @@
 
+export {Ignore} from "./decorators/ignore.decorator";
+
 export {Connection} from "./classes/connection.class";
 
 export {SortItem} from "./classes/sort-item.class";
