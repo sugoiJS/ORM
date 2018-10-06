@@ -1,26 +1,23 @@
-import {CONNECTION_STATUS, SugoiModelException, EXCEPTIONS} from "../index";
+import {SugoiModelException, EXCEPTIONS} from "../index";
 import {IModel} from "../interfaces/model.interface";
-import {getPrimaryKey, Primary} from "../decorators/primary.decorator";
+import {getPrimaryKey} from "../decorators/primary.decorator";
 import {TIdentifierTypes} from "../interfaces/identifer-types.type";
 import {QueryOptions} from "../classes/query-options.class";
 import {clone} from "../utils/object.utils";
+import {Storeable} from "../classes/storeable.class";
 
 
-export abstract class ModelAbstract implements IModel {
-    public static status: CONNECTION_STATUS;
+export abstract class ModelAbstract extends Storeable implements IModel {
+    private static modelName: string;
 
-    private static collectionName: string;
-
-
-    constructor() {
-    }
+    constructor(){super()}
 
     public static setModelName(name: string = this.name) {
         this.setCollectionName(name)
     }
 
     public static setCollectionName(name: string = this.name) {
-        this.collectionName = name;
+        this.modelName = name;
     }
 
     public static getModelName() {
@@ -28,7 +25,7 @@ export abstract class ModelAbstract implements IModel {
     }
 
     public static getCollectionName() {
-        return this.collectionName || this.name;
+        return this.modelName || this.name;
     }
 
     public static find<T=any>(query: any = {}, options?: Partial<QueryOptions | any>): Promise<Array<T>> {
@@ -50,9 +47,9 @@ export abstract class ModelAbstract implements IModel {
         return this.findOne<T>(this.castIdToQuery(id), options)
     }
 
-    public sugBeforeFind(query,options): Promise<void> {
+    public sugBeforeFind(query, options): Promise<void> {
         return 'beforeFind' in (this as any)
-            ? (<any>this).beforeFind(query,options) || Promise.resolve()
+            ? (<any>this).beforeFind(query, options) || Promise.resolve()
             : Promise.resolve();
     };
 
@@ -63,7 +60,7 @@ export abstract class ModelAbstract implements IModel {
     };
 
     protected static findPipe<T=any>(query?: any, options?: Partial<QueryOptions | any>): Promise<T[]> {
-        return this.prototype.sugBeforeFind(query,options)
+        return this.prototype.sugBeforeFind(query, options)
             .then(() => this.findEmitter(query, options))
             .then((res: Array<T>) => {
                 if (!Array.isArray(res)) res = [res];
@@ -80,6 +77,7 @@ export abstract class ModelAbstract implements IModel {
     };
 
     public async save<T=any>(options?: Partial<QueryOptions | any>): Promise<T> {
+        let key;
         return await this.sugBeforeValidate()
             .then(() => {
                 return this.sugValidate();
@@ -89,7 +87,11 @@ export abstract class ModelAbstract implements IModel {
                     throw new SugoiModelException(EXCEPTIONS.INVALID.message, EXCEPTIONS.INVALID.code, valid);
             })
             .then(() => this.sugBeforeSave())
+            .then(() => {
+                 key = this.removeIgnoredFields();
+            })
             .then(() => this.saveEmitter(options))
+            .then(() => this.revertIgnoredFields(key))
             .then((savedData) => {
                 if (typeof this !== "function")//check if is instance
                     savedData = (<any>this.constructor).clone(this.constructor, savedData);
@@ -131,7 +133,7 @@ export abstract class ModelAbstract implements IModel {
     };
 
     public async update<T=any>(options?: Partial<QueryOptions | any>): Promise<T> {
-        const that = this;
+        let key;
         return await this.sugBeforeValidate()
             .then(() => {
                 return this.sugValidate();
@@ -141,7 +143,11 @@ export abstract class ModelAbstract implements IModel {
                     throw new SugoiModelException(EXCEPTIONS.INVALID.message, EXCEPTIONS.INVALID.code, valid);
             })
             .then(() => this.sugBeforeUpdate())
+            .then(() => {
+                key = this.removeIgnoredFields();
+            })
             .then(() => this.updateEmitter(options))
+            .then(() => this.revertIgnoredFields(key))
             .then((updatedData) => {
                 if (typeof this !== "function")//check if is instance
                     updatedData = (<any>this.constructor).clone(this.constructor, updatedData);
@@ -193,7 +199,7 @@ export abstract class ModelAbstract implements IModel {
     }
 
     protected static removePipe<T=any>(query?: any, options?: Partial<QueryOptions | any>): Promise<T> {
-        return this.prototype.sugBeforeRemove(query,options)
+        return this.prototype.sugBeforeRemove(query, options)
             .then(() => this.removeEmitter(query, options))
             .then((data) => this.prototype.sugAfterRemove(data).then(res => res || data))
     }
@@ -202,9 +208,9 @@ export abstract class ModelAbstract implements IModel {
         throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "Remove Emitter " + this.constructor.name);
     };
 
-    public sugBeforeRemove(query,options): Promise<void> {
+    public sugBeforeRemove(query, options): Promise<void> {
         return 'beforeRemove' in (this as any)
-            ? (<any>this).beforeRemove(query,options) || Promise.resolve()
+            ? (<any>this).beforeRemove(query, options) || Promise.resolve()
             : Promise.resolve();
     };
 
@@ -222,7 +228,7 @@ export abstract class ModelAbstract implements IModel {
     public setPrimaryPropertyValue(value: TIdentifierTypes): void {
         const primaryKey = getPrimaryKey(this);
         if (!primaryKey)
-            throw new SugoiModelException(EXCEPTIONS.PRIMARY_NOT_CONFIGURED.message,EXCEPTIONS.PRIMARY_NOT_CONFIGURED.code,(<any>this["constructor"]).getModelName());
+            throw new SugoiModelException(EXCEPTIONS.PRIMARY_NOT_CONFIGURED.message, EXCEPTIONS.PRIMARY_NOT_CONFIGURED.code, (<any>this["constructor"]).getModelName());
         this[primaryKey] = value;
     }
 
@@ -240,7 +246,7 @@ export abstract class ModelAbstract implements IModel {
             data = classIns;
             classIns = this;
         }
-        return clone(classIns,data) as T;
+        return clone(classIns, data) as T;
     }
 
 
@@ -269,7 +275,7 @@ export abstract class ModelAbstract implements IModel {
      * @param {boolean} deleteProperty - flag to remove the primaryKey property from the query
      * @returns {TIdentifierTypes}
      */
-    public static getIdFromQuery(query: any, classToUse:any = this, deleteProperty: boolean = true): TIdentifierTypes {
+    public static getIdFromQuery(query: any, classToUse: any = this, deleteProperty: boolean = true): TIdentifierTypes {
         const primaryKey = getPrimaryKey(classToUse);
         const id = query && query.hasOwnProperty(primaryKey) ? query[primaryKey] : null;
         if (deleteProperty) {
@@ -286,5 +292,4 @@ export abstract class ModelAbstract implements IModel {
         const primaryKey = getPrimaryKey(this);
         return primaryKey ? {[primaryKey]: this[primaryKey]} : null;
     }
-
 }

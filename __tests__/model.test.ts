@@ -2,7 +2,6 @@ import {IConnectionConfig, QueryOptions, SugoiModelException, SortItem, SortOpti
 import {Dummy} from "./models/dummy";
 import {NotModel} from "./models/not-model";
 import {ModelAbstract} from "../models/model.abstract";
-import {EXCEPTIONS} from "../constants/exceptions.contant";
 import {DummyConnection} from "./classes/dummy-connection.class";
 import {ConnectionName} from "../decorators/connection-name.decorator";
 import {ModelName} from "../decorators/model-name.decorator";
@@ -370,4 +369,21 @@ describe("Model extra functions", () => {
         expect({name: dummyRes.name, id: dummyRes.id}).toEqual({name: dummy.name, id: dummy.id});
     });
 
+    it("Ignored fields",async ()=>{
+        expect.assertions(8);
+        const dummy = Dummy.builder("TestIgnore");
+        dummy.addFieldsToIgnore("lastUpdated");
+        expect(dummy.getIgnoredFields().length).toEqual(4);
+        let res = await dummy.save();
+        expect(res.lastUpdated).not.toBeDefined();
+        expect(res.saved).not.toBeDefined();
+        res = await dummy.update().then(()=>Dummy.findById(res.id));
+        expect(res.updated).not.toBeDefined();
+        expect(res.isUpdate).not.toBeDefined();
+        dummy.removeFieldsFromIgnored("lastUpdated","updated");
+        res = await dummy.update().then(() => Dummy.findById(res.id));
+        expect(res.lastUpdated).toBeDefined();
+        expect(res.isUpdate).not.toBeDefined();
+        expect(res.updated).toBeDefined();
+    })
 });

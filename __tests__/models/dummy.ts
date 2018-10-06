@@ -21,6 +21,7 @@ import {
 import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
 import {EXCEPTIONS} from "../../constants/exceptions.contant";
 import {ConnectionName} from "../../decorators/connection-name.decorator";
+import {Ignore} from "../../decorators/ignore.decorator";
 
 
 @ModelName("dummy")
@@ -35,8 +36,11 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
     public lastUpdated;
     public lastSaved;
     public lastSavedTime;
+    @Ignore()
     public saved: boolean;
+    @Ignore()
     public updated: boolean;
+    @Ignore()
     public isUpdate: boolean;
 
     constructor(name: string) {
