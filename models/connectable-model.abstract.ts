@@ -5,13 +5,15 @@ import {EXCEPTIONS} from "../constants/exceptions.contant";
 import {IConnection} from "../interfaces/connection.interface";
 import {clone} from "../utils/object.utils";
 import {CONNECTION_STATUS} from "../constants/connection-status.constant";
+import {Connection} from "../classes/connection.class";
 
 export abstract class ConnectableModel extends ModelAbstract {
     protected static connections: Map<string, IConnection> = new Map();
-
     protected static connectionName: string = "default";
 
-    public static setConnection(configData: IConnectionConfig,connectionClass, connectionName: string = "default"): Promise<IConnection> {
+    public static setConnection(configData: IConnectionConfig, connectionName?: string): Promise<IConnection>;
+    public static setConnection(configData: IConnectionConfig, connectionClass: string | typeof Connection, connectionName?: string): Promise<IConnection>;
+    public static setConnection(configData: IConnectionConfig, connectionClass?:string | typeof Connection, connectionName: any = "default"): Promise<IConnection> {
         if (!connectionClass)
             throw new SugoiModelException(EXCEPTIONS.CONNECTABLE_CONNECTION_NOT_CONFIGURED.message, EXCEPTIONS.CONNECTABLE_CONNECTION_NOT_CONFIGURED.code, this.name);
         configData['connectionName'] = connectionName;

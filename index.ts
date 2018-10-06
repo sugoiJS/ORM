@@ -1,4 +1,6 @@
 
+export {Connection} from "./classes/connection.class";
+
 export {SortItem} from "./classes/sort-item.class";
 
 export {ConnectionName} from "./decorators/connection-name.decorator";
