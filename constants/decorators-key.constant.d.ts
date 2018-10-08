@@ -1,0 +1,5 @@
+export declare enum DECORATOR_KEYS {
+    PRIMARY_KEY = "PRIMARY_KEY",
+    IGNORE_KEY = "IGNORED_KEY",
+    NOT_IGNORE_KEY = "NOT_IGNORED_KEY"
+}
