@@ -1,12 +1,19 @@
-import {addIgnoredFields, getIgnoredFields, removeFieldsFromIgnored,initInstanceIgnoredFields} from "../decorators/ignore.decorator";
+import {
+    addIgnoredFields,
+    getIgnoredFields,
+    removeFieldsFromIgnored,
+    initInstanceIgnoredFields
+} from "../decorators/ignore.decorator";
 import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
+
 const IGNORED_FIELDS_OBJECT_KEY = "IGNORED_FIELDS_OBJECT";
-export class Storeable{
 
-    private static ModelMeta:Map<string,any> = new Map();
-    private modelInstanceMeta:Map<string,any> = new Map();
+export class Storeable {
 
-    constructor(){
+    private static ModelMeta: Map<string, any> = new Map();
+    private modelInstanceMeta: Map<string, any> = new Map();
+
+    constructor() {
     }
 
     public static setModelMeta(key: string, value: any) {
@@ -41,40 +48,43 @@ export class Storeable{
         this.modelInstanceMeta.delete(key);
     }
 
-    public addFieldsToIgnore(...fields:string[]){
-        addIgnoredFields(this,...fields);
+    public addFieldsToIgnore(...fields: string[]) {
+        addIgnoredFields(this, ...fields);
     }
 
-    public removeFieldsFromIgnored(...fields:string[]){
-        removeFieldsFromIgnored(this,...fields);
+    public removeFieldsFromIgnored(...fields: string[]) {
+        removeFieldsFromIgnored(this, ...fields);
     }
 
 
-    public initIgnoredFields(){
+    public initIgnoredFields() {
         initInstanceIgnoredFields(this);
     }
 
-    public getIgnoredFields(){
+    public getIgnoredFields() {
         return getIgnoredFields(this);
     }
 
-    protected removeIgnoredFields():any{
+    protected removeIgnoredFields(): any {
         const key = StringUtils.generateGuid();
         const ignoredFields = this.getIgnoredFields();
         const metaObject = {};
-        ignoredFields.forEach(field=>{
-            if(!this.hasOwnProperty(field)) return;
+        ignoredFields.forEach(field => {
+            if (!this.hasOwnProperty(field)) return;
             metaObject[field] = this[field];
             delete this[field];
         });
-        (<typeof Storeable>this.constructor).setModelMeta(IGNORED_FIELDS_OBJECT_KEY+"_"+key,metaObject);
+        (<typeof Storeable>this.constructor).setModelMeta(IGNORED_FIELDS_OBJECT_KEY + "_" + key, metaObject);
         return key;
     }
 
-    protected revertIgnoredFields(key:string,value?:any):any{
-        const metaObject = (<typeof Storeable>this.constructor).getModelMeta(IGNORED_FIELDS_OBJECT_KEY+"_"+key);
-        Object.assign(this,metaObject,value);
+    protected revertIgnoredFields(key: string, value?: any, removeRecord: boolean = true): any {
+        const metaObject = (<typeof Storeable>this.constructor).getModelMeta(IGNORED_FIELDS_OBJECT_KEY + "_" + key);
+        Object.assign(this, metaObject, value);
+        if(removeRecord)
+            (<typeof Storeable>this.constructor).deleteModelMeta(IGNORED_FIELDS_OBJECT_KEY + "_" + key);
         return this;
     }
 }
-addIgnoredFields(Storeable,"modelInstanceMeta");
+
+addIgnoredFields(Storeable, "modelInstanceMeta");
