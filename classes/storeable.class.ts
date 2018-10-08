@@ -1,8 +1,8 @@
 import {addIgnoredFields, getIgnoredFields, removeFieldsFromIgnored,initInstanceIgnoredFields} from "../decorators/ignore.decorator";
 import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
-
+const IGNORED_FIELDS_OBJECT_KEY = "IGNORED_FIELDS_OBJECT";
 export class Storeable{
-    public static readonly IGNORED_FIELDS_OBJECT_KEY = "IGNORED_FIELDS_OBJECT";
+
     private static ModelMeta:Map<string,any> = new Map();
     private modelInstanceMeta:Map<string,any> = new Map();
 
@@ -67,12 +67,12 @@ export class Storeable{
             metaObject[field] = this[field];
             delete this[field];
         });
-        (<typeof Storeable>this.constructor).setModelMeta(Storeable.IGNORED_FIELDS_OBJECT_KEY+"_"+key,metaObject);
+        (<typeof Storeable>this.constructor).setModelMeta(IGNORED_FIELDS_OBJECT_KEY+"_"+key,metaObject);
         return key;
     }
 
     protected revertIgnoredFields(key:string,value?:any):any{
-        const metaObject = (<typeof Storeable>this.constructor).getModelMeta(Storeable.IGNORED_FIELDS_OBJECT_KEY+"_"+key);
+        const metaObject = (<typeof Storeable>this.constructor).getModelMeta(IGNORED_FIELDS_OBJECT_KEY+"_"+key);
         Object.assign(this,metaObject,value);
         return this;
     }
