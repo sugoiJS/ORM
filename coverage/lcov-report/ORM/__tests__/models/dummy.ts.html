@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ORM/__tests__/models/dummy.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\index.html">All files</a> / <a href="index.html">ORM/__tests__/models</a> dummy.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>78/78</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">94.59% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>35/37</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>26/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>73/73</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">176x</span>
+<span class="cline-any cline-yes">176x</span>
+<span class="cline-any cline-yes">176x</span>
+<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">176x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">225x</span>
+<span class="cline-any cline-yes">225x</span>
+<span class="cline-any cline-yes">225x</span>
+<span class="cline-any cline-yes">225x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">225x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">225x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
+    IAfterSave,
+    IAfterUpdate,
+    IBeforeSave,
+    IBeforeUpdate,
+    IBeforeValidate,
+    IValidate,
+    SortItem,
+    QueryOptions,
+    ModelName,
+    Primary,
+    SugoiModelException,
+    IBeforeFind,
+    IAfterFind,
+    IBeforeRemove,
+    IAfterRemove,
+    ConnectableModel,
+    IConnection,
+    CONNECTION_STATUS
+} from "../../index";
+import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
+import {EXCEPTIONS} from "../../constants/exceptions.contant";
+import {ConnectionName} from "../../decorators/connection-name.decorator";
+import {Ignore} from "../../decorators/ignore.decorator";
+&nbsp;
+&nbsp;
+@ModelName("dummy")
+@ConnectionName("TESTING")
+export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate, IAfterUpdate, IAfterSave, IBeforeSave, IBeforeValidate, IBeforeFind, IAfterFind, IBeforeRemove, IAfterRemove {
+&nbsp;
+&nbsp;
+    public static RECORDS = [];
+    @Primary()
+    public id;
+    public name;
+    public lastUpdated;
+    public lastSaved;
+    public lastSavedTime;
+    @Ignore()
+    public saved: boolean;
+    @Ignore()
+    public updated: boolean;
+    @Ignore()
+    public isUpdate: boolean;
+&nbsp;
+    constructor(name: string) {
+        super();
+        this.name = name;
+    }
+&nbsp;
+    beforeFind(query: any, options?: Partial&lt;QueryOptions | any&gt;): Promise&lt;any&gt; | void {
+        if (query.fail)
+            throw new SugoiModelException(EXCEPTIONS.INVALID.message, EXCEPTIONS.INVALID.code)
+        return Dummy.connect();
+    }
+&nbsp;
+    afterFind(res): Promise&lt;any&gt; | void {
+        res.forEach(item =&gt; item.found = true)
+    }
+&nbsp;
+    beforeRemove(query: any, options?: Partial&lt;QueryOptions | any&gt;): Promise&lt;any&gt; | void {
+        if (query.fail)
+            throw new SugoiModelException(EXCEPTIONS.INVALID.message, EXCEPTIONS.INVALID.code)
+        return Dummy.connect();
+    }
+&nbsp;
+    afterRemove(res): Promise&lt;any&gt; | void {
+        res.ok = res.n &gt; 0
+    }
+&nbsp;
+    protected saveEmitter(options?: any): Promise&lt;any&gt; {
+        return Dummy.upsert(this);
+    }
+&nbsp;
+    protected static findEmitter&lt;T=Dummy&gt;(query?: any, options: Partial&lt;QueryOptions | any&gt; = QueryOptions.builder()): Promise&lt;T&gt; {
+        const limit = options.getLimit();
+        const offset = options.getOffset();
+        let response = Dummy.filterByQuery(query, limit, options.getSortOptions());
+        return Promise.resolve(response);
+    }
+&nbsp;
+    protected static removeEmitter&lt;T=any&gt;(query?: any, options: Partial&lt;QueryOptions | any&gt; = QueryOptions.builder()): Promise&lt;any&gt; {
+        const hasId = !!this.getIdFromQuery(query, this, false);
+        const limit = options.limit || 0;
+        const originalSize = Dummy.RECORDS.length;
+        const size = originalSize - limit;
+        let i = 0;
+        Dummy.RECORDS = hasId || limit
+            ? Dummy.filterByQuery(query, size, options.sort, hasId)
+            : Dummy.RECORDS.filter(rec =&gt; {
+                return !(i++ &lt; size &amp;&amp; Dummy.validRecordByQuery(rec, query));
+            });
+        const res = {n: originalSize - Dummy.RECORDS.length};
+        return Promise.resolve(res);
+    }
+&nbsp;
+    protected updateEmitter(options?: any): Promise&lt;any&gt; {
+        const index = Dummy.RECORDS.findIndex((rec) =&gt; Dummy.validRecordByQuery(rec, {id: this.id}));
+        if (index === -1)
+            throw new SugoiModelException("Not updated", 5000);
+        else {
+            Dummy.RECORDS.splice(index, 1);
+        }
+&nbsp;
+        return Dummy.upsert(this)
+    }
+&nbsp;
+    public static upsert(record) {
+        return new Promise(resolve =&gt; {
+            setTimeout(() =&gt; {
+                const rec = {...record};
+                Dummy.RECORDS.push(rec);
+                resolve(rec);
+            }, 1000)
+        });
+&nbsp;
+    }
+&nbsp;
+    public static filterByQuery(query, limit = Dummy.RECORDS.length, sort?: SortItem, not: boolean = false) {
+        if (sort) {
+            Dummy.RECORDS.sort((a, b) =&gt; {
+                const aField = a[sort.field];
+                const bField = b[sort.field];
+                return sort.sortOption === "DESC" ? <span class="branch-0 cbranch-no" title="branch not covered" >bField - aField </span>: aField - bField;
+            });
+        }
+        return Dummy.RECORDS.reduce((arr, rec) =&gt; {
+            let valid = Dummy.validRecordByQuery(rec, query);
+            valid = not ? !valid : valid;
+            if ((not || arr.length &lt; limit) &amp;&amp; valid) {
+                arr.push(rec);
+            }
+            return arr;
+        }, []);
+    }
+&nbsp;
+    public static validRecordByQuery(record, query) {
+        let valid = false;
+        for (let prop in query) {
+            valid = true;
+            valid = valid &amp;&amp; (typeof query[prop] === "string"
+                ? record[prop].indexOf(query[prop]) &gt; -1
+                : <span class="branch-1 cbranch-no" title="branch not covered" >query[prop] === record[prop])</span>;
+            if (!valid) break;
+        }
+        return valid;
+    }
+&nbsp;
+    beforeValidate(): Promise&lt;any&gt; | void {
+        this.name = this.isUpdate
+            ? "u_" + this.name : this.name;
+    }
+&nbsp;
+    beforeUpdate(): Promise&lt;any&gt; | void {
+        this.lastUpdated = "today";
+        return Dummy.connect();
+    }
+&nbsp;
+    afterUpdate(updateResponse?: any): Promise&lt;any&gt; | void {
+        this.updated = this.lastUpdated === "today";
+    }
+&nbsp;
+    beforeSave(): Promise&lt;any&gt; | void {
+        this.id = StringUtils.generateGuid();
+        this.lastSaved = "today";
+        this.lastSavedTime = new Date().getTime();
+        return Dummy.connect();
+    }
+&nbsp;
+    afterSave(saveResponse?: any): Promise&lt;any&gt; | void {
+        this.saved = true;
+    }
+&nbsp;
+    validate(): Promise&lt;string | boolean&gt; {
+        return Promise.resolve(isNaN(parseInt(&lt;string&gt;this.name)));
+    }
+&nbsp;
+    static builder(name) {
+        return new Dummy(name);
+    }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Oct 10 2018 00:14:33 GMT+0300 (Jerusalem Daylight Time)
+</div>
+</div>
+<script src="..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\sorter.js"></script>
+</body>
+</html>
