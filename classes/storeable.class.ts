@@ -2,50 +2,60 @@ import {
     addIgnoredFields,
     getIgnoredFields,
     removeFieldsFromIgnored,
-    initInstanceIgnoredFields
+    initInstanceIgnoredFields, Ignore
 } from "../decorators/ignore.decorator";
-import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
-
-const IGNORED_FIELDS_OBJECT_KEY = "IGNORED_FIELDS_OBJECT";
 
 export class Storeable {
 
-    private static ModelMeta: Map<string, any> = new Map();
-    private modelInstanceMeta: Map<string, any> = new Map();
+    private static ModelMeta: {[prop:string]: any} = {};
+    protected modelInstanceMeta: {[prop:string]: any} = {};
 
     constructor() {
+        this.flagMetaAsIgnored()
+    }
+
+    public flagMetaAsIgnored() {
+        this.flagAsIgnored('modelInstanceMeta', true);
+    }
+
+    private flagAsIgnored(field: string, ignored: boolean) {
+        const descriptor = Object.getOwnPropertyDescriptor(this, field);
+        if (!descriptor) return;
+        descriptor.enumerable = !ignored;
+        descriptor.configurable = true;
+        Object.defineProperty(this, field, descriptor);
     }
 
     public static setModelMeta(key: string, value: any) {
-        this.ModelMeta.set(key, value);
+        this.ModelMeta[key] = value;
     }
 
     public setModelMeta(key: string, value: any) {
-        this.modelInstanceMeta.set(key, value);
+        this.modelInstanceMeta[key] =  value;
     }
 
     public static getModelMeta<T=any>(key: string): T {
-        return this.ModelMeta.get(key) as T;
+        return this.ModelMeta[key] as T;
     }
 
     public getModelMeta<T=any>(key: string): T {
-        return this.modelInstanceMeta.get(key) as T;
+        return this.modelInstanceMeta[key] as T;
     }
 
     public static hasModelMeta(key: string): boolean {
-        return this.ModelMeta.has(key);
+        return this.ModelMeta.hasOwnProperty(key);
     }
 
     public hasModelMeta(key: string): boolean {
-        return this.modelInstanceMeta.has(key)
+        return this.modelInstanceMeta.hasOwnProperty(key)
     }
 
     public static deleteModelMeta(key: string) {
-        this.ModelMeta.delete(key);
+        delete this.ModelMeta[key];
     }
 
     public deleteModelMeta(key: string) {
-        this.modelInstanceMeta.delete(key);
+        delete this.modelInstanceMeta[key];
     }
 
     public addFieldsToIgnore(...fields: string[]) {
@@ -65,26 +75,19 @@ export class Storeable {
         return getIgnoredFields(this);
     }
 
-    protected removeIgnoredFields(): any {
-        const key = StringUtils.generateGuid();
+
+    public hideIgnoredFields(): void {
         const ignoredFields = this.getIgnoredFields();
-        const metaObject = {};
         ignoredFields.forEach(field => {
-            if (!this.hasOwnProperty(field)) return;
-            metaObject[field] = this[field];
-            delete this[field];
+            this.flagAsIgnored(field, true);
         });
-        (<typeof Storeable>this.constructor).setModelMeta(IGNORED_FIELDS_OBJECT_KEY + "_" + key, metaObject);
-        return key;
     }
 
-    protected revertIgnoredFields(key: string, value?: any, removeRecord: boolean = true): any {
-        const metaObject = (<typeof Storeable>this.constructor).getModelMeta(IGNORED_FIELDS_OBJECT_KEY + "_" + key);
-        Object.assign(this, metaObject, value);
-        if(removeRecord)
-            (<typeof Storeable>this.constructor).deleteModelMeta(IGNORED_FIELDS_OBJECT_KEY + "_" + key);
-        return this;
+    protected revertIgnoredFields(): void {
+        const ignoredFields = this.getIgnoredFields();
+        ignoredFields.forEach(field => {
+            if (field === "modelInstanceMeta") return;
+            this.flagAsIgnored(field, false);
+        });
     }
 }
-
-addIgnoredFields(Storeable, "modelInstanceMeta");

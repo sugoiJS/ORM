@@ -52,11 +52,12 @@ let connection;
 async function setResources() {
     const p = [];
     for (let i = 0; i < recAmount; i++) {
-        p.push(
-            Dummy.builder(`${recNamePrefix}${i}`).save()
-        );
+        const dummy = Dummy.builder(`${recNamePrefix}${i}`);
+        dummy.hideIgnoredFields();
+        p.push(dummy.save());
     }
     Promise.race(p).then(first => {
+        delete  first.saved;
         mockObject = first;
     });
     return Promise.all(p);
@@ -370,20 +371,24 @@ describe("Model extra functions", () => {
     });
 
     it("Ignored fields", async () => {
-        expect.assertions(10);
+        expect.assertions(11);
         const dummy = Dummy.builder("TestIgnore");
         dummy.addFieldsToIgnore("lastUpdated");
         expect(dummy.getIgnoredFields().indexOf("lastUpdated")).toBeGreaterThan(-1);
         let res = await dummy.save();
+        expect(res.saved).toBeDefined();
         dummy.isUpdate = true;
+        res = await Dummy.findById(res.id);
         expect(res.saved).not.toBeDefined();
         res = await dummy.update().then(() => Dummy.findById(res.id));
         expect(res.lastUpdated).not.toBeDefined();
         expect(res.updated).not.toBeDefined();
         expect(res.isUpdate).not.toBeDefined();
+
         dummy.removeFieldsFromIgnored("lastUpdated", "updated");
         expect(dummy.getIgnoredFields().indexOf("lastUpdated")).toEqual(-1);
         expect(dummy.getIgnoredFields().indexOf("updated")).toEqual(-1);
+
         res = await dummy.update().then(() => Dummy.findById(res.id));
         expect(res.lastUpdated).toEqual("today");
         expect(res.isUpdate).not.toBeDefined();
@@ -395,10 +400,10 @@ describe("Model extra functions", () => {
         const dummy = Dummy.builder("TestIgnore");
         dummy.addFieldsToIgnore("lastUpdated");
         dummy.removeFieldsFromIgnored("isUpdate");
-        expect(dummy.getIgnoredFields().length).toEqual(4);
+        expect(dummy.getIgnoredFields().length).toEqual(3);
         let res = await dummy.save();
         dummy.isUpdate = true;
-        expect(res.saved).not.toBeDefined();
+        expect(res.saved).toBeDefined();
         res = await dummy.update().then(() => Dummy.findById(res.id));
         expect(res.lastUpdated).not.toBeDefined();
         expect(res.updated).not.toBeDefined();
@@ -408,4 +413,31 @@ describe("Model extra functions", () => {
         expect(res.lastUpdated).toBeDefined();
         expect(res.isUpdate).not.toBeDefined();
     })
+
+    it("Formalize value with ignored",async ()=>{
+        expect.assertions(4);
+        let res = await Dummy.builder("tester_100").save();
+        expect(res.saved).toBeTruthy();
+        expect(JSON.parse(JSON.stringify(res)).modelInstanceMeta).not.toBeDefined();
+        const dummy = Dummy.builder("tester_100");
+        dummy.hideIgnoredFields();
+        res = dummy.save();
+        expect(res.saved).toBeFalsy();
+        expect(JSON.parse(JSON.stringify(res)).modelInstanceMeta).not.toBeDefined();
+
+    });
+
+    it("Formalize value without ignored",async ()=>{
+        expect.assertions(5);
+        let res = await Dummy.builder("tester_100").save();
+        expect(res.saved).toBeTruthy();
+        res = await res.update();
+        expect(res.updated).toBeTruthy();
+        expect(JSON.parse(JSON.stringify(res)).modelInstanceMeta).not.toBeDefined();
+            const dummy = Dummy.builder("tester_100");
+        dummy.hideIgnoredFields();
+        res = dummy.save();
+        expect(res.saved).not.toBeTruthy();
+        expect(JSON.parse(JSON.stringify(res)).modelInstanceMeta).not.toBeDefined();
+    });
 });

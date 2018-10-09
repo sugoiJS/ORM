@@ -77,7 +77,6 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     };
 
     public async save<T=any>(options?: Partial<QueryOptions | any>): Promise<T> {
-        let key;
         return await this.sugBeforeValidate()
             .then(() => {
                 return this.sugValidate();
@@ -87,11 +86,12 @@ export abstract class ModelAbstract extends Storeable implements IModel {
                     throw new SugoiModelException(EXCEPTIONS.INVALID.message, EXCEPTIONS.INVALID.code, valid);
             })
             .then(() => this.sugBeforeSave())
-            .then(() => {
-                 key = this.removeIgnoredFields();
-            })
+            .then(() => this.hideIgnoredFields())
             .then(() => this.saveEmitter(options))
-            .then((res) => this.revertIgnoredFields(key,res))
+            .then((res) => {
+                this.revertIgnoredFields();
+                return res;
+            })
             .then((savedData) => {
                 if (typeof this !== "function")//check if is instance
                     savedData = (<any>this.constructor).clone(this.constructor, savedData);
@@ -99,9 +99,10 @@ export abstract class ModelAbstract extends Storeable implements IModel {
                     savedData = (<any>this).clone(this, savedData);
 
                 Object.assign(this, savedData);
-                return savedData;
+                this.flagMetaAsIgnored();
+                return this;
             })
-            .then((savedData) => {
+            .then((savedData:any) => {
                 return this.sugAfterSave<T>(savedData).then((res) => res || savedData)
             })
     }
@@ -133,7 +134,6 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     };
 
     public async update<T=any>(options?: Partial<QueryOptions | any>): Promise<T> {
-        let key;
         return await this.sugBeforeValidate()
             .then(() => {
                 return this.sugValidate();
@@ -143,20 +143,22 @@ export abstract class ModelAbstract extends Storeable implements IModel {
                     throw new SugoiModelException(EXCEPTIONS.INVALID.message, EXCEPTIONS.INVALID.code, valid);
             })
             .then(() => this.sugBeforeUpdate())
-            .then(() => {
-                key = this.removeIgnoredFields();
-            })
+            .then(() => this.hideIgnoredFields())
             .then(() => this.updateEmitter(options))
-            .then((res) => this.revertIgnoredFields(key,res))
+            .then((res) => {
+                this.revertIgnoredFields();
+                return res;
+            })
             .then((updatedData) => {
                 if (typeof this !== "function")//check if is instance
                     updatedData = (<any>this.constructor).clone(this.constructor, updatedData);
                 else
                     updatedData = (<any>this).clone(this, updatedData);
                 Object.assign(this, updatedData);
-                return updatedData;
+                this.flagMetaAsIgnored();
+                return this;
             })
-            .then((updatedData) => {
+            .then((updatedData:any) => {
                 return this.sugAfterUpdate<T>(updatedData).then((res) => res || updatedData)
             });
     }
@@ -241,12 +243,14 @@ export abstract class ModelAbstract extends Storeable implements IModel {
      * @param data - data to transform
      * @returns {T}
      */
-    public static clone<T=any>(classIns: any, data?: any): T {
+    public static clone<T extends Storeable = any>(classIns: any, data?: any): T {
         if (arguments.length === 1) {
             data = classIns;
             classIns = this;
         }
-        return clone(classIns, data) as T;
+        const instance = clone(classIns, data) as T;
+        instance.flagMetaAsIgnored();
+        return instance;
     }
 
 
