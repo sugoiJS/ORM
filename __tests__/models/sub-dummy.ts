@@ -44,6 +44,8 @@ export class SubDummy extends Dummy {
     })
     public complexMandatoryField: string;
 
+    public test:string;
+
     public setComplexMandatoryField(value) {
         this.complexMandatoryField = value;
         return this;

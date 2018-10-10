@@ -576,4 +576,22 @@ describe("Model mandatory check", () => {
         delete res.saved;
         expect(res).toEqual(dummy);
     });
+
+    it("add mandatory fields",()=>{
+        const d1 = SubDummy.builder("1");
+        const d2 = SubDummy.builder("2");
+        d1.addMandatoryField("test",true);
+        expect(d1.getMandatoryFields()).not.toEqual(d2.getMandatoryFields());
+        d1.removeMandatoryFields("test",true);
+        expect(d1.getMandatoryFields()).toEqual(d2.getMandatoryFields());
+    })
+
+    it("remove mandatory fields",()=>{
+        const d1 = SubDummy.builder("1");
+        const d2 = SubDummy.builder("2");
+        d1.removeMandatoryFields("complexMandatoryField");
+        expect(d1.getMandatoryFields()).not.toEqual(d2.getMandatoryFields());
+        d2.removeMandatoryFields("complexMandatoryField");
+        expect(d1.getMandatoryFields()).toEqual(d2.getMandatoryFields());
+    })
 });

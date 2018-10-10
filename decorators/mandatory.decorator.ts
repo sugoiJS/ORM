@@ -16,17 +16,27 @@ export function Mandatory(condition: boolean | ComparableValueType = false) {
     return function (contextClass: Storeable,
                      propertyKey: string): void {
 
-        const fields = getMandatoryFields(contextClass) || {};
-        fields[propertyKey] = new MandatoryItem(propertyKey, condition);
-        Reflect.defineMetadata(DECORATOR_KEYS.MANDATORY_KEY, fields, contextClass);
+        addMandatoryField(contextClass, propertyKey, condition);
     }
 }
 
-export function getMandatoryFields(contextClass): {[prop:string]: MandatoryItem} {
+export function getMandatoryFields(contextClass): { [prop: string]: MandatoryItem } {
     if (!(contextClass && Reflect.hasMetadata(DECORATOR_KEYS.MANDATORY_KEY, contextClass))) {
         return contextClass.prototype ? getMandatoryFields(contextClass.prototype) : null;
     }
     return Reflect.getMetadata(DECORATOR_KEYS.MANDATORY_KEY, contextClass);
+}
+
+export function addInstanceMandatoryField(contextClass: Storeable, property: string, condition?: ComparableValueType | boolean) {
+    const fields = contextClass.getInstanceMandatoryFields();
+    fields[property] = new MandatoryItem(property, condition);
+    return contextClass.setModelMeta(DECORATOR_KEYS.MANDATORY_KEY, fields)
+}
+
+function addMandatoryField(contextClass: Storeable, property: string, condition?) {
+    const fields = getMandatoryFields(contextClass) || {};
+    fields[property] = new MandatoryItem(property, condition);
+    Reflect.defineMetadata(DECORATOR_KEYS.MANDATORY_KEY, fields, contextClass);
 }
 
 class MandatoryItem {
