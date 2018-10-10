@@ -3,14 +3,14 @@ import {Storeable} from "../classes/storeable.class";
 
 
 /**
- * Set property as primary key.
- * This key is use later to query, update and remove models.
+ * Set property as ignored.
+ * This key won't be used during parsing, storing and response.
  *
  * @returns {(contextClassInstance: Storeable, propertyKey: string) => void}
  * @constructor
  */
 export function Ignore() {
-    return function (contextClassInstance: any,
+    return function (contextClassInstance: Storeable,
                      propertyKey: string): void {
         const contextClass = (<typeof Storeable>contextClassInstance.constructor);
         addIgnoredFields(contextClass, propertyKey);

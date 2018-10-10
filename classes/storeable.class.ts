@@ -2,7 +2,7 @@ import {
     addIgnoredFields,
     getIgnoredFields,
     removeFieldsFromIgnored,
-    initInstanceIgnoredFields, Ignore
+    initInstanceIgnoredFields
 } from "../decorators/ignore.decorator";
 
 export class Storeable {
@@ -11,7 +11,8 @@ export class Storeable {
     protected modelInstanceMeta: {[prop:string]: any} = {};
 
     constructor() {
-        this.flagMetaAsIgnored()
+        this.flagMetaAsIgnored();
+        this.hideIgnoredFields();
     }
 
     public flagMetaAsIgnored() {
@@ -60,15 +61,19 @@ export class Storeable {
 
     public addFieldsToIgnore(...fields: string[]) {
         addIgnoredFields(this, ...fields);
+        fields.forEach(field => this.flagAsIgnored(field,true));
     }
 
     public removeFieldsFromIgnored(...fields: string[]) {
         removeFieldsFromIgnored(this, ...fields);
+        fields.forEach(field => this.flagAsIgnored(field,false));
     }
 
 
     public initIgnoredFields() {
+        this.showIgnoredFields();
         initInstanceIgnoredFields(this);
+        this.hideIgnoredFields();
     }
 
     public getIgnoredFields() {
@@ -83,7 +88,7 @@ export class Storeable {
         });
     }
 
-    protected revertIgnoredFields(): void {
+    protected showIgnoredFields(): void {
         const ignoredFields = this.getIgnoredFields();
         ignoredFields.forEach(field => {
             if (field === "modelInstanceMeta") return;

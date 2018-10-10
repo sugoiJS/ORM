@@ -5,12 +5,17 @@ import {TIdentifierTypes} from "../interfaces/identifer-types.type";
 import {QueryOptions} from "../classes/query-options.class";
 import {clone} from "../utils/object.utils";
 import {Storeable} from "../classes/storeable.class";
+import {getMandatoryFields} from "../decorators/mandatory.decorator";
+import {ValidateSchemaUtil} from "@sugoi/core";
+import {IValidationResult} from "@sugoi/core/dist/policies/interfaces/policy-schema-validator.interface";
 
 
 export abstract class ModelAbstract extends Storeable implements IModel {
     private static modelName: string;
 
-    constructor(){super()}
+    constructor() {
+        super()
+    }
 
     public static setModelName(name: string = this.name) {
         this.setCollectionName(name)
@@ -88,10 +93,6 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             .then(() => this.sugBeforeSave())
             .then(() => this.hideIgnoredFields())
             .then(() => this.saveEmitter(options))
-            .then((res) => {
-                this.revertIgnoredFields();
-                return res;
-            })
             .then((savedData) => {
                 if (typeof this !== "function")//check if is instance
                     savedData = (<any>this.constructor).clone(this.constructor, savedData);
@@ -102,7 +103,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
                 this.flagMetaAsIgnored();
                 return this;
             })
-            .then((savedData:any) => {
+            .then((savedData: any) => {
                 return this.sugAfterSave<T>(savedData).then((res) => res || savedData)
             })
     }
@@ -115,10 +116,8 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             : Promise.resolve();
     }
 
-    public sugValidate(): Promise<string | boolean> {
-        return 'validate' in (this as any)
-            ? (<any>this).validate().then(valid => (valid === undefined) ? true : !!valid)
-            : Promise.resolve(true);
+    public sugValidate(): Promise<any | true> {
+        return this.validateModel();
     };
 
     protected sugBeforeSave(): Promise<void> {
@@ -145,10 +144,6 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             .then(() => this.sugBeforeUpdate())
             .then(() => this.hideIgnoredFields())
             .then(() => this.updateEmitter(options))
-            .then((res) => {
-                this.revertIgnoredFields();
-                return res;
-            })
             .then((updatedData) => {
                 if (typeof this !== "function")//check if is instance
                     updatedData = (<any>this.constructor).clone(this.constructor, updatedData);
@@ -158,7 +153,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
                 this.flagMetaAsIgnored();
                 return this;
             })
-            .then((updatedData:any) => {
+            .then((updatedData: any) => {
                 return this.sugAfterUpdate<T>(updatedData).then((res) => res || updatedData)
             });
     }
@@ -296,4 +291,47 @@ export abstract class ModelAbstract extends Storeable implements IModel {
         const primaryKey = getPrimaryKey(this);
         return primaryKey ? {[primaryKey]: this[primaryKey]} : null;
     }
+
+    public validateModel(): Promise<any | true> {
+        const valid = this.validateMandatoryFields();
+        if (!valid.valid) {
+            return Promise.resolve(valid);
+        }
+        return 'validate' in (this as any)
+            ? (<any>this).validate().then(valid => (valid === undefined) ? true : !!valid)
+            : Promise.resolve(true);
+    }
+
+    protected validateMandatoryFields(): modelValidate {
+        const result = {valid:false, invalidValue: null, expectedValue: null,field:null};
+        const fields = getMandatoryFields(this);
+        if (!fields){
+            result.valid = true;
+            return result;
+        }
+        Object.keys(fields).every((field) => {
+            result.field = field;
+            result.invalidValue = this[field];
+            if (fields[field].condition) {
+                const validate = ValidateSchemaUtil.ValidateSchema(this[field], fields[field].condition);
+                result.invalidValue = validate.invalidValue;
+                result.expectedValue = validate.expectedValue;
+                result.valid = validate.valid;
+            }
+            else if (fields[field].allowEmptyString) {
+                result.expectedValue = "!null";
+                result.valid = this[field] != null || this[field] === "";
+            }
+            else {
+                result.expectedValue = "!null && !''";
+                result.valid = this[field] != null && this[field] !== "";
+            }
+            return result.valid;
+        });
+        return result
+    }
+}
+
+interface modelValidate extends IValidationResult {
+    field?: string
 }

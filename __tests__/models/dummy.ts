@@ -127,7 +127,7 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
         return Dummy.RECORDS.reduce((arr, rec) => {
             let valid = Dummy.validRecordByQuery(rec, query);
             valid = not ? !valid : valid;
-            if ((not || arr.length < limit) && valid) {
+            if (valid && (not || (arr.length < limit))) {
                 arr.push(rec);
             }
             return arr;
@@ -175,7 +175,7 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
         return Promise.resolve(isNaN(parseInt(<string>this.name)));
     }
 
-    static builder(name) {
-        return new Dummy(name);
+    static builder<T=Dummy>(name) {
+        return (<any>new this(name)) as T;
     }
 }

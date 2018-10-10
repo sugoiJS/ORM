@@ -5,12 +5,14 @@ import {ModelAbstract} from "../models/model.abstract";
 import {DummyConnection} from "./classes/dummy-connection.class";
 import {ConnectionName} from "../decorators/connection-name.decorator";
 import {ModelName} from "../decorators/model-name.decorator";
+import {SubDummy} from "./models/sub-dummy";
 
 const exceptionCheck = {
-    toBeExceptionOf(received, expected: { type: any, message: string, code: number }) {
+    toBeExceptionOf(received, expected: { type: any, message: string, code: number, data?: any[] }) {
         const type = expected.type;
         const message = expected.message;
         const code = expected.code;
+        const data = expected.data;
         const isInstance = received instanceof type;
         if (!isInstance) {
             return {
@@ -32,6 +34,12 @@ const exceptionCheck = {
                 message: () => `expected ${code} got ${received.code}`,
             }
         }
+        if (data) {
+            return {
+                pass: JSON.stringify(data) === JSON.stringify(received.data),
+                message: () => this.pass ? `expected data equals` : `expected data ${JSON.stringify(data)}, received ${JSON.stringify(received.data)}`
+            };
+        }
 
         return {
             pass: true,
@@ -45,21 +53,21 @@ expect.extend(exceptionCheck);
 
 const recAmount = 10;
 const recNamePrefix = "read_name_";
-let mockObject;
-
-let connection;
+let mockObject,
+    MockId,
+    connection;
 
 async function setResources() {
     const p = [];
     for (let i = 0; i < recAmount; i++) {
         const dummy = Dummy.builder(`${recNamePrefix}${i}`);
-        dummy.hideIgnoredFields();
         p.push(dummy.save());
     }
-    Promise.race(p).then(first => {
-        delete  first.saved;
-        mockObject = first;
-    });
+    Promise.race(p)
+        .then(first => {
+            delete  first.saved;
+            mockObject = first;
+        });
     return Promise.all(p);
 }
 
@@ -96,7 +104,6 @@ async function disconnect(connection) {
 
 }
 
-let MockId;
 const validationException = {type: SugoiModelException, message: "INVALID", code: 4000};
 const notUpdatedException = {type: SugoiModelException, message: "Not updated", code: 5000};
 const notFoundException = {type: SugoiModelException, message: "Not Found", code: 404};
@@ -107,7 +114,6 @@ beforeAll(async () => {
     return await connect();
 });
 afterAll(async () => disconnect(connection));
-
 
 //Create test suit
 describe("Model save test suit", () => {
@@ -414,30 +420,160 @@ describe("Model extra functions", () => {
         expect(res.isUpdate).not.toBeDefined();
     })
 
-    it("Formalize value with ignored",async ()=>{
+    it("Formalize value with ignored", async () => {
         expect.assertions(4);
         let res = await Dummy.builder("tester_100").save();
         expect(res.saved).toBeTruthy();
         expect(JSON.parse(JSON.stringify(res)).modelInstanceMeta).not.toBeDefined();
         const dummy = Dummy.builder("tester_100");
-        dummy.hideIgnoredFields();
         res = dummy.save();
         expect(res.saved).toBeFalsy();
         expect(JSON.parse(JSON.stringify(res)).modelInstanceMeta).not.toBeDefined();
 
     });
 
-    it("Formalize value without ignored",async ()=>{
+    it("Formalize value without ignored", async () => {
         expect.assertions(5);
         let res = await Dummy.builder("tester_100").save();
         expect(res.saved).toBeTruthy();
         res = await res.update();
         expect(res.updated).toBeTruthy();
         expect(JSON.parse(JSON.stringify(res)).modelInstanceMeta).not.toBeDefined();
-            const dummy = Dummy.builder("tester_100");
-        dummy.hideIgnoredFields();
+        const dummy = Dummy.builder("tester_100");
+
         res = dummy.save();
         expect(res.saved).not.toBeTruthy();
         expect(JSON.parse(JSON.stringify(res)).modelInstanceMeta).not.toBeDefined();
+    });
+});
+
+describe("Model mandatory check", () => {
+    const complexField = {data: {id: "te_123", payload: 10}};
+    it("verify class level default arg mandatory fields", async () => {
+        expect.assertions(2);
+        let dummy = SubDummy.builder<SubDummy>("sub_dummy");
+        try {
+            const res = await dummy.save();
+        } catch (err) {
+            (<any>expect(err)).toBeExceptionOf({
+                type: SugoiModelException,
+                message: "INVALID",
+                code: 4000,
+                data: [{
+                    valid: false,
+                    invalidValue: undefined,
+                    expectedValue: '!null && !\'\'',
+                    field: 'simpleMandatoryField'
+                }]
+            })
+        }
+
+        dummy = dummy
+            .setSimpleMandatoryField("test")
+            .setStringMandatoryField("default")
+            .setStringMandatoryField_2("default")
+            .setComplexMandatoryField(complexField);
+        let res = await dummy.save();
+        delete res.saved;
+        expect(res).toEqual(dummy);
+
+
+    });
+
+    it("verify class level don't allow empty string for mandatory fields", async () => {
+        expect.assertions(2);
+        let dummy = SubDummy.builder<SubDummy>("sub_dummy")
+            .setSimpleMandatoryField("test");
+
+        try {
+            const res = await dummy.save();
+        } catch (err) {
+            (<any>expect(err)).toBeExceptionOf({
+                type: SugoiModelException,
+                message: "INVALID",
+                code: 4000,
+                data: [{
+                    valid: false,
+                    invalidValue: undefined,
+                    expectedValue: '!null && !\'\'',
+                    field: 'stringMandatoryField'
+                }]
+            })
+        }
+
+        dummy = dummy
+            .setStringMandatoryField("default")
+            .setStringMandatoryField_2("default")
+            .setComplexMandatoryField(complexField);
+        let res = await dummy.save();
+        delete res.saved;
+        expect(res).toEqual(dummy);
+    });
+
+    it("verify class level allow empty string for mandatory fields", async () => {
+        expect.assertions(2);
+        let dummy = SubDummy.builder<SubDummy>("sub_dummy")
+            .setSimpleMandatoryField("test")
+            .setStringMandatoryField("default");
+
+        try {
+            const res = await dummy.save();
+        } catch (err) {
+            (<any>expect(err)).toBeExceptionOf({
+                type: SugoiModelException,
+                message: "INVALID",
+                code: 4000,
+                data: [{
+                    valid: false,
+                    expectedValue: '!null',
+                    field: 'stringMandatoryField_2'
+                }]
+            })
+        }
+
+        dummy = dummy
+            .setStringMandatoryField_2("")
+            .setComplexMandatoryField(complexField);
+        let res = await dummy.save();
+        delete res.saved;
+        expect(res).toEqual(dummy);
+    });
+
+    it("verify class level comparable object for mandatory fields", async () => {
+        expect.assertions(2);
+        let dummy = SubDummy.builder<SubDummy>("sub_dummy")
+            .setSimpleMandatoryField("test")
+            .setStringMandatoryField("default")
+            .setStringMandatoryField_2("")
+            .setComplexMandatoryField(Object.assign({}, complexField, {data: {id: 23}}));
+
+        try {
+            const res = await dummy.save();
+        } catch (err) {
+            (<any>expect(err)).toBeExceptionOf({
+                type: SugoiModelException,
+                message: "INVALID",
+                code: 4000,
+                data: [{
+                    "valid": false,
+                    "invalidValue": {"id": 23},
+                    "expectedValue": {
+                        "mandatory": true,
+                        "arrayAllowed": false,
+                        "valueType": {
+                            "id": {"mandatory": true, "arrayAllowed": false, "valueType": "string"},
+                            "payload": {"mandatory": true, "arrayAllowed": false, "valueType": "number", "min": 3}
+                        }
+                    },
+                    "field": "complexMandatoryField"
+                }]
+            })
+        }
+
+        dummy = dummy
+            .setComplexMandatoryField(complexField);
+        let res = await dummy.save();
+        delete res.saved;
+        expect(res).toEqual(dummy);
     });
 });
