@@ -240,7 +240,10 @@ describe("Model update test suit", () => {
         expect(dummyRes).toEqual({name: "MyTest", lastUpdated: "today", updated: true})
     });
 
-    // it("update all",async ()=>{})
+    // it("update all",async ()=>{
+    //     Dummy.updateAll
+    //
+    // })
 
 });
 
@@ -572,6 +575,43 @@ describe("Model mandatory check", () => {
 
         dummy = dummy
             .setComplexMandatoryField(complexField);
+        let res = await dummy.save();
+        delete res.saved;
+        expect(res).toEqual(dummy);
+    });
+
+    it("skip mandatory check fields", async () => {
+        expect.assertions(2);
+        let dummy = SubDummy.builder<SubDummy>("sub_dummy")
+            .setSimpleMandatoryField("test")
+            .setStringMandatoryField("default")
+            .setStringMandatoryField_2("")
+            .setComplexMandatoryField(Object.assign({}, complexField, {data: {id: 23}}));
+
+        try {
+            const res = await dummy.save();
+        } catch (err) {
+            (<any>expect(err)).toBeExceptionOf({
+                type: SugoiModelException,
+                message: "INVALID",
+                code: 4000,
+                data: [{
+                    "valid": false,
+                    "invalidValue": {"id": 23},
+                    "expectedValue": {
+                        "mandatory": true,
+                        "arrayAllowed": false,
+                        "valueType": {
+                            "id": {"mandatory": true, "arrayAllowed": false, "valueType": "string"},
+                            "payload": {"mandatory": true, "arrayAllowed": false, "valueType": "number", "min": 3}
+                        }
+                    },
+                    "field": "complexMandatoryField"
+                }]
+            })
+        }
+
+        dummy.skipRequiredFieldsValidation(true);
         let res = await dummy.save();
         delete res.saved;
         expect(res).toEqual(dummy);

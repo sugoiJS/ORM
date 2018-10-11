@@ -4,15 +4,15 @@ import {ComparableValueType} from "@sugoi/core/dist/policies/interfaces/comparab
 
 
 /**
- * Set property as Mandatory so it will be validate before upsert.
+ * Set property as Required so it will be validate before upsert.
  *
  * @returns {(contextClassInstance: Storeable, propertyKey: string) => void}
  * @constructor
  */
-export function Mandatory();
-export function Mandatory(condition: ComparableValueType);
-export function Mandatory(allowEmptyString: boolean);
-export function Mandatory(condition: boolean | ComparableValueType = false) {
+export function Required();
+export function Required(condition: ComparableValueType);
+export function Required(allowEmptyString: boolean);
+export function Required(condition: boolean | ComparableValueType = false) {
     return function (contextClass: Storeable,
                      propertyKey: string): void {
 

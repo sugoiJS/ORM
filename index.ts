@@ -1,7 +1,7 @@
 
 
 
-export {Mandatory} from "./decorators/mandatory.decorator";
+export {Required} from "./decorators/mandatory.decorator";
 
 export {Ignore} from "./decorators/ignore.decorator";
 

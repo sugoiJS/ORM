@@ -8,6 +8,7 @@ import {Storeable} from "../classes/storeable.class";
 import {getMandatoryFields} from "../decorators/mandatory.decorator";
 import {ValidateSchemaUtil} from "@sugoi/core";
 import {IValidationResult} from "@sugoi/core/dist/policies/interfaces/policy-schema-validator.interface";
+import {DECORATOR_KEYS} from "../constants/decorators-key.constant";
 
 
 export abstract class ModelAbstract extends Storeable implements IModel {
@@ -293,7 +294,9 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     }
 
     public validateModel(): Promise<any | true> {
-        const valid = this.validateMandatoryFields();
+        const valid = this.getModelMeta(DECORATOR_KEYS.SKIP_MANDATORY_VALIDATION)
+            ? {valid: true}
+            : this.validateMandatoryFields();
         if (!valid.valid) {
             return Promise.resolve(valid);
         }
@@ -303,9 +306,9 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     }
 
     protected validateMandatoryFields(): modelValidate {
-        const result = {valid:false, invalidValue: null, expectedValue: null,field:null};
+        const result = {valid: false, invalidValue: null, expectedValue: null, field: null};
         const fields = getMandatoryFields(this);
-        if (!fields){
+        if (!fields) {
             result.valid = true;
             return result;
         }
@@ -329,6 +332,10 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             return result.valid;
         });
         return result
+    }
+
+    public skipRequiredFieldsValidation(shouldSkip: boolean) {
+        this.setModelMeta(DECORATOR_KEYS.SKIP_MANDATORY_VALIDATION, shouldSkip)
     }
 }
 

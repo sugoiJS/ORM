@@ -1,5 +1,5 @@
 import {
-    ModelName, Mandatory, ConnectionName
+    ModelName, Required, ConnectionName
 } from "../../index";
 import {Dummy} from "./dummy";
 import {ComparableSchema, SchemaTypes} from "@sugoi/core";
@@ -10,7 +10,7 @@ import {ComparableSchema, SchemaTypes} from "@sugoi/core";
 export class SubDummy extends Dummy {
     public static RECORDS = [];
 
-    @Mandatory()
+    @Required()
     public simpleMandatoryField: number;
 
     public setSimpleMandatoryField(value) {
@@ -18,7 +18,7 @@ export class SubDummy extends Dummy {
         return this;
     }
 
-    @Mandatory(false)
+    @Required(false)
     public stringMandatoryField: string;
 
     public setStringMandatoryField(value) {
@@ -26,7 +26,7 @@ export class SubDummy extends Dummy {
         return this;
     }
 
-    @Mandatory(true)
+    @Required(true)
     public stringMandatoryField_2: string;
 
     public setStringMandatoryField_2(value) {
@@ -34,7 +34,7 @@ export class SubDummy extends Dummy {
         return this;
     }
 
-    @Mandatory({
+    @Required({
         data: ComparableSchema.ofType(
             {
                 id: ComparableSchema.ofType(SchemaTypes.STRING).setMandatory(true),
