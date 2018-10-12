@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ORM/classes/storeable.class.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">ORM/classes</a> storeable.class.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">96.72% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>59/61</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>10/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">96.67% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>29/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">98.21% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>55/56</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">100x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">100x</span>
+<span class="cline-any cline-yes">100x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">204x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">618x</span>
+<span class="cline-any cline-yes">618x</span>
+<span class="cline-any cline-yes">223x</span>
+<span class="cline-any cline-yes">223x</span>
+<span class="cline-any cline-yes">223x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">146x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">84x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">286x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">140x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">135x</span>
+<span class="cline-any cline-yes">135x</span>
+<span class="cline-any cline-yes">406x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
+    addIgnoredFields,
+    getIgnoredFields,
+    removeFieldsFromIgnored,
+    initInstanceIgnoredFields
+} from "../decorators/ignore.decorator";
+import {DECORATOR_KEYS} from "../constants/decorators-key.constant";
+import {ComparableValueType} from "@sugoi/core/dist/policies/interfaces/comparable-value.interface";
+import {addInstanceMandatoryField, getMandatoryFields} from "../decorators/mandatory.decorator";
+&nbsp;
+export class Storeable {
+&nbsp;
+    private static ModelMeta: { [prop: string]: any } = {};
+    protected modelInstanceMeta: { [prop: string]: any } = {};
+&nbsp;
+    constructor() {
+        this.flagMetaAsIgnored();
+        this.hideIgnoredFields();
+    }
+&nbsp;
+    public flagMetaAsIgnored() {
+        this.flagAsIgnored('modelInstanceMeta', true);
+    }
+&nbsp;
+    private flagAsIgnored(field: string, ignored: boolean) {
+        const descriptor = Object.getOwnPropertyDescriptor(this, field);
+        if (!descriptor) return;
+        descriptor.enumerable = !ignored;
+        descriptor.configurable = true;
+        Object.defineProperty(this, field, descriptor);
+    }
+&nbsp;
+    public static setModelMeta(key: string, value: any) {
+        this.ModelMeta[key] = value;
+    }
+&nbsp;
+    public setModelMeta(key: string, value: any) {
+        this.modelInstanceMeta[key] = value;
+    }
+&nbsp;
+    public static getModelMeta&lt;T=any&gt;(key: string): T {
+        return this.ModelMeta[key] as T;
+    }
+&nbsp;
+    public getModelMeta&lt;T=any&gt;(key: string): T {
+        return this.modelInstanceMeta[key] as T;
+    }
+&nbsp;
+    public static hasModelMeta(key: string): boolean {
+        return this.ModelMeta.hasOwnProperty(key);
+    }
+&nbsp;
+    public hasModelMeta(key: string): boolean {
+        return this.modelInstanceMeta.hasOwnProperty(key)
+    }
+&nbsp;
+    public <span class="fstat-no" title="function not covered" >static</span> deleteModelMeta(key: string) {
+<span class="cstat-no" title="statement not covered" >        delete this.ModelMeta[key];</span>
+    }
+&nbsp;
+    public deleteModelMeta(key: string) {
+        delete this.modelInstanceMeta[key];
+    }
+&nbsp;
+    public addFieldsToIgnore(...fields: string[]) {
+        addIgnoredFields(this, ...fields);
+        fields.forEach(field =&gt; this.flagAsIgnored(field, true));
+    }
+&nbsp;
+    public removeFieldsFromIgnored(...fields: string[]) {
+        removeFieldsFromIgnored(this, ...fields);
+        fields.forEach(field =&gt; this.flagAsIgnored(field, false));
+    }
+&nbsp;
+&nbsp;
+    public initIgnoredFields() {
+        this.showIgnoredFields();
+        initInstanceIgnoredFields(this);
+        this.hideIgnoredFields();
+    }
+&nbsp;
+    public getIgnoredFields() {
+        return getIgnoredFields(this);
+    }
+&nbsp;
+&nbsp;
+    public hideIgnoredFields(): void {
+        const ignoredFields = this.getIgnoredFields();
+        ignoredFields.forEach(field =&gt; {
+            this.flagAsIgnored(field, true);
+        });
+    }
+&nbsp;
+    protected showIgnoredFields(): void {
+        const ignoredFields = this.getIgnoredFields();
+        ignoredFields.forEach(field =&gt; {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (field === "modelInstanceMeta") <span class="cstat-no" title="statement not covered" >return;</span>
+            this.flagAsIgnored(field, false);
+        });
+    }
+&nbsp;
+    public getMandatoryFields() {
+        const fields = Object.assign({}, this.getInstanceMandatoryFields(), getMandatoryFields(this));
+        Array.from(this.getIgnoreMandatoryFields())
+            .forEach(field =&gt; {
+                delete fields[field];
+            });
+        return fields;
+    }
+&nbsp;
+    public getInstanceMandatoryFields() {
+        return this.getModelMeta(DECORATOR_KEYS.MANDATORY_KEY) || {};
+    }
+&nbsp;
+&nbsp;
+    public addMandatoryField(field: string, condition?: ComparableValueType);
+    public addMandatoryField(field: string, allowEmptyString?: boolean);
+    public addMandatoryField(field: string, condition?: boolean | ComparableValueType) {
+        addInstanceMandatoryField(this, field, condition);
+    }
+&nbsp;
+    private getIgnoreMandatoryFields():Set&lt;string&gt; {
+        return this.getModelMeta(DECORATOR_KEYS.IGNORE_MANDATORY_KEY) || new Set();
+    }
+&nbsp;
+    private setIgnoreMandatoryFields(fields: Set&lt;string&gt;) {
+        this.setModelMeta(DECORATOR_KEYS.IGNORE_MANDATORY_KEY, fields);
+    }
+&nbsp;
+    public removeMandatoryFields(...fields) {
+        const instanceFields = this.getInstanceMandatoryFields();
+        const classFields = [];
+        fields.forEach(field =&gt; {
+            if (!instanceFields.hasOwnProperty(field)) {
+                classFields.push(field);
+                return;
+            } else {
+                delete instanceFields[field];
+            }
+        });
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (classFields.length &gt; 0) {
+            const classIgnoreMandatory = this.getIgnoreMandatoryFields();
+            classFields.forEach(field =&gt; classIgnoreMandatory.add(field));
+            this.setIgnoreMandatoryFields(classIgnoreMandatory);
+        }
+    }
+&nbsp;
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Oct 11 2018 18:04:06 GMT+0300 (Jerusalem Daylight Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>

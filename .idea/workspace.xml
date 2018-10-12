@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6d8f9c3c-d8a7-4a8d-bc27-4b4f80d2951f" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/sort-arrow-sprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dist.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__tests__/classes/dummy-connection.class.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__tests__/classes/dummy-connection.class.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__tests__/model.test.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__tests__/model.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__tests__/models/dummy.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__tests__/models/dummy.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__tests__/models/not-model.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__tests__/models/not-model.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__tests__/models/sub-dummy.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__tests__/models/sub-dummy.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/connection.class.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/connection.class.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/query-options.class.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/query-options.class.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/sort-item.class.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/sort-item.class.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/storeable.class.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/storeable.class.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/constants/connection-status.constant.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/constants/connection-status.constant.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/constants/decorators-key.constant.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/constants/decorators-key.constant.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/constants/exceptions.contant.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/constants/exceptions.contant.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/constants/sort-options.enum.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/constants/sort-options.enum.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/clover.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/coverage-final.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/__tests__/classes/dummy-connection.class.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/__tests__/classes/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/__tests__/models/dummy.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/__tests__/models/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/__tests__/models/not-model.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/__tests__/models/sub-dummy.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/classes/connection.class.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/classes/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/classes/query-options.class.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/classes/sort-item.class.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/classes/storeable.class.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/constants/connection-status.constant.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/constants/decorators-key.constant.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/constants/exceptions.contant.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/constants/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/constants/sort-options.enum.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/decorators/connection-name.decorator.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/decorators/ignore.decorator.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/decorators/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/decorators/mandatory.decorator.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/decorators/model-name.decorator.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/decorators/primary.decorator.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/exceptions/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/exceptions/model.exception.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/index.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/models/connectable-model.abstract.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/models/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/models/model.abstract.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/utils/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/utils/index.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/ORM/utils/object.utils.ts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/base.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/prettify.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/prettify.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov-report/sorter.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coverage/lcov.info" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/decorators/connection-name.decorator.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/decorators/connection-name.decorator.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/decorators/ignore.decorator.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/decorators/ignore.decorator.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/decorators/mandatory.decorator.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/decorators/mandatory.decorator.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/decorators/model-name.decorator.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/decorators/model-name.decorator.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/decorators/primary.decorator.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/decorators/primary.decorator.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/main.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/exceptions/model.exception.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/exceptions/model.exception.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/after-find.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/after-find.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/after-remove.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/after-remove.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/after-save.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/after-save.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/after-update.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/after-update.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/before-find.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/before-find.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/before-remove.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/before-remove.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/before-save.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/before-save.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/before-update.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/before-update.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/before-validate.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/before-validate.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/connection-config.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/connection-config.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/connection.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/connection.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/identifer-types.type.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/identifer-types.type.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/index.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/model.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/model.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/sort-item.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/sort-item.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/validate.interface.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/interfaces/validate.interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/connectable-model.abstract.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/connectable-model.abstract.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/model.abstract.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/model.abstract.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utils/index.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utils/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utils/object.utils.d.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utils/object.utils.js" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="width" value="1946" />
+    <option name="height" value="1106" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="dist" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6d8f9c3c-d8a7-4a8d-bc27-4b4f80d2951f" name="Default" comment="" />
+      <created>1539352869485</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1539352869485</updated>
+      <workItem from="1539352870716" duration="295000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="295000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
+    <layout>
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24972972" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Nativescript Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="NativeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+</project>
