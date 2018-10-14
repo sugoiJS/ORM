@@ -1,6 +1,6 @@
 import {DECORATOR_KEYS} from "../constants/decorators-key.constant";
 import {Storeable} from "../classes/storeable.class";
-import {ComparableValueType} from "@sugoi/core/dist/policies/interfaces/comparable-value.interface";
+import {TComparableSchema} from "@sugoi/core"
 
 
 /**
@@ -10,9 +10,9 @@ import {ComparableValueType} from "@sugoi/core/dist/policies/interfaces/comparab
  * @constructor
  */
 export function Required();
-export function Required(condition: ComparableValueType);
+export function Required(condition: TComparableSchema);
 export function Required(allowEmptyString: boolean);
-export function Required(condition: boolean | ComparableValueType = false) {
+export function Required(condition: boolean | TComparableSchema = false) {
     return function (contextClass: Storeable,
                      propertyKey: string): void {
 
@@ -27,7 +27,7 @@ export function getMandatoryFields(contextClass): { [prop: string]: MandatoryIte
     return Reflect.getMetadata(DECORATOR_KEYS.MANDATORY_KEY, contextClass);
 }
 
-export function addInstanceMandatoryField(contextClass: Storeable, property: string, condition?: ComparableValueType | boolean) {
+export function addInstanceMandatoryField(contextClass: Storeable, property: string, condition?: TComparableSchema | boolean) {
     const fields = contextClass.getInstanceMandatoryFields();
     fields[property] = new MandatoryItem(property, condition);
     return contextClass.setModelMeta(DECORATOR_KEYS.MANDATORY_KEY, fields)
@@ -43,7 +43,7 @@ class MandatoryItem {
     public condition;
     public allowEmptyString;
 
-    constructor(public field: string, condition?: boolean | ComparableValueType) {
+    constructor(public field: string, condition?: boolean | TComparableSchema) {
         if (condition === undefined) return;
         else if (typeof condition === "boolean") {
             this.allowEmptyString = condition;

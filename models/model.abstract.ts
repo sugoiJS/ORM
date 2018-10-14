@@ -118,7 +118,15 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     }
 
     public sugValidate(): Promise<any | true> {
-        return this.validateModel();
+        const valid = this.getModelMeta(DECORATOR_KEYS.SKIP_MANDATORY_VALIDATION)
+            ? {valid: true}
+            : this.validateMandatoryFields();
+        if (!valid.valid) {
+            return Promise.resolve(valid);
+        }
+        return 'validate' in (this as any)
+            ? (<any>this).validate().then(valid => (valid === undefined) ? true : !!valid)
+            : Promise.resolve(true);
     };
 
     protected sugBeforeSave(): Promise<void> {
@@ -294,15 +302,8 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     }
 
     public validateModel(): Promise<any | true> {
-        const valid = this.getModelMeta(DECORATOR_KEYS.SKIP_MANDATORY_VALIDATION)
-            ? {valid: true}
-            : this.validateMandatoryFields();
-        if (!valid.valid) {
-            return Promise.resolve(valid);
-        }
-        return 'validate' in (this as any)
-            ? (<any>this).validate().then(valid => (valid === undefined) ? true : !!valid)
-            : Promise.resolve(true);
+        return this.sugBeforeValidate()
+            .then(()=> this.sugValidate());
     }
 
     protected validateMandatoryFields(): modelValidate {

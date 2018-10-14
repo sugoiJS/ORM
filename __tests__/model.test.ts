@@ -522,14 +522,16 @@ describe("Model mandatory check", () => {
         try {
             const res = await dummy.save();
         } catch (err) {
+
             (<any>expect(err)).toBeExceptionOf({
                 type: SugoiModelException,
                 message: "INVALID",
                 code: 4000,
                 data: [{
-                    valid: false,
-                    expectedValue: '!null',
-                    field: 'stringMandatoryField_2'
+                    "valid": false,
+                    "invalidValue": 1,
+                    "expectedValue": {"mandatory": true, "arrayAllowed": false, "valueType": "string"},
+                    "field": "stringMandatoryField_2"
                 }]
             })
         }
@@ -559,15 +561,8 @@ describe("Model mandatory check", () => {
                 code: 4000,
                 data: [{
                     "valid": false,
-                    "invalidValue": {"id": 23},
-                    "expectedValue": {
-                        "mandatory": true,
-                        "arrayAllowed": false,
-                        "valueType": {
-                            "id": {"mandatory": true, "arrayAllowed": false, "valueType": "string"},
-                            "payload": {"mandatory": true, "arrayAllowed": false, "valueType": "number", "min": 3}
-                        }
-                    },
+                    "invalidValue": 23,
+                    "expectedValue": {"mandatory": true, "arrayAllowed": false, "valueType": "string"},
                     "field": "complexMandatoryField"
                 }]
             })
@@ -597,15 +592,8 @@ describe("Model mandatory check", () => {
                 code: 4000,
                 data: [{
                     "valid": false,
-                    "invalidValue": {"id": 23},
-                    "expectedValue": {
-                        "mandatory": true,
-                        "arrayAllowed": false,
-                        "valueType": {
-                            "id": {"mandatory": true, "arrayAllowed": false, "valueType": "string"},
-                            "payload": {"mandatory": true, "arrayAllowed": false, "valueType": "number", "min": 3}
-                        }
-                    },
+                    "invalidValue": 23,
+                    "expectedValue": {"mandatory": true, "arrayAllowed": false, "valueType": "string"},
                     "field": "complexMandatoryField"
                 }]
             })
@@ -617,16 +605,16 @@ describe("Model mandatory check", () => {
         expect(res).toEqual(dummy);
     });
 
-    it("add mandatory fields",()=>{
+    it("add mandatory fields", () => {
         const d1 = SubDummy.builder("1");
         const d2 = SubDummy.builder("2");
-        d1.addMandatoryField("test",true);
+        d1.addMandatoryField("test", true);
         expect(d1.getMandatoryFields()).not.toEqual(d2.getMandatoryFields());
-        d1.removeMandatoryFields("test",true);
+        d1.removeMandatoryFields("test", true);
         expect(d1.getMandatoryFields()).toEqual(d2.getMandatoryFields());
     })
 
-    it("remove mandatory fields",()=>{
+    it("remove mandatory fields", () => {
         const d1 = SubDummy.builder("1");
         const d2 = SubDummy.builder("2");
         d1.removeMandatoryFields("complexMandatoryField");

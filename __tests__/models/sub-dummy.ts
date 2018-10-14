@@ -26,8 +26,8 @@ export class SubDummy extends Dummy {
         return this;
     }
 
-    @Required(true)
-    public stringMandatoryField_2: string;
+    @Required(ComparableSchema.ofType(SchemaTypes.STRING).setMandatory(true))
+    public stringMandatoryField_2: string | number = 1;
 
     public setStringMandatoryField_2(value) {
         this.stringMandatoryField_2 = value;

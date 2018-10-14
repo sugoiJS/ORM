@@ -5,7 +5,7 @@ import {
     initInstanceIgnoredFields
 } from "../decorators/ignore.decorator";
 import {DECORATOR_KEYS} from "../constants/decorators-key.constant";
-import {ComparableValueType} from "@sugoi/core/dist/policies/interfaces/comparable-value.interface";
+import {TComparableSchema} from "@sugoi/core";
 import {addInstanceMandatoryField, getMandatoryFields} from "../decorators/mandatory.decorator";
 
 export class Storeable {
@@ -113,9 +113,9 @@ export class Storeable {
     }
 
 
-    public addMandatoryField(field: string, condition?: ComparableValueType);
+    public addMandatoryField(field: string, condition?: TComparableSchema);
     public addMandatoryField(field: string, allowEmptyString?: boolean);
-    public addMandatoryField(field: string, condition?: boolean | ComparableValueType) {
+    public addMandatoryField(field: string, condition?: boolean | TComparableSchema) {
         addInstanceMandatoryField(this, field, condition);
     }
 
