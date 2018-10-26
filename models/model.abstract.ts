@@ -82,7 +82,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
         throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "Find Emitter " + this.constructor.name);
     };
 
-    public async save<T=any>(options?: Partial<QueryOptions | any>): Promise<T> {
+    public async save<T=any>(options?: Partial<QueryOptions | any>,data:any=this): Promise<T> {
         return await this.sugBeforeValidate()
             .then(() => {
                 return this.sugValidate();
@@ -93,7 +93,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             })
             .then(() => this.sugBeforeSave())
             .then(() => this.hideIgnoredFields())
-            .then(() => this.saveEmitter(options))
+            .then(() => this.saveEmitter(options,data))
             .then((savedData) => {
                 if (typeof this !== "function")//check if is instance
                     savedData = (<any>this.constructor).clone(this.constructor, savedData);
@@ -109,7 +109,11 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             })
     }
 
-    protected abstract saveEmitter<T=any>(options?: Partial<QueryOptions | any>): Promise<T>;
+    // public static async saveAll<T=any>(data,options?:Partial<QueryOptions|any>):Promise<T>{
+    //     const objectInstance = this.clone(this, {}) as any;
+    //     return objectInstance.save(options,data)
+    // }
+    protected abstract saveEmitter<T=any>(options?: Partial<QueryOptions | any>,data?:any): Promise<T>;
 
     protected sugBeforeValidate(): Promise<void> {
         return 'beforeValidate' in (this as any)
@@ -141,7 +145,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             : Promise.resolve();
     };
 
-    public async update<T=any>(options?: Partial<QueryOptions | any>): Promise<T> {
+    public async update<T=any>(options?: Partial<QueryOptions | any>,query:any = this.getIdQuery()): Promise<T> {
         return await this.sugBeforeValidate()
             .then(() => {
                 return this.sugValidate();
@@ -149,10 +153,13 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             .then((valid) => {
                 if (valid !== true)
                     throw new SugoiModelException(EXCEPTIONS.INVALID.message, EXCEPTIONS.INVALID.code, valid);
+                if(!(options && options.limit!== null) && query.hasOwnProperty(getPrimaryKey(this)))
+                    options = Object.assign({},options,QueryOptions.builder().setLimit(1))
+
             })
             .then(() => this.sugBeforeUpdate())
             .then(() => this.hideIgnoredFields())
-            .then(() => this.updateEmitter(options))
+            .then(() => this.updateEmitter(options,query))
             .then((updatedData) => {
                 if (typeof this !== "function")//check if is instance
                     updatedData = (<any>this.constructor).clone(this.constructor, updatedData);
@@ -167,13 +174,19 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             });
     }
 
-    public static async updateById<T = any>(id: string, data: any, options?: Partial<QueryOptions | any>): Promise<T> {
+    public static async updateAll<T = any>(query: any, data: any, options?: Partial<QueryOptions | any>): Promise<T> {
         const objectInstance = this.clone(this, data) as any;
-        objectInstance.setPrimaryPropertyValue(id);
-        return objectInstance.update(options);
+        return objectInstance.update(options,query)
     }
 
-    protected abstract updateEmitter<T=any>(options?: Partial<QueryOptions | any>): Promise<T>;
+    public static async updateById<T = any>(id: string, data: any, options: Partial<QueryOptions | any> = QueryOptions.builder().setLimit(1)): Promise<T> {
+        const objectInstance = this.clone(this, data) as any;
+        objectInstance.setPrimaryPropertyValue(id);
+        const key = getPrimaryKey(objectInstance);
+        return objectInstance.update(options,{[key]:id});
+    }
+
+    protected abstract updateEmitter<T=any>(options?: Partial<QueryOptions | any>,query?:any): Promise<T>;
 
     public sugBeforeUpdate(): Promise<void> {
         return 'beforeUpdate' in (this as any)

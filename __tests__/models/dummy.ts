@@ -16,12 +16,14 @@ import {
     IAfterRemove,
     ConnectableModel,
     IConnection,
-    CONNECTION_STATUS
+    CONNECTION_STATUS,
+    Required,
+    Ignore,
+    ConnectionName
 } from "../../index";
 import {StringUtils} from "@sugoi/core/dist/policies/utils/string.util";
 import {EXCEPTIONS} from "../../constants/exceptions.contant";
-import {ConnectionName} from "../../decorators/connection-name.decorator";
-import {Ignore} from "../../decorators/ignore.decorator";
+import {SortOptions} from "../../constants/sort-options.enum";
 
 
 @ModelName("dummy")
@@ -32,6 +34,8 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
     public static RECORDS = [];
     @Primary()
     public id;
+
+    // @Required()
     public name;
     public lastUpdated;
     public lastSaved;
@@ -68,8 +72,8 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
         res.ok = res.n > 0
     }
 
-    protected saveEmitter(options?: any): Promise<any> {
-        return Dummy.upsert(this);
+    protected saveEmitter(options?: any,data?:any): Promise<any> {
+        return Dummy.upsert(data);
     }
 
     protected static findEmitter<T=Dummy>(query?: any, options: Partial<QueryOptions | any> = QueryOptions.builder()): Promise<T> {
@@ -94,15 +98,25 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
         return Promise.resolve(res);
     }
 
-    protected updateEmitter(options?: any): Promise<any> {
-        const index = Dummy.RECORDS.findIndex((rec) => Dummy.validRecordByQuery(rec, {id: this.id}));
-        if (index === -1)
-            throw new SugoiModelException("Not updated", 5000);
-        else {
-            Dummy.RECORDS.splice(index, 1);
-        }
+    protected async updateEmitter(options: any = {}, query: any = this.getIdQuery()): Promise<any> {
+        let limit = options.limit || 100000;
+        let counter = 0;
+        const results = [];
+        Dummy.RECORDS = Dummy.RECORDS.reduce((arr, rec) => {
+            if (counter<limit && Dummy.validRecordByQuery(rec, query)) {
+                rec = options.upsert === false ? this : Object.assign({},rec,this);
+                rec = JSON.parse(JSON.stringify(rec));
+                results.push(rec);
+                counter++
+            }
+            arr.push(rec);
+            return arr;
+        }, []);
 
-        return Dummy.upsert(this)
+        if(results.length === 0){
+            throw new SugoiModelException("Not updated", 5000);
+        }
+        return options.limit ===  1 ? results[0]:results;
     }
 
     public static upsert(record) {
@@ -116,20 +130,23 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
 
     }
 
-    public static filterByQuery(query, limit = Dummy.RECORDS.length, sort?: SortItem, not: boolean = false) {
+    public static filterByQuery(query, limit = Dummy.RECORDS.length, sort?: SortItem, not: boolean = false, preserveIndexes: boolean = false) {
         if (sort) {
             Dummy.RECORDS.sort((a, b) => {
                 const aField = a[sort.field];
                 const bField = b[sort.field];
-                return sort.sortOption === "DESC" ? bField - aField : aField - bField;
+                return sort.sortOption === SortOptions.DESC ? bField - aField : aField - bField;
             });
         }
+        let counter = 0;
         return Dummy.RECORDS.reduce((arr, rec) => {
             let valid = Dummy.validRecordByQuery(rec, query);
             valid = not ? !valid : valid;
-            if (valid && (not || (arr.length < limit))) {
+            if (valid && (not || (counter++ < limit))) {
                 arr.push(rec);
             }
+            else if (preserveIndexes)
+                arr.push({});
             return arr;
         }, []);
     }
@@ -147,17 +164,21 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
     }
 
     beforeValidate(): Promise<any> | void {
-        this.name = this.isUpdate
+        this.name = this.isUpdate && this.name.indexOf("u_") != 0
             ? "u_" + this.name : this.name;
     }
 
     beforeUpdate(): Promise<any> | void {
         this.lastUpdated = "today";
+        // this.removeMandatoryFields("name");
+        if(!this.name) delete this.name;
         return Dummy.connect();
     }
 
     afterUpdate(updateResponse?: any): Promise<any> | void {
         this.updated = this.lastUpdated === "today";
+        // this.addMandatoryField("name");
+
     }
 
     beforeSave(): Promise<any> | void {

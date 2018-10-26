@@ -206,7 +206,7 @@ describe("Model update test suit", () => {
     it("update by id - validation pass", async () => {
         expect.assertions(1);
         const dummy = await Dummy.updateById<any>(MockId, {name: "12", isUpdate: true})
-            .then(res => Dummy.find({id: MockId}, QueryOptions.builder().setLimit(1).setOffset(0)))
+            .then(res => Dummy.find({id: res.id}, QueryOptions.builder().setLimit(1).setOffset(0)))
             .then(res => res[0])
             .then(res => {
                 if (!res) res = {};
@@ -224,7 +224,7 @@ describe("Model update test suit", () => {
         }
     });
 
-    it("update after find ", async () => {
+    it("update after find", async () => {
         expect.assertions(1);
         let dummy;
         const dummyRes = await Dummy.findById(MockId)
@@ -233,17 +233,22 @@ describe("Model update test suit", () => {
                 dummy.name = "MyTest";
                 return dummy.update()
             })
-            .then(_ => Dummy.findById(dummy.id))
+            .then(res => {
+                return Dummy.findById(res.id).then(findRes=> !!findRes ? res : null)
+            })
             .then(res => {
                 return {name: res.name, updated: dummy.updated, lastUpdated: res.lastUpdated}
             });
         expect(dummyRes).toEqual({name: "MyTest", lastUpdated: "today", updated: true})
     });
 
-    // it("update all",async ()=>{
-    //     Dummy.updateAll
-    //
-    // })
+    it("update all",async ()=>{
+        const date = new Date();
+        const query = {name: recNamePrefix};
+        const updated = await Dummy.updateAll(query,{date},{upsert:true});
+        const res = await Dummy.findAll(query);
+        expect(res.every(d=>d.date && new Date(d.date).toISOString() === date.toISOString())).toBe(true);
+    })
 
 });
 
@@ -372,11 +377,12 @@ describe("Model extra functions", () => {
         expect.assertions(2);
         const name = "test_clone";
         const d = await Dummy.builder("test").save();
-        const dummy = Dummy.clone({name, id: d.id});
+        const dummy = Dummy.clone({name:name, id: d.id});
         expect(dummy.constructor.name).toBe("Dummy");
         const dummyRes = await dummy.update()
             .then(res => Dummy.findById(d.id));
-        expect({name: dummyRes.name, id: dummyRes.id}).toEqual({name: dummy.name, id: dummy.id});
+        console.log(dummyRes);
+        expect({name: dummy.name, id: dummy.id}).toEqual({name: dummyRes.name, id: dummyRes.id});
     });
 
     it("Ignored fields", async () => {
@@ -418,7 +424,7 @@ describe("Model extra functions", () => {
         expect(res.updated).not.toBeDefined();
         expect(res.isUpdate).toBeDefined();
         dummy.initIgnoredFields();
-        res = await res.update().then(() => Dummy.findById(res.id));
+        res = await res.update({upsert:false}).then(() => Dummy.findById(res.id));
         expect(res.lastUpdated).toBeDefined();
         expect(res.isUpdate).not.toBeDefined();
     })
@@ -610,7 +616,7 @@ describe("Model mandatory check", () => {
         const d2 = SubDummy.builder("2");
         d1.addMandatoryField("test", true);
         expect(d1.getMandatoryFields()).not.toEqual(d2.getMandatoryFields());
-        d1.removeMandatoryFields("test", true);
+        d1.removeMandatoryFields("test");
         expect(d1.getMandatoryFields()).toEqual(d2.getMandatoryFields());
     })
 

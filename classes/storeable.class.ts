@@ -22,6 +22,8 @@ export class Storeable {
         this.flagAsIgnored('modelInstanceMeta', true);
     }
 
+
+
     private flagAsIgnored(field: string, ignored: boolean) {
         const descriptor = Object.getOwnPropertyDescriptor(this, field);
         if (!descriptor) return;
@@ -127,7 +129,7 @@ export class Storeable {
         this.setModelMeta(DECORATOR_KEYS.IGNORE_MANDATORY_KEY, fields);
     }
 
-    public removeMandatoryFields(...fields) {
+    public removeMandatoryFields(...fields:string[]) {
         const instanceFields = this.getInstanceMandatoryFields();
         const classFields = [];
         fields.forEach(field => {
