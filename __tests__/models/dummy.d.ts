@@ -1,0 +1,31 @@
+import { IAfterSave, IAfterUpdate, IBeforeSave, IBeforeUpdate, IBeforeValidate, IValidate, SortItem, QueryOptions, IBeforeFind, IAfterFind, IBeforeRemove, IAfterRemove, ConnectableModel } from "../../index";
+export declare class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate, IAfterUpdate, IAfterSave, IBeforeSave, IBeforeValidate, IBeforeFind, IAfterFind, IBeforeRemove, IAfterRemove {
+    static RECORDS: any[];
+    id: any;
+    name: any;
+    lastUpdated: any;
+    lastSaved: any;
+    lastSavedTime: any;
+    saved: boolean;
+    updated: boolean;
+    isUpdate: boolean;
+    constructor(name: string);
+    beforeFind(query: any, options?: Partial<QueryOptions | any>): Promise<any> | void;
+    afterFind(res: any): Promise<any> | void;
+    beforeRemove(query: any, options?: Partial<QueryOptions | any>): Promise<any> | void;
+    afterRemove(res: any): Promise<any> | void;
+    protected saveEmitter(options?: any, data?: any): Promise<any>;
+    protected static findEmitter<T = Dummy>(query?: any, options?: Partial<QueryOptions | any>): Promise<T>;
+    protected static removeEmitter<T = any>(query?: any, options?: Partial<QueryOptions | any>): Promise<any>;
+    protected updateEmitter(options?: any, query?: any): Promise<any>;
+    static upsert(record: any): Promise<{}>;
+    static filterByQuery(query: any, limit?: number, sort?: SortItem, not?: boolean, preserveIndexes?: boolean): any;
+    static validRecordByQuery(record: any, query: any): boolean;
+    beforeValidate(): Promise<any> | void;
+    beforeUpdate(): Promise<any> | void;
+    afterUpdate(updateResponse?: any): Promise<any> | void;
+    beforeSave(): Promise<any> | void;
+    afterSave(saveResponse?: any): Promise<any> | void;
+    validate(): Promise<string | boolean>;
+    static builder<T = Dummy>(name: any): T;
+}
