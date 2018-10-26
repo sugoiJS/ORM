@@ -83,7 +83,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     };
 
     public async save<T=any>(options?: Partial<QueryOptions | any>,data:any=this): Promise<T> {
-        return await this.sugBeforeValidate()
+        return await this.sugBeforeValidate(options)
             .then(() => {
                 return this.sugValidate();
             })
@@ -115,9 +115,9 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     // }
     protected abstract saveEmitter<T=any>(options?: Partial<QueryOptions | any>,data?:any): Promise<T>;
 
-    protected sugBeforeValidate(): Promise<void> {
+    protected sugBeforeValidate(options): Promise<void> {
         return 'beforeValidate' in (this as any)
-            ? (<any>this).beforeValidate() || Promise.resolve()
+            ? (<any>this).beforeValidate(options) || Promise.resolve()
             : Promise.resolve();
     }
 
@@ -146,15 +146,17 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     };
 
     public async update<T=any>(options?: Partial<QueryOptions | any>,query:any = this.getIdQuery()): Promise<T> {
-        return await this.sugBeforeValidate()
+        return await this.sugBeforeValidate(options)
             .then(() => {
+                if((!options || options.limit == null) && query.hasOwnProperty(getPrimaryKey(this)))
+                    options = Object.assign({},options,QueryOptions.builder().setLimit(1));
+                if(options && options.hasOwnProperty("skipRequiredValidation"))
+                    this.skipRequiredFieldsValidation(options.skipRequiredValidation);
                 return this.sugValidate();
             })
             .then((valid) => {
                 if (valid !== true)
                     throw new SugoiModelException(EXCEPTIONS.INVALID.message, EXCEPTIONS.INVALID.code, valid);
-                if(!(options && options.limit!== null) && query.hasOwnProperty(getPrimaryKey(this)))
-                    options = Object.assign({},options,QueryOptions.builder().setLimit(1))
 
             })
             .then(() => this.sugBeforeUpdate())
@@ -314,8 +316,8 @@ export abstract class ModelAbstract extends Storeable implements IModel {
         return primaryKey ? {[primaryKey]: this[primaryKey]} : null;
     }
 
-    public validateModel(): Promise<any | true> {
-        return this.sugBeforeValidate()
+    public validateModel(options:Partial<QueryOptions | any>): Promise<any | true> {
+        return this.sugBeforeValidate(options)
             .then(()=> this.sugValidate());
     }
 

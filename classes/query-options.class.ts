@@ -3,6 +3,7 @@ import {SortItem} from "./sort-item.class";
 export class QueryOptions{
     protected sort:Array<SortItem>;
     protected offset:number;
+    public skipRequiredValidation:boolean;
     public limit:number;
 
     public static builder(){
@@ -34,25 +35,15 @@ export class QueryOptions{
         return this;
     }
 
-    /**
-     * @deprecated
-     * @use setSortOptions
-     * @param {SortItem} sort
-     */
-    setSortOption(...sort:Array<SortItem>){
-        return this.setSortOptions(...sort);
-
-    }
-
     getSortOptions(){
         return this.sort || [];
     }
 
-    /**
-     * @deprecated
-     * @use getSortOptions
-     */
-    getSortOption(){
-        return this.getSortOptions();
+    setSkipRequiredValidation(skip:boolean){
+        this.skipRequiredValidation = skip;
+        return this;
+    }
+    getSkipRequiredValidation():boolean{
+        return this.skipRequiredValidation;
     }
 }

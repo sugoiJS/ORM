@@ -156,7 +156,7 @@ describe("Model read test suit", () => {
         expect.assertions(1);
         const resAmount = await Dummy.findAll({name: `${recNamePrefix}`}, QueryOptions
             .builder()
-            .setSortOption(new SortItem(SortOptions.DESC, "lastSavedTime"))
+            .setSortOptions(new SortItem(SortOptions.DESC, "lastSavedTime"))
         )
             .then(res => res.length);
         expect(resAmount).toBe(recAmount);
@@ -582,7 +582,8 @@ describe("Model mandatory check", () => {
     });
 
     it("skip mandatory check fields", async () => {
-        expect.assertions(2);
+        expect.assertions(4);
+        let res;
         let dummy = SubDummy.builder<SubDummy>("sub_dummy")
             .setSimpleMandatoryField("test")
             .setStringMandatoryField("default")
@@ -590,7 +591,7 @@ describe("Model mandatory check", () => {
             .setComplexMandatoryField(Object.assign({}, complexField, {data: {id: 23}}));
 
         try {
-            const res = await dummy.save();
+            res = await dummy.save();
         } catch (err) {
             (<any>expect(err)).toBeExceptionOf({
                 type: SugoiModelException,
@@ -606,9 +607,26 @@ describe("Model mandatory check", () => {
         }
 
         dummy.skipRequiredFieldsValidation(true);
-        let res = await dummy.save();
+        res = await dummy.save();
         delete res.saved;
         expect(res).toEqual(dummy);
+
+        try {
+            res = await SubDummy.updateById(dummy.id,{name:"testing"});
+        } catch (err) {
+            (<any>expect(err)).toBeExceptionOf({
+                type: SugoiModelException,
+                message: "INVALID",
+                code: 4000,
+                data: [{"valid":false,"expectedValue":"!null && !''","field":"simpleMandatoryField"}]
+            })
+        }
+        res = await SubDummy.updateById(dummy.id,{stringMandatoryField_2:"",name:"testing"},QueryOptions.builder().setSkipRequiredValidation(true));
+        dummy.name = "testing";
+        delete res.lastUpdated;
+        delete res.updated;
+        expect(res).toEqual(dummy)
+
     });
 
     it("add mandatory fields", () => {
@@ -618,7 +636,9 @@ describe("Model mandatory check", () => {
         expect(d1.getMandatoryFields()).not.toEqual(d2.getMandatoryFields());
         d1.removeMandatoryFields("test");
         expect(d1.getMandatoryFields()).toEqual(d2.getMandatoryFields());
-    })
+    });
+
+
 
     it("remove mandatory fields", () => {
         const d1 = SubDummy.builder("1");

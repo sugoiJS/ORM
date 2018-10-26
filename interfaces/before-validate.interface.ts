@@ -1,3 +1,5 @@
+import {QueryOptions} from "../classes/query-options.class";
+
 export interface IBeforeValidate{
-    beforeValidate():Promise<any> | void
+    beforeValidate(options?:Partial<QueryOptions|any>):Promise<any> | void
 }
