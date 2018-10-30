@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DECORATOR_KEYS = {
+    PRIMARY_KEY: Symbol.for("SUG_PRIMARY_KEY"),
+    MANDATORY_KEY: "SUG_MANDATORY_KEY",
+    IGNORE_MANDATORY_KEY: "SUG_IGNORE_MANDATORY_KEY",
+    IGNORE_KEY: "SUG_IGNORED_KEY",
+    NOT_IGNORE_KEY: "SUG_NOT_IGNORED_KEY",
+    SKIP_MANDATORY_VALIDATION: "SUG_NOT_IGNORED_KEY"
+};
