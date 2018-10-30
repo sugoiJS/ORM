@@ -147,4 +147,10 @@ export class Storeable {
         }
     }
 
+    private _initInstanceMetaField(){
+        this.modelInstanceMeta = {};
+        this.flagMetaAsIgnored();
+        this.hideIgnoredFields();
+    }
+
 }

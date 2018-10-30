@@ -268,7 +268,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             classIns = this;
         }
         const instance = clone(classIns, data) as T;
-        instance.flagMetaAsIgnored();
+        instance['_initInstanceMetaField']();
         return instance;
     }
 

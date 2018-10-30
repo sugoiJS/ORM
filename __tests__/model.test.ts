@@ -385,6 +385,17 @@ describe("Model extra functions", () => {
         expect({name: dummy.name, id: dummy.id}).toEqual({name: dummyRes.name, id: dummyRes.id});
     });
 
+    it("Clone without name", () => {
+        const originalData = {test:true};
+        const dummyClone = Dummy.clone(originalData);
+        expect(dummyClone.constructor.name).toBe("Dummy");
+        expect(dummyClone).toEqual(originalData);
+        expect(dummyClone instanceof Dummy).toBeTruthy();
+        expect("save" in dummyClone).toBeTruthy();
+        expect("update" in dummyClone).toBeTruthy();
+        expect("remove" in dummyClone).toBeTruthy();
+    });
+
     it("Ignored fields", async () => {
         expect.assertions(11);
         const dummy = Dummy.builder("TestIgnore");

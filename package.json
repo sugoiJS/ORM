@@ -41,7 +41,7 @@
     "url": "https://github.com/sugoiJS/ORM"
   },
   "dependencies": {
-    "@sugoi/core": "^3.0.1"
+    "@sugoi/core": "^3.0.2"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",

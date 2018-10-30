@@ -49,7 +49,7 @@ export class Dummy extends ConnectableModel implements IValidate, IBeforeUpdate,
 
     constructor(name: string) {
         super();
-        this.name = name;
+        this.name = name || "default";
     }
 
     beforeFind(query: any, options?: Partial<QueryOptions | any>): Promise<any> | void {
