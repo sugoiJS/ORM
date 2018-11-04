@@ -14,8 +14,7 @@ export class Storeable {
     protected modelInstanceMeta: { [prop: string]: any } = {};
 
     constructor() {
-        this.flagMetaAsIgnored();
-        this.hideIgnoredFields();
+        this._initInstanceMetaField();
     }
 
     public flagMetaAsIgnored() {
@@ -53,6 +52,10 @@ export class Storeable {
     }
 
     public hasModelMeta(key: string): boolean {
+        if(!this.modelInstanceMeta){
+            this._initInstanceMetaField();
+            return false;
+        }
         return this.modelInstanceMeta.hasOwnProperty(key)
     }
 
