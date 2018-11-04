@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ORM/models/connectable-model.abstract.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">ORM/models</a> connectable-model.abstract.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">81.25% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>26/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">78.57% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>11/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">77.78% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">81.25% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>26/32</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">58x</span>
+<span class="cline-any cline-yes">56x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {ModelAbstract} from "./model.abstract";
+import {IConnectionConfig} from "../interfaces/connection-config.interface";
+import {SugoiModelException} from "../exceptions/model.exception";
+import {EXCEPTIONS} from "../constants/exceptions.contant";
+import {IConnection} from "../interfaces/connection.interface";
+import {clone} from "../utils/object.utils";
+import {CONNECTION_STATUS} from "../constants/connection-status.constant";
+import {Connection} from "../classes/connection.class";
+&nbsp;
+export abstract class ConnectableModel extends ModelAbstract {
+    protected static connections: Map&lt;string, IConnection&gt; = new Map();
+    protected static connectionName: string = "default";
+&nbsp;
+    public static setConnection(configData: IConnectionConfig, connectionName?: string): Promise&lt;IConnection&gt;;
+    public static setConnection(configData: IConnectionConfig, connectionClass: string | typeof Connection, connectionName?: string): Promise&lt;IConnection&gt;;
+    public static setConnection(configData: IConnectionConfig, connectionClass?:string | typeof Connection, connectionName: any = <span class="branch-0 cbranch-no" title="branch not covered" >"default")</span>: Promise&lt;IConnection&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!connectionClass)
+<span class="cstat-no" title="statement not covered" >            throw new SugoiModelException(EXCEPTIONS.CONNECTABLE_CONNECTION_NOT_CONFIGURED.message, EXCEPTIONS.CONNECTABLE_CONNECTION_NOT_CONFIGURED.code, this.name);</span>
+        configData['connectionName'] = connectionName;
+        const connection = clone(connectionClass, configData) as IConnection;
+        connection.status = CONNECTION_STATUS.DISCONNECTED;
+        this.connections.set(connectionName, connection);
+        return this.connect(connectionName);
+&nbsp;
+    }
+&nbsp;
+    public static getConnection(connectionName: string = this.getConnectionName()): IConnection {
+        return this.connections.has(connectionName)
+            ? this.connections.get(connectionName)
+            : null;
+    }
+&nbsp;
+    public static setConnectionName(connectionName: string = <span class="branch-0 cbranch-no" title="branch not covered" >"default")</span>: void {
+        this.connectionName = connectionName;
+    }
+&nbsp;
+    public static getConnectionName(): string {
+        return this.connectionName;
+    }
+&nbsp;
+    public static async connect(connectionName: string = this.getConnectionName()): Promise&lt;IConnection&gt; {
+        const connection = this.connections.get(connectionName);
+        if (!connection) {
+            throw new SugoiModelException(EXCEPTIONS.CONFIGURATION_MISSING.message, EXCEPTIONS.CONFIGURATION_MISSING.code);
+        }
+&nbsp;
+        if (await connection.isConnected()) {
+            return Promise.resolve(connection);
+        } else {
+            return connection.connect()
+                .then(() =&gt; connection)
+                .catch(<span class="fstat-no" title="function not covered" >async e</span>rr =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+<span class="cstat-no" title="statement not covered" >                    console.error(err);</span>
+<span class="cstat-no" title="statement not covered" >                    try {</span>
+<span class="cstat-no" title="statement not covered" >                        await connection.disconnect();</span>
+                    } catch (err) {
+                    }
+<span class="cstat-no" title="statement not covered" >                    throw err;</span>
+                });
+&nbsp;
+        }
+    }
+&nbsp;
+    public static disconnect(connectionName?: string) {
+        const connection = this.getConnection(connectionName);
+        return !!connection
+            ? connection.disconnect()
+            : null
+    }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Oct 11 2018 18:04:06 GMT+0300 (Jerusalem Daylight Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>
