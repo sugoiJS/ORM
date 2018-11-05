@@ -5,6 +5,7 @@ export class QueryOptions{
     protected offset:number;
     public skipRequiredValidation:boolean;
     public limit:number;
+    public applyConstructorOnCast:boolean;
 
     public static builder(){
         return new QueryOptions();

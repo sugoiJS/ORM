@@ -3,9 +3,9 @@ import {IConnectionConfig} from "../interfaces/connection-config.interface";
 import {SugoiModelException} from "../exceptions/model.exception";
 import {EXCEPTIONS} from "../constants/exceptions.contant";
 import {IConnection} from "../interfaces/connection.interface";
-import {clone} from "../utils/object.utils";
 import {CONNECTION_STATUS} from "../constants/connection-status.constant";
 import {Connection} from "../classes/connection.class";
+import {clone} from "../index";
 
 export abstract class ConnectableModel extends ModelAbstract {
     protected static connections: Map<string, IConnection> = new Map();
@@ -17,7 +17,7 @@ export abstract class ConnectableModel extends ModelAbstract {
         if (!connectionClass)
             throw new SugoiModelException(EXCEPTIONS.CONNECTABLE_CONNECTION_NOT_CONFIGURED.message, EXCEPTIONS.CONNECTABLE_CONNECTION_NOT_CONFIGURED.code, this.name);
         configData['connectionName'] = connectionName;
-        const connection = clone(connectionClass, configData) as IConnection;
+        const connection = clone<IConnection>(connectionClass, configData);
         connection.status = CONNECTION_STATUS.DISCONNECTED;
         this.connections.set(connectionName, connection);
         return this.connect(connectionName);

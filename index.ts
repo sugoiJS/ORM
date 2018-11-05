@@ -1,10 +1,6 @@
-
-
-
 export {Required} from "./decorators/mandatory.decorator";
 
 export {Ignore} from "./decorators/ignore.decorator";
-
 
 export {Connection} from "./classes/connection.class";
 
@@ -16,7 +12,7 @@ export {SortOptions} from "./constants/sort-options.enum";
 
 export {ModelName} from "./decorators/model-name.decorator";
 
-export {Primary,getPrimaryKey} from "./decorators/primary.decorator";
+export {Primary, getPrimaryKey} from "./decorators/primary.decorator";
 
 export {QueryOptions} from "./classes/query-options.class";
 
@@ -31,6 +27,10 @@ export {ConnectableModel} from "./models/connectable-model.abstract";
 export {CONNECTION_STATUS} from "./constants/connection-status.constant";
 
 export * from "./interfaces"
-export * from "./utils"
+
+import {clone, cast} from "@sugoi/core";
+
+export {clone, cast};
+
 
 

@@ -1,9 +1,8 @@
-import {SugoiModelException, EXCEPTIONS} from "../index";
+import {clone, SugoiModelException, EXCEPTIONS} from "../index";
 import {IModel} from "../interfaces/model.interface";
 import {getPrimaryKey} from "../decorators/primary.decorator";
 import {TIdentifierTypes} from "../interfaces/identifer-types.type";
 import {QueryOptions} from "../classes/query-options.class";
-import {clone} from "../utils/object.utils";
 import {Storeable} from "../classes/storeable.class";
 import {getMandatoryFields} from "../decorators/mandatory.decorator";
 import {ValidateSchemaUtil} from "@sugoi/core";
@@ -71,7 +70,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             .then((res: Array<T>) => {
                 if (!Array.isArray(res)) res = [res];
                 res = res.map((collection) => {
-                    return this.clone(this, collection);
+                    return this.cast(collection,options && options.applyConstructorOnCast);
                 });
                 return res;
             })
@@ -82,7 +81,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
         throw new SugoiModelException(EXCEPTIONS.NOT_IMPLEMENTED.message, EXCEPTIONS.NOT_IMPLEMENTED.code, "Find Emitter " + this.constructor.name);
     };
 
-    public async save<T=any>(options?: Partial<QueryOptions | any>,data:any=this): Promise<T> {
+    public async save<T=any>(options?: Partial<QueryOptions | any>, data: any = this): Promise<T> {
         return await this.sugBeforeValidate(options)
             .then(() => {
                 return this.sugValidate();
@@ -93,14 +92,9 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             })
             .then(() => this.sugBeforeSave())
             .then(() => this.hideIgnoredFields())
-            .then(() => this.saveEmitter(options,data))
+            .then(() => this.saveEmitter(options, data))
             .then((savedData) => {
-                if (typeof this !== "function")//check if is instance
-                    savedData = (<any>this.constructor).clone(this.constructor, savedData);
-                else
-                    savedData = (<any>this).clone(this, savedData);
-
-                Object.assign(this, savedData);
+                Object.assign(this,savedData);
                 this.flagMetaAsIgnored();
                 return this;
             })
@@ -113,7 +107,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     //     const objectInstance = this.clone(this, {}) as any;
     //     return objectInstance.save(options,data)
     // }
-    protected abstract saveEmitter<T=any>(options?: Partial<QueryOptions | any>,data?:any): Promise<T>;
+    protected abstract saveEmitter<T=any>(options?: Partial<QueryOptions | any>, data?: any): Promise<T>;
 
     protected sugBeforeValidate(options): Promise<void> {
         return 'beforeValidate' in (this as any)
@@ -145,12 +139,12 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             : Promise.resolve();
     };
 
-    public async update<T=any>(options?: Partial<QueryOptions | any>,query:any = this.getIdQuery()): Promise<T> {
+    public async update<T=any>(options?: Partial<QueryOptions | any>, query: any = this.getIdQuery()): Promise<T> {
         return await this.sugBeforeValidate(options)
             .then(() => {
-                if((!options || options.limit == null) && query.hasOwnProperty(getPrimaryKey(this)))
-                    options = Object.assign({},options,QueryOptions.builder().setLimit(1));
-                if(options && options.hasOwnProperty("skipRequiredValidation"))
+                if ((!options || options.limit == null) && query.hasOwnProperty(getPrimaryKey(this)))
+                    options = Object.assign({}, options, QueryOptions.builder().setLimit(1));
+                if (options && options.hasOwnProperty("skipRequiredValidation"))
                     this.skipRequiredFieldsValidation(options.skipRequiredValidation);
                 return this.sugValidate();
             })
@@ -161,12 +155,8 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             })
             .then(() => this.sugBeforeUpdate())
             .then(() => this.hideIgnoredFields())
-            .then(() => this.updateEmitter(options,query))
+            .then(() => this.updateEmitter(options, query))
             .then((updatedData) => {
-                if (typeof this !== "function")//check if is instance
-                    updatedData = (<any>this.constructor).clone(this.constructor, updatedData);
-                else
-                    updatedData = (<any>this).clone(this, updatedData);
                 Object.assign(this, updatedData);
                 this.flagMetaAsIgnored();
                 return this;
@@ -177,18 +167,18 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     }
 
     public static async updateAll<T = any>(query: any, data: any, options?: Partial<QueryOptions | any>): Promise<T> {
-        const objectInstance = this.clone(this, data) as any;
-        return objectInstance.update(options,query)
+        const objectInstance = this.clone(this,data,options && options.applyConstructorOnCast) as any;
+        return objectInstance.update(options, query)
     }
 
     public static async updateById<T = any>(id: string, data: any, options: Partial<QueryOptions | any> = QueryOptions.builder().setLimit(1)): Promise<T> {
-        const objectInstance = this.clone(this, data) as any;
+        const objectInstance = this.clone(this,data,options && options.applyConstructorOnCast) as any;
         objectInstance.setPrimaryPropertyValue(id);
         const key = getPrimaryKey(objectInstance);
-        return objectInstance.update(options,{[key]:id});
+        return objectInstance.update(options, {[key]: id});
     }
 
-    protected abstract updateEmitter<T=any>(options?: Partial<QueryOptions | any>,query?:any): Promise<T>;
+    protected abstract updateEmitter<T=any>(options?: Partial<QueryOptions | any>, query?: any): Promise<T>;
 
     public sugBeforeUpdate(): Promise<void> {
         return 'beforeUpdate' in (this as any)
@@ -254,22 +244,33 @@ export abstract class ModelAbstract extends Storeable implements IModel {
     }
 
     public static clone<T=any>(data: any): T;
-    public static clone<T=any>(classIns: any, data: any): T;
+    public static clone<T=any>(data: any, applyConstructor: boolean): T;
+    public static clone<T=any>(classInstance: any, data: any): T;
+    public static clone<T=any>(classInstance: any, data: any, applyConstructor: boolean): T;
 
     /**
      * Transform data into class(T) instance
      * @param classIns - class instance
      * @param data - data to transform
+     * @param {boolean }applyConstructor - should apply class constructor
      * @returns {T}
      */
-    public static clone<T extends Storeable = any>(classIns: any, data?: any): T {
-        if (arguments.length === 1) {
+    public static clone<T extends Storeable = any>(classIns: any, data?: any, applyConstructor: boolean = false): T {
+
+        if (
+            arguments.length < 3
+            && ((arguments.length === 1) || (arguments.length === 2 && typeof arguments[1] === "boolean"))
+        ) {
             data = classIns;
             classIns = this;
         }
-        const instance = clone(classIns, data) as T;
+        const instance = clone<T>(classIns, data, applyConstructor);
         instance['_initInstanceMetaField']();
         return instance;
+    }
+
+    public static cast<T extends Storeable>(data: any, applyConstructor: boolean = false) {
+        return this.clone(data, applyConstructor)
     }
 
 
@@ -316,9 +317,9 @@ export abstract class ModelAbstract extends Storeable implements IModel {
         return primaryKey ? {[primaryKey]: this[primaryKey]} : null;
     }
 
-    public validateModel(options:Partial<QueryOptions | any>): Promise<any | true> {
+    public validateModel(options: Partial<QueryOptions | any>): Promise<any | true> {
         return this.sugBeforeValidate(options)
-            .then(()=> this.sugValidate());
+            .then(() => this.sugValidate());
     }
 
     protected validateMandatoryFields(): modelValidate {
