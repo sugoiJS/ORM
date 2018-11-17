@@ -171,7 +171,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
         return objectInstance.update(options, query)
     }
 
-    public static async updateById<T = any>(id: string, data: any, options: Partial<QueryOptions | any> = QueryOptions.builder().setLimit(1)): Promise<T> {
+    public static async updateById<T = any>(id: TIdentifierTypes, data: any, options: Partial<QueryOptions | any> = QueryOptions.builder().setLimit(1)): Promise<T> {
         const objectInstance = this.clone(this,data,options && options.applyConstructorOnCast) as any;
         objectInstance.setPrimaryPropertyValue(id);
         const key = getPrimaryKey(objectInstance);
@@ -196,7 +196,7 @@ export abstract class ModelAbstract extends Storeable implements IModel {
         return (<any>this.constructor).removePipe(query, options);
     }
 
-    public static removeById<T=any>(id: string, options?: Partial<QueryOptions | any>): Promise<T> {
+    public static removeById<T=any>(id: TIdentifierTypes, options?: Partial<QueryOptions | any>): Promise<T> {
         return this.removeOne(this.castIdToQuery(id), options);
     }
 
