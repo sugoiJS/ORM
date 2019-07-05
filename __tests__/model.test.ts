@@ -547,7 +547,12 @@ describe("Model mandatory check", () => {
                 data: [{
                     "valid": false,
                     "invalidValue": 1,
-                    "expectedValue": {"mandatory": true, "arrayAllowed": false, "valueType": "string"},
+                    "expectedValue": {
+                        "mandatory": true,
+                        "arrayAllowed": false,
+                        "forceArray": false,
+                        "valueType": ["string"]
+                    },
                     "field": "stringMandatoryField_2"
                 }]
             })
@@ -579,7 +584,27 @@ describe("Model mandatory check", () => {
                 data: [{
                     "valid": false,
                     "invalidValue": 23,
-                    "expectedValue": {"mandatory": true, "arrayAllowed": false, "valueType": "string"},
+
+                    "expectedValue": {
+                        "mandatory": true,
+                        "arrayAllowed": false,
+                        "forceArray": false,
+                        "valueType": [{
+                            "id": {
+                                "mandatory": true,
+                                "arrayAllowed": false,
+                                "forceArray": false,
+                                "valueType": ["string"]
+                            },
+                            "payload": {
+                                "mandatory": true,
+                                "arrayAllowed": false,
+                                "forceArray": false,
+                                "valueType": ["number"],
+                                "min": 3
+                            }
+                        }]
+                    },
                     "field": "complexMandatoryField"
                 }]
             })
@@ -611,7 +636,26 @@ describe("Model mandatory check", () => {
                 data: [{
                     "valid": false,
                     "invalidValue": 23,
-                    "expectedValue": {"mandatory": true, "arrayAllowed": false, "valueType": "string"},
+                    "expectedValue": {
+                        "mandatory": true,
+                        "arrayAllowed": false,
+                        "forceArray": false,
+                        "valueType": [{
+                            "id": {
+                                "mandatory": true,
+                                "arrayAllowed": false,
+                                "forceArray": false,
+                                "valueType": ["string"]
+                            },
+                            "payload": {
+                                "mandatory": true,
+                                "arrayAllowed": false,
+                                "forceArray": false,
+                                "valueType": ["number"],
+                                "min": 3
+                            }
+                        }]
+                    },
                     "field": "complexMandatoryField"
                 }]
             })
