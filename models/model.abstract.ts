@@ -139,13 +139,20 @@ export abstract class ModelAbstract extends Storeable implements IModel {
             : Promise.resolve();
     };
 
-    public async update<T=any>(options?: Partial<QueryOptions | any>, query: any = this.getIdQuery()): Promise<T> {
+    public async update<T=any>(options?: Partial<QueryOptions | any>, 
+                                query: {[prop: string]: string | number | boolean} = this.getIdQuery()): Promise<T> {
         return await this.sugBeforeValidate(options)
             .then(() => {
-                if ((!options || options.limit == null) && query.hasOwnProperty(getPrimaryKey(this)))
+                if(!query){
+                    console.warn(`Query object not found, please verify you have used the @Primary() decorater or pass the 'query' argument`)
+                    query = {};
+                }
+                if ((!options || options.limit == null) && query.hasOwnProperty(getPrimaryKey(this))){
                     options = Object.assign({}, options, QueryOptions.builder().setLimit(1));
-                if (options && options.hasOwnProperty("skipRequiredValidation"))
+                }
+                if (options && options.hasOwnProperty("skipRequiredValidation")){
                     this.skipRequiredFieldsValidation(options.skipRequiredValidation);
+                }
                 return this.sugValidate();
             })
             .then((valid) => {

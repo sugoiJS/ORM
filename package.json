@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest --config=jest.config.js --coverage --detectOpenHandles",
-    "coverage": "jest --coverage --coverageReporters=text-lcov  --detectOpenHandles | curl -s https://codecov.io/bash | bash",
+    "coverage": "jest  --config=jest.config.js --coverage --coverageReporters=text-lcov  --detectOpenHandles | curl -s https://codecov.io/bash | bash",
     "docs": "..\\node_modules\\.bin\\typedoc --out ..\\dist\\docs\\orm --json dist\\docs\\main.json --ignoreCompilerErrors --excludeNotExported --excludeProtected --excludePrivate --readme .\\README.md --mode file --hideGenerator --externalPattern node_modules/**/* --excludeExternals ",
     "build": "rimraf dist && tsc",
     "build:publish": "npm run build && npm test",
@@ -41,13 +41,13 @@
     "url": "https://github.com/sugoiJS/ORM"
   },
   "dependencies": {
-    "@sugoi/core": "^4.0.3"
+    "@sugoi/core": "^4.0.6"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.15",
-    "jest": "^24.8.0",
-    "rimraf": "^2.6.3",
-    "ts-jest": "^24.0.2"
+    "@types/jest": "^24.9.1",
+    "jest": "^24.9.0",
+    "rimraf": "^2.7.1",
+    "ts-jest": "^26.4.0"
   },
   "jest": {
     "collectCoverage": true,
